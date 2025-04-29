@@ -10,6 +10,9 @@ const urlsToCache = [
     '/demo/images/icon.png'
 ];
 
+// Khai báo biến cờ ở phạm vi toàn cục của Service Worker
+let hasShownOfflineNotification = false;
+
 self.addEventListener('install', event => {
     console.log('Service Worker đang được cài đặt...');
     event.waitUntil(
@@ -72,6 +75,7 @@ self.addEventListener('activate', event => {
     );
 });
 
+// Lắng nghe message từ main.js để hiển thị thông báo offline (chỉ gửi một lần)
 self.addEventListener('message', event => {
     if (event.data && event.data.action === 'offlineNotification') {
         // Kiểm tra biến cờ: chỉ hiển thị thông báo nếu chưa hiển thị lần nào
