@@ -1,4 +1,4 @@
-﻿/* --- Biến màu sắc (Giữ nguyên) --- */
+/* --- Biến màu sắc (Giữ nguyên) --- */
 :root {
 	--primary-color: #007bff;
 	--primary-dark: #0056b3;
@@ -215,6 +215,20 @@ body {
 	to {
 		opacity: 1;
 	}
+}
+
+/* --- Fullscreen QR Container --- */
+#qr-container.fullscreen {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+	background-color: #000;
+	z-index: 0;
+	border-radius: 0;
 }
 
 /* --- QR Scanner & Camera --- */
@@ -506,8 +520,8 @@ th {
 
 .spinner-small {
 	margin: 0 5px 0 0; /* Điều chỉnh margin */
-	width: 12px; /* Giảm */
-	height: 12px;
+	width: 16px; /* Giảm */
+	height: 16px;
 	border: 2px solid rgba(255, 255, 255, 0.3); /* Màu sáng hơn trên nền tối */
 	border-left-color: var(--card-bg); /* Giữ nguyên */
 	border-radius: 50%;
@@ -543,17 +557,6 @@ header,
 	z-index: 10;
 }
 
-#qr-scanner {
-	width: 100%;
-	height: 100%;
-	border: none;
-	border-radius: 0;
-}
-
-	#qr-scanner .loading {
-		font-size: 1rem;
-		color: #fff;
-	}
 
 /* --- Giao diện đăng nhập --- */
 .login-container {
@@ -694,23 +697,23 @@ header,
 	/* th:nth-child(3), td:nth-child(3) { display: none; } */
 
 	.pagination-btn {
-		font-size: 0.6rem;
-		padding: 2px;
+		font-size: 0.57rem;
+		padding: 3px 2px;
 	}
 
 	.pagination-info {
-		font-size: 0.45rem;
+		font-size: 0.5rem;
 		/* Bạn cũng có thể thêm các thuộc tính khác như font-weight, color,... */
 	}
 
 	.confirm-attendance-btn {
 		font-size: 0.8rem;
-		padding: 4px 8px;
+		padding: 3px 6px;
 	}
 
 	.attendance-checkbox {
-		width: 15px;
-		height: 15px;
+		width: 14px;
+		height: 14px;
 	}
 
 		.attendance-checkbox:checked::after {
