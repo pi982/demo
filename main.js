@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    
     if (localStorage.getItem("loginTimestamp")) {
         // Người dùng đã đăng nhập, ẩn form đăng nhập và hiển thị giao diện chính
         document.getElementById("login-container").style.display = "none";
@@ -1184,4 +1185,40 @@ document.addEventListener("DOMContentLoaded", function () {
             printWindow.print();
         }, 1000);
     }
+    
+    // Yêu cầu quyền hiển thị thông báo nếu chưa được cấp
+    if (Notification.permission !== 'granted') {
+        Notification.requestPermission().then(function (permission) {
+            console.log('Quyền thông báo:', permission);
+        });
+    }
+    
+    // Biến cờ để đảm bảo chỉ gửi thông báo offline một lần duy nhất trong phiên
+    let hasNotifiedOffline = false;
+    
+    // Hàm gửi thông điệp đến Service Worker để hiển thị thông báo offline
+    function sendOfflineNotification() {
+        if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+            navigator.serviceWorker.controller.postMessage({ action: 'offlineNotification' });
+        } else {
+            // Dự phòng: dùng Notification API trực tiếp nếu không có Service Worker controller
+            new Notification("Mất kết nối", {
+                body: "Bạn đang mất kết nối Internet!",
+                icon: "/demo/images/icon.png",
+                tag: "offline-notification"  // Sử dụng tag để ngăn trùng thông báo nếu có khả năng gửi nhầm
+            });
+        }
+    }
+    
+    // Lắng nghe sự kiện 'offline'
+    window.addEventListener('offline', function () {
+        console.log("Offline: Mất kết nối Internet");
+        // Nếu chưa từng gửi thông báo offline trong phiên này, gửi thông báo và đánh dấu flag
+        if (!hasNotifiedOffline) {
+            sendOfflineNotification();
+            hasNotifiedOffline = true;
+        }
+    });
+
+    
 });
