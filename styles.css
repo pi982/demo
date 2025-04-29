@@ -346,7 +346,7 @@ th {
 	/* Giảm nhẹ kích thước */
 	width: 22px;
 	height: 22px;
-	border: 2px solid var(--neutral-color);
+	border: 1px solid var(--neutral-color);
 	border-radius: 4px;
 	cursor: pointer;
 	transition: background-color 0.2s ease, border-color 0.2s ease;
@@ -506,8 +506,8 @@ th {
 
 .spinner-small {
 	margin: 0 5px 0 0; /* Điều chỉnh margin */
-	width: 16px; /* Giảm */
-	height: 16px;
+	width: 12px; /* Giảm */
+	height: 12px;
 	border: 2px solid rgba(255, 255, 255, 0.3); /* Màu sáng hơn trên nền tối */
 	border-left-color: var(--card-bg); /* Giữ nguyên */
 	border-radius: 50%;
@@ -695,16 +695,16 @@ header,
 
 	.pagination-btn {
 		font-size: 0.6rem;
-		padding: 3px;
+		padding: 2px;
 	}
 
 	.pagination-info {
-		font-size: 0.5rem;
+		font-size: 0.45rem;
 		/* Bạn cũng có thể thêm các thuộc tính khác như font-weight, color,... */
 	}
 
 	.confirm-attendance-btn {
-		font-size: 0.9rem;
+		font-size: 0.8rem;
 		padding: 4px 8px;
 	}
 
@@ -716,6 +716,6 @@ header,
 		.attendance-checkbox:checked::after {
 			width: 4px;
 			height: 8px;
-			border-width: 0 2px 2px 0;
+			border-width: 0 1px 1px 0;
 		}
 }
