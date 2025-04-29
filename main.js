@@ -256,7 +256,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         store.put(student);
                     });
                     console.log("Đã tải dữ liệu data sheet vào IndexedDB.");
-                    showModal("Đã tải xong dữ liệu", "success");
+                    //showModal("Đã tải xong dữ liệu", "success");
                 }).catch(err => console.error("Lỗi mở DB:", err));
             })
             .catch(error => console.error("Lỗi fetch data sheet:", error));
