@@ -1,13 +1,13 @@
 ﻿const CACHE_NAME = 'attendance-cache-v10';
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/styles.css',
-    '/main.js',
-    '/manifest.json',
-    '/html5-qrcode.min.js',
-    '/images/logo.jpg',
-    '/images/icon.png'
+    '/demo/',
+    '/demon/index.html',
+    '/demo/styles.css',
+    '/demo/main.js',
+    '/demo/manifest.json',
+    '/demo/html5-qrcode.min.js',
+    '/demo/images/logo.jpg',
+    '/demo/images/icon.png'
 ];
 
 self.addEventListener('install', event => {
