@@ -550,8 +550,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 saveAttendanceRecord(record);
                 showModal("Có lỗi khi gửi dữ liệu! Đã lưu offline.", "error");
             });
-            // Hiển thị thông báo thành công ngay lập tức sau khi gọi fetch
-            showModal(successMsg, "success");
+        // Hiển thị thông báo thành công ngay lập tức sau khi gọi fetch
+        showModal(successMsg, "success");
     }
     // ---------------------
     // EVENT LISTENERS CHUYỂN ĐỔI GIAO DIỆN
@@ -764,7 +764,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         tableHtml += `</tbody></table>`;
         const totalPages = Math.ceil(searchData.length / pageSize);
-        tableHtml += `<div id="pagination" style="text-align:right; margin-top:5px;">`;
+        tableHtml += `<div id="pagination" style="text-align:right; margin-top:10px;">`;
         if (currentPage > 1) {
             tableHtml += `<button class="pagination-btn" data-page="${currentPage - 1}">Prev</button>`;
         }
@@ -807,7 +807,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 interactiveElements.forEach(el => el.disabled = true);
                 const confirmBtn = this;
                 const originalText = confirmBtn.innerHTML;
-                confirmBtn.innerHTML = `<span class="spinner spinner-small" style="margin-right: 8px;"></span>Đang xử lý...`;
+                confirmBtn.innerHTML = `<span class="spinner spinner-small" style="margin-right: 8px;"></span>Đang gửi...`;
 
                 const selectedIds = Object.keys(selectedStudents);
                 if (selectedIds.length === 0) {
@@ -993,7 +993,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         tableHtml += `</tbody></table>`;
         const totalPages = Math.ceil(reportData.length / reportPageSize);
-        tableHtml += `<div id="report-pagination" style="text-align:right; margin-top:5px;">`;
+        tableHtml += `<div id="report-pagination" style="text-align:right; margin-top:10px;">`;
         if (currentReportPage > 1) {
             tableHtml += `<button class="pagination-btn" data-page="${currentReportPage - 1}">Prev</button>`;
         }
