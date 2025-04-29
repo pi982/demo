@@ -42,7 +42,7 @@ self.addEventListener('fetch', event => {
     // nếu không có mạng thì fallback về cached index.html.
     if (request.mode === 'navigate') {
         event.respondWith(
-            fetch(request).catch(() => caches.match('/index.html'))
+            fetch(request).catch(() => caches.match('/demo/index.html'))
         );
         return;
     }
