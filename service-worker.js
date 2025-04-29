@@ -1,7 +1,7 @@
 ﻿const CACHE_NAME = 'attendance-cache-v10';
 const urlsToCache = [
     '/demo/',
-    '/demon/index.html',
+    '/demo/index.html',
     '/demo/styles.css',
     '/demo/main.js',
     '/demo/manifest.json',
@@ -71,53 +71,4 @@ self.addEventListener('activate', event => {
     );
 });
 
-self.addEventListener('sync', event => {
-    if (event.tag === 'syncAttendance') {
-        event.waitUntil(checkOfflineRecordsAndNotify());
-    }
-});
-
-async function checkOfflineRecordsAndNotify() {
-    try {
-        // Mở IndexedDB (đảm bảo rằng hàm openAttendanceDB() có sẵn trong Service Worker)
-        const db = await openAttendanceDB();
-        const transaction = db.transaction("offlineAttendance", "readonly");
-        const store = transaction.objectStore("offlineAttendance");
-
-        // Lấy toàn bộ bản ghi offline
-        const records = await new Promise((resolve, reject) => {
-            const request = store.getAll();
-            request.onsuccess = () => resolve(request.result);
-            request.onerror = () => reject("Lỗi truy xuất bản ghi offline từ IndexedDB");
-        });
-
-        // Nếu có bản ghi offline, hiển thị thông báo push
-        if (records && records.length > 0) {
-            await self.registration.showNotification("Thông báo đồng bộ", {
-                body: `Có ${records.length} bản ghi offline cần đồng bộ!`,
-                icon: "/images/icon.png",
-                vibrate: [200, 100, 200]
-            });
-
-            // Nếu muốn, sau khi thông báo bạn có thể gọi fetch gửi lên server và xoá dữ liệu offline sau khi đồng bộ thành công.
-            // Ví dụ:
-            //
-            // const combinedRecords = processRecords(records); // Giả sử hàm xử lý dữ liệu offline
-            // await fetch(webAppUrl, {
-            //     method: "POST",
-            //     mode: "no-cors",
-            //     headers: { "Content-Type": "application/json" },
-            //     body: JSON.stringify({ records: combinedRecords })
-            // });
-            // clearOfflineAttendanceStore();
-        }
-    } catch (err) {
-        console.error("Lỗi khi kiểm tra/dồng bộ offline attendance:", err);
-        // Tùy chọn: thông báo lỗi cho người dùng nếu cần
-        await self.registration.showNotification("Lỗi đồng bộ", {
-            body: "Có lỗi xảy ra khi kiểm tra bản ghi offline.",
-            icon: "/images/icon.png"
-        });
-    }
-}
 
