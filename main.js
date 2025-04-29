@@ -1,4 +1,4 @@
-﻿document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("loginTimestamp")) {
         // Người dùng đã đăng nhập, ẩn form đăng nhập và hiển thị giao diện chính
         document.getElementById("login-container").style.display = "none";
@@ -121,7 +121,7 @@
 
     // Các biến và khởi tạo
     const webAppUrl =
-        "https://script.google.com/macros/s/AKfycbxyZkkL3uRTcLVUbcxytOKiKfWOAow_hKuwHCW6FcHVSAXTv38ZnYfnW4sCXscdJ2oN/exec";
+        "https://script.google.com/macros/s/AKfycbyLou-P4MZScdHllSnRnX_39N4vIKrk-Hi4dsbg6dPodNJ3fGprS7L5Zoo_TYtk82jC1Q/exec";
     let currentAttendanceType = "di-le"; // Mặc định
     let currentMode = "qr"; // Có thể là "qr", "search", "report"
     const searchCache = new Map();
@@ -504,7 +504,6 @@
         if (studentName.trim() !== "") {
             successMsg = "Điểm danh " + studentName;
         }
-        showModal(successMsg, "success");
 
         if (!navigator.onLine) {
             // Nếu offline: lưu bản ghi vào IndexedDB
@@ -516,7 +515,7 @@
                 recordType: "single",
                 timestamp: Date.now()
             };
-            showModal("Điểm danh offline " + studentName, "success");
+            showModal("Điểm danh offline " + studentName, "normal");
             saveAttendanceRecord(record);
             return;
         }
@@ -551,6 +550,8 @@
                 saveAttendanceRecord(record);
                 showModal("Có lỗi khi gửi dữ liệu! Đã lưu offline.", "error");
             });
+            // Hiển thị thông báo thành công ngay lập tức sau khi gọi fetch
+            showModal(successMsg, "success");
     }
     // ---------------------
     // EVENT LISTENERS CHUYỂN ĐỔI GIAO DIỆN
