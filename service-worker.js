@@ -72,4 +72,21 @@ self.addEventListener('activate', event => {
     );
 });
 
+self.addEventListener('message', event => {
+    if (event.data && event.data.action === 'offlineNotification') {
+        // Kiểm tra biến cờ: chỉ hiển thị thông báo nếu chưa hiển thị lần nào
+        if (!hasShownOfflineNotification) {
+            self.registration.showNotification("Mất kết nối", {
+                body: "Bạn đang mất kết nối Internet. Vui lòng kiểm tra lại.",
+                icon: "/demo/images/icon.png",
+                tag: "offline-notification"
+            });
+            hasShownOfflineNotification = true;
+        } else {
+            console.log("Thông báo offline đã được hiển thị rồi.");
+        }
+    }
+});
+
+
 
