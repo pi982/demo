@@ -1,13 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
     
+
     if (localStorage.getItem("loginTimestamp")) {
         // Người dùng đã đăng nhập, ẩn form đăng nhập và hiển thị giao diện chính
         document.getElementById("login-container").style.display = "none";
         document.querySelector(".mode-toggle").style.display = "flex";
         document.getElementById("function-container").style.display = "flex";
+        document.body.classList.add('app-active');
     } else {
         // Người dùng chưa đăng nhập, hiển thị form đăng nhập
         document.getElementById("login-container").style.display = "block";
+        document.body.classList.remove('app-active');
     }
 
     // Khai báo hàng đợi thông báo và biến kiểm tra trạng thái modal
@@ -43,29 +46,26 @@ document.addEventListener("DOMContentLoaded", function () {
         modalMessage.textContent = message;
 
         // Xóa mọi class kiểu cũ
-        modalContent.classList.remove("success", "error", "normal");
+        modalContent.classList.remove("success", "error", "normal", "status");
 
         // Thêm class dựa theo loại thông báo
-        if (type === "success") {
-            modalContent.classList.add("success");
-        } else if (type === "error") {
-            modalContent.classList.add("error");
-        } else {
-            modalContent.classList.add("normal");
-        }
+        modalContent.classList.add(type);
 
         // Hiển thị modal
         modal.classList.add("show");
 
-        // Sau khi thông báo được hiển thị trong 2 giây, ẩn và xử lý thông báo kế tiếp
+        // Định nghĩa thời gian hiển thị dựa vào loại thông báo
+        const displayDuration = type === "status" ? 5000 : 1500; // "normal" tồn tại 5 giây, các loại khác 2 giây
+
+        // Sau khi thông báo được hiển thị, ẩn và xử lý thông báo kế tiếp
         setTimeout(() => {
             modal.classList.remove("show");
 
             // Đợi một chút (ví dụ 500ms) trước khi hiển thị thông báo tiếp theo để tránh hiện tượng quá chồng
             setTimeout(() => {
                 processQueue();
-            }, 500);
-        }, 2000);
+            }, 200);
+        }, displayDuration);
     }
 
     // ---------------------
@@ -104,9 +104,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     document.getElementById("login-container").style.display = "none";
                     document.querySelector(".mode-toggle").style.display = "flex";
                     document.getElementById("function-container").style.display = "flex";
+                    document.body.classList.add('app-active');
                 } else {
                     // Nếu đăng nhập thất bại, hiển thị lỗi
                     showModal(data.message || "Sai tài khoản hoặc mật khẩu", "error");
+                    document.body.classList.remove('app-active');
                 }
             })
             .catch(err => {
@@ -274,13 +276,30 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    // Kiểm tra trạng thái mạng ngay khi trang load
     if (navigator.onLine) {
+        showModal("Đã kết nối mạng!", "success");
         runOnlineTasks();
+    } else {
+        // Nếu không có mạng ngay từ đầu, hiển thị thông báo offline.
+        showModal("Không có kết nối mạng!", "status");
     }
 
+
+
     window.addEventListener("online", () => {
+        showModal("Đã kết nối mạng!", "success");
         syncCombinedAttendanceRecords();
     })
+
+    // Lắng nghe sự kiện 'offline': thông báo khi mất kết nối
+    window.addEventListener("offline", () => {
+        showModal("Không có kết nối mạng!", "status");
+        // (Tùy chọn) Gọi hàm gửi notification
+        sendOfflineNotification && sendOfflineNotification();
+    });
+
+
 
     function normalizeText(text) {
         if (!text) return "";
@@ -368,6 +387,15 @@ document.addEventListener("DOMContentLoaded", function () {
     document
         .getElementById("status-khac")
         .addEventListener("click", () => onStatusSelected("khac"));
+
+    let attendanceDescription = "";
+    if (currentAttendanceType === "di-le") {
+        attendanceDescription = " đi lễ";
+    } else if (currentAttendanceType === "di-hoc") {
+        attendanceDescription = " đi học";
+    } else if (currentAttendanceType === "khac") {
+        attendanceDescription = " (khác)";
+    }
 
     // ---------------------
     // XỬ LÝ QR SCANNER
@@ -503,7 +531,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // ---------------------
     function submitAttendance(studentId, studentHoly = "", studentName = "") {
         if (studentName.trim() !== "") {
-            successMsg = "Điểm danh " + studentName;
+            successMsg = "Điểm danh" + attendanceDescription + " " + studentName ;
         }
 
         if (!navigator.onLine) {
@@ -516,7 +544,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 recordType: "single",
                 timestamp: Date.now()
             };
-            showModal("Điểm danh offline " + studentName, "normal");
+            showModal("Điểm danh Offline " + attendanceDescription + " " + studentName, "normal");
             saveAttendanceRecord(record);
             return;
         }
@@ -818,7 +846,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-                if (!confirm("Xác nhận điểm danh " + selectedIds.length + " thiếu nhi đã chọn?")) {
+                if (!confirm("Xác nhận điểm danh " + attendanceDescription + " " + selectedIds.length + " thiếu nhi đã chọn?")) {
                     interactiveElements.forEach(el => el.disabled = false);
                     confirmBtn.innerHTML = originalText;
                     return;
@@ -845,14 +873,14 @@ document.addEventListener("DOMContentLoaded", function () {
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({ records: records })
                         });
-                        showModal("Điểm danh " + selectedIds.length + " thiếu nhi thành công", "success");
+                        showModal("Điểm danh " + attendanceDescription + " " + selectedIds.length + " thiếu nhi thành công", "success");
                     } else {
                         const batchRecord = {
                             timestamp: Date.now(), // Thêm thuộc tính bắt buộc theo keyPath
                             recordType: "batch",   // Đánh dấu đây là bản ghi dạng batch
                             records: records       // Đây là mảng các bản ghi đã tạo
                         };
-                        showModal("Đã lưu điểm danh " + selectedIds.length + " thiếu nhi offline", "normal");
+                        showModal("Đã lưu điểm danh " + attendanceDescription + " " + selectedIds.length + " thiếu nhi offline", "normal");
                         saveAttendanceRecord(batchRecord);
 
                     }
@@ -1004,7 +1032,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         tableHtml += `</div>`;
         tableHtml += `<div style="margin-top:-35px; text-align:center;">
-                    <button id="print-report" class="confirm-attendance-btn"> In </button>
+                    <button id="print-report" class=" confirm-attendance-btn" style="padding: 3px 6px;"> In </button>
                   </div>`;
         resultsDiv.innerHTML = tableHtml;
         document.querySelectorAll("#report-pagination .pagination-btn").forEach((btn) => {
@@ -1185,9 +1213,8 @@ document.addEventListener("DOMContentLoaded", function () {
             printWindow.print();
         }, 1000);
     }
-    
-    // Yêu cầu quyền thông báo nếu chưa được cấp
-    if (Notification.permission !== 'granted') {
+
+       if (Notification.permission !== 'granted') {
         Notification.requestPermission().then(function (permission) {
             console.log('Quyền thông báo:', permission);
         });
@@ -1203,7 +1230,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             new Notification("Mất kết nối", {
                 body: "Bạn đang mất kết nối Internet!",
-                icon: "/demo/images/icon.png",
+                icon: "/images/icon.png",
                 tag: "offline-notification"
             });
         }
@@ -1224,5 +1251,5 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    
+
 });
