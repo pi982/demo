@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
+    
+
     if (localStorage.getItem("loginTimestamp")) {
         // Người dùng đã đăng nhập, ẩn form đăng nhập và hiển thị giao diện chính
         document.getElementById("login-container").style.display = "none";
@@ -384,14 +386,6 @@ document.addEventListener("DOMContentLoaded", function () {
         .getElementById("status-khac")
         .addEventListener("click", () => onStatusSelected("khac"));
 
-    let attendanceDescription = "";
-    if (currentAttendanceType === "di-le") {
-        attendanceDescription = " đi lễ";
-    } else if (currentAttendanceType === "di-hoc") {
-        attendanceDescription = " đi học";
-    } else if (currentAttendanceType === "khac") {
-        attendanceDescription = " (khác)";
-    }
 
     // ---------------------
     // XỬ LÝ QR SCANNER
@@ -526,8 +520,17 @@ document.addEventListener("DOMContentLoaded", function () {
     // HÀM GỬI ĐIỂM DANH QRCODE (legacy)
     // ---------------------
     function submitAttendance(studentId, studentHoly = "", studentName = "") {
+        let attendanceDescription = "";
+        if (currentAttendanceType === "di-le") {
+            attendanceDescription = " đi lễ ";
+        } else if (currentAttendanceType === "di-hoc") {
+            attendanceDescription = " đi học ";
+        } else if (currentAttendanceType === "khac") {
+            attendanceDescription = " khác ";
+        }
+
         if (studentName.trim() !== "") {
-            successMsg = studentName + " " + attendanceDescription;
+            successMsg = studentName + attendanceDescription;
         }
 
         if (!navigator.onLine) {
@@ -828,6 +831,15 @@ document.addEventListener("DOMContentLoaded", function () {
         const confirmAttendanceBtn = document.getElementById("confirm-attendance");
         if (confirmAttendanceBtn) {
             confirmAttendanceBtn.addEventListener("click", async function () {
+                let attendanceDescription = "";
+                if (currentAttendanceType === "di-le") {
+                    attendanceDescription = " đi lễ ";
+                } else if (currentAttendanceType === "di-hoc") {
+                    attendanceDescription = " đi học ";
+                } else if (currentAttendanceType === "khac") {
+                    attendanceDescription = " khác ";
+                }
+
                 const interactiveElements = document.querySelectorAll("button, input");
                 interactiveElements.forEach(el => el.disabled = true);
                 const confirmBtn = this;
@@ -842,7 +854,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-                if (!confirm("Xác nhận điểm danh " + attendanceDescription + " " + selectedIds.length + " thiếu nhi đã chọn?")) {
+                if (!confirm("Xác nhận điểm danh" + attendanceDescription + selectedIds.length + " thiếu nhi đã chọn?")) {
                     interactiveElements.forEach(el => el.disabled = false);
                     confirmBtn.innerHTML = originalText;
                     return;
@@ -869,14 +881,14 @@ document.addEventListener("DOMContentLoaded", function () {
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({ records: records })
                         });
-                        showModal("Điểm danh " + attendanceDescription + " " + selectedIds.length + " thiếu nhi thành công", "success");
+                        showModal("Điểm danh" + attendanceDescription + selectedIds.length + " thiếu nhi thành công", "success");
                     } else {
                         const batchRecord = {
                             timestamp: Date.now(), // Thêm thuộc tính bắt buộc theo keyPath
                             recordType: "batch",   // Đánh dấu đây là bản ghi dạng batch
                             records: records       // Đây là mảng các bản ghi đã tạo
                         };
-                        showModal("Đã lưu điểm danh " + attendanceDescription + " " + selectedIds.length + " thiếu nhi Offline", "normal");
+                        showModal("Đã lưu điểm danh" + attendanceDescription + selectedIds.length + " thiếu nhi Offline", "normal");
                         saveAttendanceRecord(batchRecord);
 
                     }
@@ -1225,7 +1237,7 @@ document.addEventListener("DOMContentLoaded", function () {
             navigator.serviceWorker.controller.postMessage({ action: 'offlineNotification' });
         } else {
             new Notification("Mất kết nối", {
-                body: "Quay lại khi có mạng! - để gửi điểm danh.",
+                body: "Quay lại khi có kết nối! - để gửi điểm danh.",
                 icon: "/images/icon.png",
                 tag: "offline-notification"
             });
@@ -1246,6 +1258,4 @@ document.addEventListener("DOMContentLoaded", function () {
             hasNotifiedOffline = true;
         }
     });
-
-
 });
