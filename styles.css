@@ -500,6 +500,8 @@ th {
 		/* border-left: 5px solid var(--error-color); */
 	}
 
+
+
 .modal-close {
 	position: absolute;
 	top: 1px;
@@ -515,6 +517,7 @@ th {
 	.modal-close:hover {
 		color: #333;
 	}
+
 
 /* --- Spinner --- */
 .spinner {
