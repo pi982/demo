@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
+    
+
     if (localStorage.getItem("loginTimestamp")) {
         // Người dùng đã đăng nhập, ẩn form đăng nhập và hiển thị giao diện chính
         document.getElementById("login-container").style.display = "none";
@@ -163,11 +165,11 @@ document.addEventListener("DOMContentLoaded", function () {
             const store = transaction.objectStore("offlineAttendance");
             const req = store.add(record);
             req.onsuccess = () => {
-                console.log("Đã lưu điểm danh offline:", record);
+                console.log("Đã lưu điểm danh Offline:", record);
             };
             req.onerror = (err) => {
                 console.error("Lỗi lưu điểm danh offline:", err);
-                showModal("Lỗi lưu điểm danh offline", "error");
+                showModal("Lỗi lưu điểm danh Offline", "error");
             };
         }).catch(err => console.error(err));
     }
@@ -213,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     .then(() => {
                         // Với no-cors, nếu promise được resolve, ta coi request đã được gửi thành công
                         console.log("Gửi thành công tất cả bản ghi offline");
-                        showModal("Gửi thành công tất cả bản ghi offline", "success");
+                        showModal("Gửi thành công tất cả bản ghi Offline", "success");
                         clearOfflineAttendanceStore();
                     })
                     .catch(err => {
@@ -234,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const req = store.clear();
             req.onsuccess = () =>
                 console.log("Đã xoá toàn bộ bản ghi offline từ IndexedDB.");
-            showModal("Đã xoá toàn bộ bản ghi offline", "normal");
+                //showModal("Đã xoá toàn bộ bản ghi Offline", "normal");
             req.onerror = (err) =>
                 console.error("Lỗi xoá bản ghi offline:", err);
         });
@@ -280,10 +282,8 @@ document.addEventListener("DOMContentLoaded", function () {
         runOnlineTasks();
     } else {
         // Nếu không có mạng ngay từ đầu, hiển thị thông báo offline.
-        showModal("Không có kết nối mạng!", "status");
+        showModal("Quay lại khi có mạng! - để gửi điểm danh.", "status");
     }
-
-
 
     window.addEventListener("online", () => {
         showModal("Đã kết nối mạng!", "success");
@@ -292,7 +292,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Lắng nghe sự kiện 'offline': thông báo khi mất kết nối
     window.addEventListener("offline", () => {
-        showModal("Không có kết nối mạng!", "status");
+        showModal("Quay lại khi có mạng! - để gửi điểm danh.", "status");
         // (Tùy chọn) Gọi hàm gửi notification
         sendOfflineNotification && sendOfflineNotification();
     });
@@ -529,7 +529,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // ---------------------
     function submitAttendance(studentId, studentHoly = "", studentName = "") {
         if (studentName.trim() !== "") {
-            successMsg = "Điểm danh" + attendanceDescription + " " + studentName ;
+            successMsg = studentName + " " + attendanceDescription;
         }
 
         if (!navigator.onLine) {
@@ -542,7 +542,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 recordType: "single",
                 timestamp: Date.now()
             };
-            showModal("Điểm danh Offline " + attendanceDescription + " " + studentName, "normal");
+            showModal(studentName + " " + attendanceDescription, "normal");
             saveAttendanceRecord(record);
             return;
         }
@@ -575,7 +575,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     timestamp: Date.now()
                 };
                 saveAttendanceRecord(record);
-                showModal("Có lỗi khi gửi dữ liệu! Đã lưu offline.", "error");
+                showModal("Có lỗi khi gửi dữ liệu! Đã lưu Offline.", "error");
             });
         // Hiển thị thông báo thành công ngay lập tức sau khi gọi fetch
         showModal(successMsg, "success");
@@ -878,7 +878,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             recordType: "batch",   // Đánh dấu đây là bản ghi dạng batch
                             records: records       // Đây là mảng các bản ghi đã tạo
                         };
-                        showModal("Đã lưu điểm danh " + attendanceDescription + " " + selectedIds.length + " thiếu nhi offline", "normal");
+                        showModal("Đã lưu điểm danh " + attendanceDescription + " " + selectedIds.length + " thiếu nhi Offline", "normal");
                         saveAttendanceRecord(batchRecord);
 
                     }
@@ -1227,7 +1227,7 @@ document.addEventListener("DOMContentLoaded", function () {
             navigator.serviceWorker.controller.postMessage({ action: 'offlineNotification' });
         } else {
             new Notification("Mất kết nối", {
-                body: "Bạn đang mất kết nối Internet!",
+                body: "Quay lại khi có mạng! - để gửi điểm danh.",
                 icon: "/images/icon.png",
                 tag: "offline-notification"
             });
@@ -1248,4 +1248,6 @@ document.addEventListener("DOMContentLoaded", function () {
             hasNotifiedOffline = true;
         }
     });
+
+
 });
