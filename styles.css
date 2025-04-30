@@ -63,6 +63,13 @@ body {
 		object-fit: cover;
 	}
 
+/* --- CSS MỚI: Kích thước NHỎ khi ứng dụng active --- */
+body.app-active .top-image {
+	width: 100px; /* <-- Kích thước nhỏ mong muốn */
+	height: 100px; /* <-- Kích thước nhỏ mong muốn */
+	margin: 30px 0; /* Có thể điều chỉnh margin cho phù hợp */
+}
+
 /* --- Nút chuyển chế độ --- */
 .mode-toggle {
 	display: flex;
@@ -446,7 +453,7 @@ th {
 	visibility: hidden;
 	transition: opacity 0.3s ease, visibility 0.3s ease;
 	z-index: 1000;
-	padding: 20px;
+	padding:15px;
 }
 
 	.modal.show {
@@ -461,7 +468,7 @@ th {
 	position: relative;
 	box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 	width: 40%;
-	padding: 20px 5px;
+	padding: 10px 5px;
 }
 
 	.modal-content p,
@@ -488,11 +495,15 @@ th {
 		color: var(--text-color);
 		/* border-left: 5px solid var(--error-color); */
 	}
+	.modal-content.status {
+		color: var(--error-color);
+		/* border-left: 5px solid var(--error-color); */
+	}
 
 .modal-close {
 	position: absolute;
-	top: 2px;
-	right: 5px;
+	top: 1px;
+	right: 4px;
 	/* Tăng kích thước và làm rõ hơn */
 	font-size: 1.1rem; /* Lớn hơn */
 	color: #888; /* Màu xám */
@@ -615,9 +626,15 @@ header,
 
 	.top-image {
 		/* Giảm kích thước thêm */
-		width: 90px;
-		height: 90px;
-		margin: 40px 0;
+		width: 100px;
+		height: 100px;
+		margin: 50px 0;
+	}
+
+	body.app-active .top-image {
+		width: 80px; /* <-- Kích thước nhỏ mong muốn (mobile) */
+		height: 80px; /* <-- Kích thước nhỏ mong muốn (mobile) */
+		margin: 60px 0; /* Điều chỉnh margin nếu cần */
 	}
 
 	.mode-toggle,
@@ -671,8 +688,8 @@ header,
 
 	/* Kích thước font trong dropdown và modal */
 	.modal-content {
-		width: 80%;
-		padding: 20px 5px;
+		width: 90%;
+		padding: 5px 5px;
 	}
 
 		.modal-content p,
