@@ -193,7 +193,7 @@ body.app-active .top-image {
 		background-color: var(--card-bg);
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Giảm nhẹ shadow */
 		border-radius: 8px;
-		padding: 15px; /* Giảm padding */
+		padding: 10px; /* Giảm padding */
 		transition: opacity 0.5s ease;
 		position: relative;
 		/* Thêm overflow nếu nội dung có thể dài */
@@ -453,7 +453,7 @@ th {
 	visibility: hidden;
 	transition: opacity 0.3s ease, visibility 0.3s ease;
 	z-index: 1000;
-	padding:15px;
+	padding:25px;
 }
 
 	.modal.show {
@@ -466,7 +466,7 @@ th {
 	border-radius: 8px;
 	text-align: center;
 	position: relative;
-	box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+	box-shadow: 0 5px 15px rgba(0,0,0,0.5);
 	width: 40%;
 	padding: 10px 5px;
 }
@@ -534,8 +534,8 @@ th {
 
 .spinner-small {
 	margin: 0 5px 0 0; /* Điều chỉnh margin */
-	width: 16px; /* Giảm */
-	height: 16px;
+	width: 15px; /* Giảm */
+	height: 15px;
 	border: 2px solid rgba(255, 255, 255, 0.3); /* Màu sáng hơn trên nền tối */
 	border-left-color: var(--card-bg); /* Giữ nguyên */
 	border-radius: 50%;
@@ -611,7 +611,6 @@ header,
 		border: none;
 		border-radius: 5px;
 		cursor: pointer;
-		min-height: 44px; /* Đảm bảo dễ bấm */
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -635,9 +634,9 @@ header,
 	}
 
 	body.app-active .top-image {
-		width: 70px; /* <-- Kích thước nhỏ mong muốn (mobile) */
-		height: 70px; /* <-- Kích thước nhỏ mong muốn (mobile) */
-		margin: 40px 0; /* Điều chỉnh margin nếu cần */
+		width: 80px; /* <-- Kích thước nhỏ mong muốn (mobile) */
+		height: 80px; /* <-- Kích thước nhỏ mong muốn (mobile) */
+		margin: 30px 0; /* Điều chỉnh margin nếu cần */
 	}
 
 	.mode-toggle,
@@ -666,12 +665,12 @@ header,
 	.function-container {
 		flex-direction: column; /* Giữ nguyên */
 		max-width: 100%;
-		padding: 0 15px;
+		padding: 0 14px;
 	}
 
 		.function-container .container {
 			padding: 10px; /* Giảm padding container con */
-			max-height: none; /* Bỏ max-height để nội dung tự do */
+			max-height: 100%; /* Bỏ max-height để nội dung tự do */
 		}
 
 	#search-query,
@@ -682,7 +681,7 @@ header,
 	.login-container button {
 		/* Đảm bảo font đủ lớn để đọc */
 		font-size: 1rem;
-		padding: 5px; /* Giữ padding đủ lớn */
+		padding: 6px; /* Giữ padding đủ lớn */
 		/*min-height: 42px;*/ /* Đảm bảo dễ bấm */
 	}
 
@@ -692,7 +691,7 @@ header,
 
 	/* Kích thước font trong dropdown và modal */
 	.modal-content {
-		width: 90%;
+		width: 95%;
 		padding: 6px 5px;
 	}
 
@@ -734,7 +733,7 @@ header,
 
 	.confirm-attendance-btn {
 		font-size: 0.7rem;
-		padding: 3px 6px;
+		padding: 5px 6px;
 	}
 
 	.attendance-checkbox {
@@ -748,5 +747,3 @@ header,
 			border-width: 0 1px 1px 0;
 		}
 }
-
-
