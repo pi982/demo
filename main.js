@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
         modal.classList.add("show");
 
         // Định nghĩa thời gian hiển thị dựa vào loại thông báo
-        const displayDuration = type === "status" ? 5000 : 1500; // "normal" tồn tại 5 giây, các loại khác 2 giây
+        const displayDuration = type === "status" ? 4000 : 1500; // "normal" tồn tại 5 giây, các loại khác 2 giây
 
         // Sau khi thông báo được hiển thị, ẩn và xử lý thông báo kế tiếp
         setTimeout(() => {
@@ -279,7 +279,7 @@ document.addEventListener("DOMContentLoaded", function () {
         runOnlineTasks();
     } else {
         // Nếu không có mạng ngay từ đầu, hiển thị thông báo offline.
-        showModal("Vào lại khi có mạng! - để đồng bộ dữ liệu.", "status");
+        showModal("Vào lại khi có mạng! Để đồng bộ dữ liệu.", "status");
     }
 
     window.addEventListener("online", () => {
@@ -1208,7 +1208,7 @@ document.addEventListener("DOMContentLoaded", function () {
             navigator.serviceWorker.controller.postMessage({ action: 'offlineNotification' });
         } else {
             new Notification("Mất kết nối", {
-                body: "Vào lại khi có mạng! - để đồng bộ dữ liệu.",
+                body: "Vào lại khi có mạng! Để đồng bộ dữ liệu.",
                 icon: "/images/icon.png",
                 tag: "offline-notification"
             });
