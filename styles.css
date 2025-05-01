@@ -627,14 +627,14 @@ header,
 
 	.top-image {
 		/* Giảm kích thước thêm */
-		width: 90px;
-		height: 90px;
-		margin: 50px 0;
+		width: 95px;
+		height: 95px;
+		margin: 40px 0;
 	}
 
 	body.app-active .top-image {
-		width: 80px; /* <-- Kích thước nhỏ mong muốn (mobile) */
-		height: 80px; /* <-- Kích thước nhỏ mong muốn (mobile) */
+		width: 85px; /* <-- Kích thước nhỏ mong muốn (mobile) */
+		height: 85px; /* <-- Kích thước nhỏ mong muốn (mobile) */
 		margin: 30px 0; /* Điều chỉnh margin nếu cần */
 	}
 
@@ -683,7 +683,7 @@ header,
 	.login-container button {
 		/* Đảm bảo font đủ lớn để đọc */
 		font-size: 1rem;
-		padding: 6px 10px; /* Giữ padding đủ lớn */
+		padding: 7px 10px; /* Giữ padding đủ lớn */
 		/*min-height: 42px;*/ /* Đảm bảo dễ bấm */
 	}
 
@@ -694,7 +694,7 @@ header,
 	/* Kích thước font trong dropdown và modal */
 	.modal-content {
 		width: 95%;
-		padding: 6px 5px;
+		padding: 6px;
 	}
 
 		.modal-content p,
@@ -708,6 +708,7 @@ header,
 	}
 
 	table {
+		table-layout:fixed;
 		min-width: 0; /* Cho phép bảng co lại hoàn toàn nếu cần */
 		font-size: 0.7rem; /* Giảm font bảng thêm */
 		margin-top: 10px;
@@ -725,7 +726,7 @@ header,
 
 	.pagination-btn {
 		font-size: 0.57rem;
-		padding: 3px 2px;
+		padding: 3px 4px;
 	}
 
 	.pagination-info {
@@ -734,7 +735,7 @@ header,
 	}
 
 	.confirm-attendance-btn {
-		font-size: 0.7rem;
+		font-size: 0.8rem;
 		padding: 5px 6px;
 	}
 
