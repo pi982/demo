@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
+    
+
     if (localStorage.getItem("loginTimestamp")) {
         // Người dùng đã đăng nhập, ẩn form đăng nhập và hiển thị giao diện chính
         document.getElementById("login-container").style.display = "none";
@@ -276,7 +278,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Kiểm tra trạng thái mạng ngay khi trang load
     if (navigator.onLine) {
-        showModal("Đã kết nối mạng!", "success");
         runOnlineTasks();
     } else {
         // Nếu không có mạng ngay từ đầu, hiển thị thông báo offline.
@@ -835,7 +836,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 interactiveElements.forEach(el => el.disabled = true);
                 const confirmBtn = this;
                 const originalText = confirmBtn.innerHTML;
-                confirmBtn.innerHTML = `<span class="spinner spinner-small" style="margin-right: 8px;"></span>Đang gửi...`;
+                confirmBtn.innerHTML = `<span class="spinner spinner-small" style="margin-right: 6px;"></span>Đang gửi...`;
 
                 const selectedIds = Object.keys(selectedStudents);
                 if (selectedIds.length === 0) {
@@ -1022,7 +1023,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         tableHtml += `</div>`;
         tableHtml += `<div style="margin-top:-35px; text-align:center;">
-                    <button id="print-report" class=" confirm-attendance-btn" style="padding: 3px 6px;"> In </button>
+                    <button id="print-report" class=" confirm-attendance-btn" style="padding: 5px 10px;"> In </button>
                   </div>`;
         resultsDiv.innerHTML = tableHtml;
         document.querySelectorAll("#report-pagination .pagination-btn").forEach((btn) => {
@@ -1209,7 +1210,7 @@ document.addEventListener("DOMContentLoaded", function () {
             navigator.serviceWorker.controller.postMessage({ action: 'offlineNotification' });
         } else {
             new Notification("Mất kết nối", {
-                body: "Quay lại khi có kết nối! - để gửi điểm danh.",
+                body: "Quay lại khi có mạng! - để gửi điểm danh.",
                 icon: "/images/icon.png",
                 tag: "offline-notification"
             });
