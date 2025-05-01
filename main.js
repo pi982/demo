@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    
-
     if (localStorage.getItem("loginTimestamp")) {
         // Người dùng đã đăng nhập, ẩn form đăng nhập và hiển thị giao diện chính
         document.getElementById("login-container").style.display = "none";
@@ -761,13 +759,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const pageData = searchData.slice(start, end);
         let tableHtml = `
       <table>
-        <colgroup>
-          <col style="width: 18%;">
-          <col style="width: 17%;">
-          <col style="width: 37%;">
-          <col style="width: 19%;">
-          <col style="width: 9%;">
-        </colgroup>
         <thead>
           <tr>
             <th>ID</th>
@@ -995,15 +986,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const pageData = reportData.slice(start, end);
         let tableHtml = `
       <table>
-        <colgroup>
-          <col style="width: 16%;">
-          <col style="width: 14%;">
-          <col style="width: 29%;">
-          <col style="width: 17%;">
-          <col style="width: 8%;">
-          <col style="width: 8%;">
-          <col style="width: 8%;">
-        </colgroup>
         <thead>
           <tr>
             <th>ID</th>
@@ -1092,12 +1074,6 @@ document.addEventListener("DOMContentLoaded", function () {
               margin: 5px 0 0;
               font-size: 24px;
             }
-            .header.a {
-              top: 10px;  /* Khoảng cách từ mép trên */
-              left: 10px; /* Khoảng cách từ mép trái */
-              text-align: left;
-              font-size: 10px;  /* Điều chỉnh kích thước chữ */
-            }
 
             table {
               width: 100%;
@@ -1133,10 +1109,6 @@ document.addEventListener("DOMContentLoaded", function () {
           </style>
         </head>
         <body>
-            <div class="header.a">
-                <p>thiếu nhi gioa xu</p>
-                <p>hiep doan thanh</p>
-            </div>
 
             <div class="header">
                 <h1>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</h1>
@@ -1258,4 +1230,6 @@ document.addEventListener("DOMContentLoaded", function () {
             hasNotifiedOffline = true;
         }
     });
+
+
 });
