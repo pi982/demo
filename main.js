@@ -289,7 +289,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Lắng nghe sự kiện 'offline': thông báo khi mất kết nối
     window.addEventListener("offline", () => {
-        showModal("Quay lại khi có mạng! - để gửi điểm danh.", "status");
+        showModal("Vào lại khi có mạng! Để đồng bộ dữ liệu.", "status");
         // (Tùy chọn) Gọi hàm gửi notification
         sendOfflineNotification && sendOfflineNotification();
     });
