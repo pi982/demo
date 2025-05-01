@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
+    
+
     if (localStorage.getItem("loginTimestamp")) {
         // Người dùng đã đăng nhập, ẩn form đăng nhập và hiển thị giao diện chính
         document.getElementById("login-container").style.display = "none";
@@ -315,7 +317,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 req.onsuccess = () => {
                     console.log("offlineSearch: Đã lấy dữ liệu từ IndexedDB.");
                     const students = req.result;
-                    console.log("offlineSearch: students =", students);
 
                     const normalizedQuery = normalizeText(query);
                     // Lọc các học sinh phù hợp với truy vấn
@@ -329,7 +330,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Sắp xếp các kết quả theo thứ tự của trường rowOrder
                     results.sort((a, b) => a.rowOrder - b.rowOrder);
 
-                    console.log("offlineSearch: results =", results);
                     resolve(results);
                 };
 
@@ -711,7 +711,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then((data) => {
                     if (data.error) {
                         // Nếu có lỗi từ server, chuyển sang offline
-                        console.error("Lỗi tìm kiếm online:", data.error);
                         return offlineSearch(query);
                     }
                     // Nếu không có dữ liệu online (ví dụ mảng rỗng), cũng dùng offline làm dự phòng
@@ -758,6 +757,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const pageData = searchData.slice(start, end);
         let tableHtml = `
       <table>
+        <colgroup>
+          <col style="width: 20%;">
+          <col style="width: 45%;">
+          <col style="width: 22%;">
+          <col style="width: 13%;">
+        </colgroup>
         <thead>
           <tr>
             <th>ID</th>
@@ -978,13 +983,20 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function renderReportTable() {
-        console.log("Report data:", reportData);
         const resultsDiv = document.getElementById("report-results");
         const start = (currentReportPage - 1) * reportPageSize;
         const end = start + reportPageSize;
         const pageData = reportData.slice(start, end);
         let tableHtml = `
       <table>
+        <colgroup>
+          <col style="width: 15%;">
+          <col style="width: 35%;">
+          <col style="width: 20%;">
+          <col style="width: 10%;">
+          <col style="width: 10%;">
+          <col style="width: 10%;">
+        </colgroup>
         <thead>
           <tr>
             <th>ID</th>
