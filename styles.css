@@ -181,7 +181,7 @@ body.app-active .top-image {
 	justify-content: center;
 	align-items: stretch;
 	width: 100%;
-	height: 100%;
+	height:100%;
 	max-width: 900px;
 	/* Bỏ overflow-y: auto ở đây, để container con tự xử lý */
 	padding: 0 10px; /* Thêm padding ngang */
@@ -431,7 +431,7 @@ th {
 	display: inline-flex; /* Cho phép spinner */
 	align-items: center;
 	justify-content: center;
-	margin-top: 15px;
+	margin-top: 13px;
 }
 
 	.confirm-attendance-btn:hover {
@@ -741,8 +741,8 @@ header,
 	}
 
 	.attendance-checkbox {
-		width: 16px;
-		height: 16px;
+		width: 17px;
+		height: 17px;
 	}
 
 		.attendance-checkbox:checked::after {
