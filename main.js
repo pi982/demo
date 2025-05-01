@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    
-
     if (localStorage.getItem("loginTimestamp")) {
         // Người dùng đã đăng nhập, ẩn form đăng nhập và hiển thị giao diện chính
         document.getElementById("login-container").style.display = "none";
@@ -130,13 +128,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchCache = new Map();
     let searchData = [];
     let currentPage = 1;
-    const pageSize = 12;
+    const pageSize = 15;
     let reportData = [];
     let currentReportPage = 1;
-    const reportPageSize = 12;
+    const reportPageSize = 15;
     let selectedStudents = {};
-
-
 
     // ========== Offline Helper Functions ==========
     function openAttendanceDB() {
