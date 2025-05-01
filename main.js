@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    
-
     if (localStorage.getItem("loginTimestamp")) {
         // Người dùng đã đăng nhập, ẩn form đăng nhập và hiển thị giao diện chính
         document.getElementById("login-container").style.display = "none";
@@ -281,7 +279,7 @@ document.addEventListener("DOMContentLoaded", function () {
         runOnlineTasks();
     } else {
         // Nếu không có mạng ngay từ đầu, hiển thị thông báo offline.
-        showModal("Quay lại khi có mạng! - để gửi điểm danh.", "status");
+        showModal("Vào lại khi có mạng! - để đồng bộ dữ liệu.", "status");
     }
 
     window.addEventListener("online", () => {
@@ -1210,7 +1208,7 @@ document.addEventListener("DOMContentLoaded", function () {
             navigator.serviceWorker.controller.postMessage({ action: 'offlineNotification' });
         } else {
             new Notification("Mất kết nối", {
-                body: "Quay lại khi có mạng! - để gửi điểm danh.",
+                body: "Vào lại khi có mạng! - để đồng bộ dữ liệu.",
                 icon: "/images/icon.png",
                 tag: "offline-notification"
             });
@@ -1231,6 +1229,4 @@ document.addEventListener("DOMContentLoaded", function () {
             hasNotifiedOffline = true;
         }
     });
-
-
 });
