@@ -709,7 +709,7 @@ header,
 
 	table {
 		min-width: 0; /* Cho phép bảng co lại hoàn toàn nếu cần */
-		font-size: 0.6rem; /* Giảm font bảng thêm */
+		font-size: 0.7rem; /* Giảm font bảng thêm */
 		margin-top: 10px;
 	}
 
@@ -739,8 +739,8 @@ header,
 	}
 
 	.attendance-checkbox {
-		width: 15px;
-		height: 15px;
+		width: 16px;
+		height: 16px;
 	}
 
 		.attendance-checkbox:checked::after {
