@@ -76,7 +76,7 @@ body.app-active .top-image {
 	justify-content: center;
 	width: 100%;
 	max-width: 900px; /* Giữ nguyên max-width cho màn hình lớn */
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 	gap: 10px;
 	padding: 0 10px; /* Thêm padding ngang để không sát cạnh màn hình nhỏ */
 }
@@ -182,7 +182,6 @@ body.app-active .top-image {
 	align-items: stretch;
 	width: 100%;
 	max-width: 900px;
-	margin-bottom: 10px;
 	/* Bỏ overflow-y: auto ở đây, để container con tự xử lý */
 	padding: 0 10px; /* Thêm padding ngang */
 }
@@ -453,7 +452,7 @@ th {
 	visibility: hidden;
 	transition: opacity 0.3s ease, visibility 0.3s ease;
 	z-index: 1000;
-	padding:25px;
+	padding: 30px;
 }
 
 	.modal.show {
@@ -574,10 +573,10 @@ header,
 
 /* --- Giao diện đăng nhập --- */
 .login-container {
-	width: 90%;
-	max-width: 450px; /* Giảm max-width cho form login */
-	padding: 20px;
-	margin: 40px auto; /* Tăng margin top */
+	width: 95%;
+	max-width: 900px; /* Giảm max-width cho form login */
+	padding: 20px 10px;
+	margin: 30px auto; /* Tăng margin top */
 	text-align: center;
 	background: var(--card-bg);
 	border-radius: 8px;
@@ -587,7 +586,7 @@ header,
 	.login-container input {
 		width: 100%;
 		/* Giảm padding/font */
-		padding: 12px;
+		padding: 12px 10px;
 		margin: 10px 0; /* Giảm margin */
 		font-size: 1rem; /* Giảm */
 		border: 1px solid var(--neutral-color);
@@ -603,8 +602,8 @@ header,
 	.login-container button {
 		width: 100%;
 		/* Giảm padding/font */
-		padding: 10px;
-		margin: 15px 0; /* Giữ margin top */
+		padding: 12px 10px;
+		margin: 10px 0; /* Giữ margin top */
 		background: var(--primary-color);
 		color: #fff;
 		font-size: 1rem; /* Giảm */
@@ -640,10 +639,13 @@ header,
 	}
 
 	.mode-toggle,
-	.function-container,
-	.login-container {
+	.function-container {
 		max-width: 100%;
 		padding: 0 16px; /* Giữ padding ngang */
+	}
+	.login-container {
+		max-width: 100%;
+		padding: 0 10px; /* Giữ padding ngang */
 	}
 
 	.toggle-button {
@@ -681,7 +683,7 @@ header,
 	.login-container button {
 		/* Đảm bảo font đủ lớn để đọc */
 		font-size: 1rem;
-		padding: 6px; /* Giữ padding đủ lớn */
+		padding: 6px 10px; /* Giữ padding đủ lớn */
 		/*min-height: 42px;*/ /* Đảm bảo dễ bấm */
 	}
 
