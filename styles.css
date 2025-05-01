@@ -716,7 +716,7 @@ header,
 	}
 
 	th, td {
-		padding: 5px 2px; /* Giảm padding ô */
+		padding: 6px 2px; /* Giảm padding ô */
 	}
 	/* Có thể ẩn một số cột không quan trọng trên mobile nếu cần */
 	/* th:nth-child(3), td:nth-child(3) { display: none; } */
@@ -726,8 +726,8 @@ header,
 	}
 
 	.pagination-btn {
-		font-size: 0.57rem;
-		padding: 3px 4px;
+		font-size: 0.6rem;
+		padding: 4px 4px;
 	}
 
 	.pagination-info {
