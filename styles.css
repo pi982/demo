@@ -286,8 +286,8 @@ video {
 #report-button {
 	width: 100%;
 	/* Giảm padding và font-size mặc định */
-	padding: 12px;
-	font-size: 1rem; /* Giảm đáng kể */
+	padding: 10px;
+	font-size: 0.9rem; /* Giảm đáng kể */
 	margin-top: 10px;
 	border: 1px solid var(--neutral-color); /* Màu border nhất quán */
 	border-radius: 5px;
@@ -305,7 +305,7 @@ video {
 	color: #fff;
 	border: none;
 	cursor: pointer;
-	margin-top: 15px;
+	margin-top: 10px;
 	transition: background-color 0.3s ease, transform 0.2s ease;
 	/* Thêm min-height để đảm bảo dễ bấm */
 	display: flex; /* Cho phép căn giữa icon/spinner nếu có */
@@ -332,13 +332,13 @@ video {
 }
 
 table {
-	table-layout: fixed; /* Cân nhắc dùng fixed nếu biết chiều rộng cột */
+	table-layout: auto; /* Cân nhắc dùng fixed nếu biết chiều rộng cột */
 	width: 100%; /* Đảm bảo bảng không cố gắng rộng hơn container */
 	min-width: 600px; /* Đặt chiều rộng tối thiểu để có scrollbar trên mobile */
 	border-collapse: collapse;
 	background-color: #fff;
-	font-size: 0.8rem; /* Giảm nhẹ font chữ bảng */
-	margin-top: 5px; /* Bỏ margin khi đã có ở .table-responsive */
+	font-size: 0.9rem; /* Giảm nhẹ font chữ bảng */
+	margin-top: 10px; /* Bỏ margin khi đã có ở .table-responsive */
 }
 
 th,
@@ -346,7 +346,7 @@ td {
 	word-wrap: break-word;
 	border: 1px solid #ddd;
 	text-align: center;
-	padding: 5px;
+	padding: 7px;
 }
 
 th {
@@ -603,11 +603,11 @@ header,
 	.login-container button {
 		width: 100%;
 		/* Giảm padding/font */
-		padding: 12px;
+		padding: 10px;
 		margin: 15px 0; /* Giữ margin top */
 		background: var(--primary-color);
 		color: #fff;
-		font-size: 1.1rem; /* Giảm */
+		font-size: 1rem; /* Giảm */
 		border: none;
 		border-radius: 5px;
 		cursor: pointer;
@@ -665,7 +665,8 @@ header,
 
 	.function-container {
 		flex-direction: column; /* Giữ nguyên */
-		padding: 0 10px;
+		max-width: 100%;
+		padding: 0 15px;
 	}
 
 		.function-container .container {
@@ -681,7 +682,7 @@ header,
 	.login-container button {
 		/* Đảm bảo font đủ lớn để đọc */
 		font-size: 1rem;
-		padding: 7px; /* Giữ padding đủ lớn */
+		padding: 5px; /* Giữ padding đủ lớn */
 		/*min-height: 42px;*/ /* Đảm bảo dễ bấm */
 	}
 
@@ -692,7 +693,7 @@ header,
 	/* Kích thước font trong dropdown và modal */
 	.modal-content {
 		width: 90%;
-		padding: 5px 5px;
+		padding: 6px 5px;
 	}
 
 		.modal-content p,
@@ -707,14 +708,19 @@ header,
 
 	table {
 		min-width: 0; /* Cho phép bảng co lại hoàn toàn nếu cần */
-		font-size: 0.57rem; /* Giảm font bảng thêm */
+		font-size: 0.6rem; /* Giảm font bảng thêm */
+		margin-top: 10px;
 	}
 
 	th, td {
-		padding: 4px 2px; /* Giảm padding ô */
+		padding: 5px 2px; /* Giảm padding ô */
 	}
 	/* Có thể ẩn một số cột không quan trọng trên mobile nếu cần */
 	/* th:nth-child(3), td:nth-child(3) { display: none; } */
+	th:nth-child(1), 
+	td:nth-child(1) {
+		display: none;
+	}
 
 	.pagination-btn {
 		font-size: 0.57rem;
@@ -727,13 +733,13 @@ header,
 	}
 
 	.confirm-attendance-btn {
-		font-size: 0.8rem;
+		font-size: 0.7rem;
 		padding: 3px 6px;
 	}
 
 	.attendance-checkbox {
-		width: 14px;
-		height: 14px;
+		width: 15px;
+		height: 15px;
 	}
 
 		.attendance-checkbox:checked::after {
