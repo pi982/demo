@@ -643,14 +643,14 @@ header,
 	.function-container,
 	.login-container {
 		max-width: 100%;
-		padding: 0 10px; /* Giữ padding ngang */
+		padding: 0 16px; /* Giữ padding ngang */
 	}
 
 	.toggle-button {
 		/* Điều chỉnh lại font/padding cho hợp lý */
 		font-size: 1rem;
 		padding: 12px 6px;
-		margin: 5px 3px;
+		margin: 5px 2px;
 	}
 
 	#status-dropdown {
@@ -665,7 +665,7 @@ header,
 	.function-container {
 		flex-direction: column; /* Giữ nguyên */
 		max-width: 100%;
-		padding: 0 14px;
+		padding: 0 11px;
 	}
 
 		.function-container .container {
