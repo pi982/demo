@@ -182,7 +182,7 @@ body.app-active .top-image {
 	align-items: stretch;
 	width: 100%;
 	max-width: 900px;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 	/* Bỏ overflow-y: auto ở đây, để container con tự xử lý */
 	padding: 0 10px; /* Thêm padding ngang */
 }
@@ -665,7 +665,7 @@ header,
 	.function-container {
 		flex-direction: column; /* Giữ nguyên */
 		max-width: 100%;
-		padding: 0 11px;
+		padding: 0 8px;
 	}
 
 		.function-container .container {
@@ -747,4 +747,3 @@ header,
 			border-width: 0 1px 1px 0;
 		}
 }
-
