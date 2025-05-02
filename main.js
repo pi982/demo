@@ -1290,13 +1290,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function sendOfflineNotification() {
         if (navigator.serviceWorker && navigator.serviceWorker.controller) {
             navigator.serviceWorker.controller.postMessage({ action: 'offlineNotification' });
-        } else {
-            new Notification("Mất kết nối!", {
-                body: "Vào lại khi có mạng! Để đồng bộ dữ liệu.",
-                icon: "/images/icon.png",
-                tag: "offline-notification"
-            });
-        }
+        } 
     }
     // Kiểm tra trạng thái mạng ngay khi trang vừa load
     if (!navigator.onLine && !hasNotifiedOffline) {
