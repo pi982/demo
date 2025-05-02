@@ -36,9 +36,10 @@ body {
 	min-height: 100vh;
 	padding: 0;
 	/*overflow-y: auto;*/
-	-webkit-overflow-scrolling: touch;
+	/*-webkit-overflow-scrolling: touch;*/
 	font-size: 1rem; /* Kích thước font cơ bản (ví dụ: 16px) */
 	line-height: 1.5; /* Cải thiện khả năng đọc */
+	overflow-y: hidden;
 }
 
 * {
