@@ -826,7 +826,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         tableHtml += `</tbody></table>`;
         const totalPages = Math.ceil(searchData.length / dynamicPageSize);
-        tableHtml += `<div id="pagination" style="text-align:right; margin-top:12px;">`;
+        tableHtml += `<div id="pagination" style="text-align:right; margin-top:15px;">`;
         if (currentPage > 1) {
             tableHtml += `<button class="pagination-btn" data-page="${currentPage - 1}">Prev</button>`;
         }
@@ -1064,7 +1064,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         tableHtml += `</tbody></table>`;
         const totalPages = Math.ceil(reportData.length / dynamicPageSize);
-        tableHtml += `<div id="report-pagination" style="text-align:right; margin-top:12px;">`;
+        tableHtml += `<div id="report-pagination" style="text-align:right; margin-top:15px;">`;
         if (currentReportPage > 1) {
             tableHtml += `<button class="pagination-btn" data-page="${currentReportPage - 1}">Prev</button>`;
         }
