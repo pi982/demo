@@ -79,8 +79,6 @@ body.app-active .top-image {
 	margin-bottom: 10px;
 	gap: 10px;
 	padding: 0 10px; /* Thêm padding ngang để không sát cạnh màn hình nhỏ */
-
-	
 }
 
 .toggle-button {
@@ -361,53 +359,6 @@ th {
 		text-align: center; /* Căn giữa cột cuối (thường là checkbox/action) */
 	}
 
-#search-results table colgroup col:nth-child(1) {
-	width: 20%;
-}
-
-#search-results table colgroup col:nth-child(2) {
-	width: 20%;
-}
-
-#search-results table colgroup col:nth-child(3) {
-	width: 33%;
-}
-
-#search-results table colgroup col:nth-child(4) {
-	width: 17%;
-}
-
-#search-results table colgroup col:nth-child(5) {
-	width: 10%;
-}
-
-#report-results table colgroup col:nth-child(1) {
-	width: 15%;
-}
-
-#report-results table colgroup col:nth-child(2) {
-	width: 15%;
-}
-
-#report-results table colgroup col:nth-child(3) {
-	width: 28%;
-}
-
-#report-results table colgroup col:nth-child(4) {
-	width: 18%;
-}
-
-#report-results table colgroup col:nth-child(5) {
-	width: 8%;
-}
-
-#report-results table colgroup col:nth-child(6) {
-	width: 8%;
-}
-
-#report-results table colgroup col:nth-child(7) {
-	width: 8%;
-}
 
 
 /* --- Checkbox điểm danh --- */
@@ -785,7 +736,7 @@ header,
 	}
 
 	#search-results th:nth-child(1),
-	#search-results td:nth-child(1) {
+	#search-results td:nth-child(1){
 		display: none;
 	}
 	/* Đặt lại width cho các cột còn lại theo lớp đã gán cho báo cáo */
@@ -849,6 +800,52 @@ header,
 		}
 }
 
+@media (min-width: 601px) {
+	#search-results table colgroup col:nth-child(1) {
+		width: 20%;
+	}
 
+	#search-results table colgroup col:nth-child(2) {
+		width: 20%;
+	}
 
+	#search-results table colgroup col:nth-child(3) {
+		width: 33%;
+	}
 
+	#search-results table colgroup col:nth-child(4) {
+		width: 17%;
+	}
+
+	#search-results table colgroup col:nth-child(5) {
+		width: 10%;
+	}
+
+	#report-results table colgroup col:nth-child(1) {
+		width: 15%;
+	}
+
+	#report-results table colgroup col:nth-child(2) {
+		width: 15%;
+	}
+
+	#report-results table colgroup col:nth-child(3) {
+		width: 28%;
+	}
+
+	#report-results table colgroup col:nth-child(4) {
+		width: 18%;
+	}
+
+	#report-results table colgroup col:nth-child(5) {
+		width: 8%;
+	}
+
+	#report-results table colgroup col:nth-child(6) {
+		width: 8%;
+	}
+
+	#report-results table colgroup col:nth-child(7) {
+		width: 8%;
+	}
+}
