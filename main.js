@@ -680,13 +680,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         return Math.floor(availableHeight / rowHeight);
     }
-
-    window.addEventListener("resize", () => {
-        // Cập nhật lại bảng tìm kiếm và báo cáo khi kích thước thay đổi
-        renderTablePage();
-        // Nếu bạn có hàm render cho báo cáo, cũng gọi renderReportTable();
-    });
-
     // ---------------------
     // EVENT LISTENER TÌM KIẾM (SEARCH)
     // ---------------------
