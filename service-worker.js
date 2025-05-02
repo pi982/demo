@@ -101,13 +101,13 @@ self.addEventListener('notificationclick', function (event) {
                 for (var i = 0; i < clientList.length; i++) {
                     var client = clientList[i];
                     // Nếu cửa sổ đã mở và URL trùng, focus nó (điều này sẽ mở lại ứng dụng PWA)
-                    if (client.url === 'https://example.com' && 'focus' in client) {
+                    if (client.url === 'https://pi982.github.io/demo/' && 'focus' in client) {
                         return client.focus();
                     }
                 }
                 // Nếu không có cửa sổ nào mở, mở một cửa sổ mới với URL của PWA
                 if (clients.openWindow) {
-                    return clients.openWindow('https://example.com');
+                    return clients.openWindow('https://pi982.github.io/demo/');
                 }
             })
     );
