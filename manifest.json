@@ -1,6 +1,6 @@
 {
   "short_name": "Điểm Danh",
-  "name": "Ứng Dụng Điểm Danh Thiếu Nhi",
+  "name": "Điểm Danh Thiếu Nhi",
   "start_url": "/demo/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
