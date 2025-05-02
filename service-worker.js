@@ -81,7 +81,7 @@ self.addEventListener('message', event => {
         // Kiểm tra biến cờ: chỉ hiển thị thông báo nếu chưa hiển thị lần nào
         if (!hasShownOfflineNotification) {
             self.registration.showNotification("Mất kết nối", {
-                body: "Bạn đang mất kết nối Internet. Vui lòng kiểm tra lại.",
+                body: "Vào lại khi có mạng! Để đồng bộ dữ liệu.",
                 icon: "/demo/images/icon.png",
                 tag: "offline-notification"
             });
@@ -90,6 +90,27 @@ self.addEventListener('message', event => {
             console.log("Thông báo offline đã được hiển thị rồi.");
         }
     }
+});
+
+self.addEventListener('notificationclick', function (event) {
+    event.notification.close();
+    event.waitUntil(
+        clients.matchAll({ type: 'window', includeUncontrolled: true })
+            .then(function (clientList) {
+                // Kiểm tra nếu đã có cửa sổ của PWA đang mở
+                for (var i = 0; i < clientList.length; i++) {
+                    var client = clientList[i];
+                    // Nếu cửa sổ đã mở và URL trùng, focus nó (điều này sẽ mở lại ứng dụng PWA)
+                    if (client.url === 'https://example.com' && 'focus' in client) {
+                        return client.focus();
+                    }
+                }
+                // Nếu không có cửa sổ nào mở, mở một cửa sổ mới với URL của PWA
+                if (clients.openWindow) {
+                    return clients.openWindow('https://example.com');
+                }
+            })
+    );
 });
 
 
