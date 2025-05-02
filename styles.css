@@ -35,7 +35,7 @@ body {
 	justify-content: flex-start;
 	min-height: 100vh;
 	padding: 0;
-	overflow-y: auto;
+	/*overflow-y: auto;*/
 	-webkit-overflow-scrolling: touch;
 	font-size: 1rem; /* Kích thước font cơ bản (ví dụ: 16px) */
 	line-height: 1.5; /* Cải thiện khả năng đọc */
@@ -79,6 +79,8 @@ body.app-active .top-image {
 	margin-bottom: 10px;
 	gap: 10px;
 	padding: 0 10px; /* Thêm padding ngang để không sát cạnh màn hình nhỏ */
+
+	
 }
 
 .toggle-button {
@@ -323,6 +325,7 @@ video {
 /* Bọc table trong div.table-responsive */
 .table-responsive {
 	width: 100%;
+	max-width: 100%;
 	overflow-x: auto;
 	-webkit-overflow-scrolling: touch;
 	margin-top: 15px;
@@ -332,9 +335,8 @@ video {
 }
 
 table {
-	table-layout: auto; /* Cân nhắc dùng fixed nếu biết chiều rộng cột */
+	table-layout: fixed; /* Cân nhắc dùng fixed nếu biết chiều rộng cột */
 	width: 100%; /* Đảm bảo bảng không cố gắng rộng hơn container */
-	min-width: 600px; /* Đặt chiều rộng tối thiểu để có scrollbar trên mobile */
 	border-collapse: collapse;
 	background-color: #fff;
 	font-size: 0.9rem; /* Giảm nhẹ font chữ bảng */
@@ -346,7 +348,7 @@ td {
 	word-wrap: break-word;
 	border: 1px solid #ddd;
 	text-align: center;
-	padding: 7px;
+	padding: 7px 5px;
 }
 
 th {
@@ -358,6 +360,54 @@ th {
 	td:last-child, th:last-child {
 		text-align: center; /* Căn giữa cột cuối (thường là checkbox/action) */
 	}
+
+#search-results table colgroup col:nth-child(1) {
+	width: 20%;
+}
+
+#search-results table colgroup col:nth-child(2) {
+	width: 20%;
+}
+
+#search-results table colgroup col:nth-child(3) {
+	width: 33%;
+}
+
+#search-results table colgroup col:nth-child(4) {
+	width: 17%;
+}
+
+#search-results table colgroup col:nth-child(5) {
+	width: 10%;
+}
+
+#report-results table colgroup col:nth-child(1) {
+	width: 15%;
+}
+
+#report-results table colgroup col:nth-child(2) {
+	width: 15%;
+}
+
+#report-results table colgroup col:nth-child(3) {
+	width: 28%;
+}
+
+#report-results table colgroup col:nth-child(4) {
+	width: 18%;
+}
+
+#report-results table colgroup col:nth-child(5) {
+	width: 8%;
+}
+
+#report-results table colgroup col:nth-child(6) {
+	width: 8%;
+}
+
+#report-results table colgroup col:nth-child(7) {
+	width: 8%;
+}
 
 
 /* --- Checkbox điểm danh --- */
@@ -710,7 +760,7 @@ header,
 
 	table {
 		table-layout:fixed;
-		min-width: 0; /* Cho phép bảng co lại hoàn toàn nếu cần */
+		width: 100%;
 		font-size: 0.7rem; /* Giảm font bảng thêm */
 		margin-top: 10px;
 	}
@@ -718,12 +768,59 @@ header,
 	th, td {
 		padding: 6px 2px; /* Giảm padding ô */
 	}
-	/* Có thể ẩn một số cột không quan trọng trên mobile nếu cần */
-	/* th:nth-child(3), td:nth-child(3) { display: none; } */
-	th:nth-child(1), 
-	td:nth-child(1) {
+
+	/* Đảm bảo bảng luôn chiếm đầy 100% chiều rộng */
+	#report-results table, #search-results table {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+
+	/* Ẩn cột 1 ở bảng tìm kiếm và Ẩn cột 1, cột 4 ở bảng báo cáo (giả sử bạn dùng cả #search-results và #report-results) */
+	#report-results th:nth-child(1),
+	#report-results td:nth-child(1),
+	#report-results th:nth-child(4),
+	#report-results td:nth-child(4) {
 		display: none;
 	}
+
+	#search-results th:nth-child(1),
+	#search-results td:nth-child(1) {
+		display: none;
+	}
+	/* Đặt lại width cho các cột còn lại theo lớp đã gán cho báo cáo */
+	/* Với báo cáo: thứ tự hiển thị sau khi ẩn là cột thứ 2, cột thứ 3, sau đó cột thứ 5, thứ 6, thứ 7 */
+	#report-results th.col-20, #report-results td.col-20 {
+		width: 20% !important;
+	}
+
+	#report-results th.col-44, #report-results td.col-44 {
+		width: 44% !important;
+	}
+
+	#report-results th.col-12, #report-results td.col-12 {
+		width: 12% !important;
+	}
+
+	/* Nếu có bảng tìm kiếm sử dụng cấu trúc tương tự, áp dụng tương tự nếu cần. */
+
+	#search-results th.col-21, #search-results td.col-21 {
+		width: 20% !important;
+	}
+
+	#search-results th.col-45, #search-results td.col-45 {
+		width: 44% !important;
+	}
+
+	#search-results th.col-27, #search-results td.col-27 {
+		width: 27% !important;
+	}
+
+	#search-results th.col-14, #search-results td.col-14 {
+		width: 14% !important;
+	}
+
+
 
 	.pagination-btn {
 		font-size: 0.6rem;
@@ -751,3 +848,7 @@ header,
 			border-width: 0 1.5px 1.5px 0;
 		}
 }
+
+
+
+
