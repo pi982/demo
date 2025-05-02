@@ -497,7 +497,7 @@ th {
 		/* border-left: 5px solid var(--error-color); */
 	}
 	.modal-content.status {
-		color: var(--error-color);
+		color: var(--primary-color);
 		/* border-left: 5px solid var(--error-color); */
 	}
 
@@ -756,7 +756,7 @@ header,
 	/* Nếu có bảng tìm kiếm sử dụng cấu trúc tương tự, áp dụng tương tự nếu cần. */
 
 	#search-results th.col-21, #search-results td.col-21 {
-		width: 18% !important;
+		width: 18.5% !important;
 	}
 
 	#search-results th.col-45, #search-results td.col-45 {
@@ -768,7 +768,7 @@ header,
 	}
 
 	#search-results th.col-14, #search-results td.col-14 {
-		width: 12% !important;
+		width: 11.5% !important;
 	}
 
 
