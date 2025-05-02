@@ -680,6 +680,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         return Math.floor(availableHeight / rowHeight);
     }
+
+    window.addEventListener("resize", () => {
+        // Cập nhật lại bảng tìm kiếm và báo cáo khi kích thước thay đổi
+        renderTablePage();
+        // Nếu bạn có hàm render cho báo cáo, cũng gọi renderReportTable();
+    });
+
     // ---------------------
     // EVENT LISTENER TÌM KIẾM (SEARCH)
     // ---------------------
@@ -790,8 +797,8 @@ document.addEventListener("DOMContentLoaded", function () {
         <thead>
           <tr>
             <th>ID</th>
-            <th class="col-21" >Tên Thánh</th>
-            <th class="col-45" >Họ và Tên</th>
+            <th class="col-21">Tên Thánh</th>
+            <th class="col-45">Họ và Tên</th>
             <th class="col-27">Lớp</th>
             <th class="col-14">Chọn</th>
           </tr>
