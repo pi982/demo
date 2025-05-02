@@ -497,11 +497,9 @@ th {
 		/* border-left: 5px solid var(--error-color); */
 	}
 	.modal-content.status {
-		color: var(--primary-color);
+		color: var(--warning-color);
 		/* border-left: 5px solid var(--error-color); */
 	}
-
-
 
 .modal-close {
 	position: absolute;
