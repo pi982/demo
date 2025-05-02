@@ -251,11 +251,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 openAttendanceDB().then(db => {
                     const transaction = db.transaction("students", "readwrite");
                     const store = transaction.objectStore("students");
-                    data.forEach(student => {
-                        store.put(student);
-                    });
-                    console.log("Đã tải dữ liệu data sheet vào IndexedDB.");
-                    //showModal("Đã tải xong dữ liệu", "success");
+
+                    // Xoá tất cả dữ liệu cũ trong store
+                    const clearRequest = store.clear();
+                    clearRequest.onsuccess = function () {
+                        console.log("Đã xoá dữ liệu cũ trong IndexedDB.");
+                        // Sau khi xoá dữ liệu cũ, chèn dữ liệu mới vào IndexedDB
+                        data.forEach(student => {
+                            store.put(student);
+                        });
+                        console.log("Đã tải dữ liệu data sheet mới vào IndexedDB.");
+                        // Bạn có thể gọi showModal nếu cần để thông báo tải xong dữ liệu
+                        // showModal("Đã tải xong dữ liệu", "success");
+                    };
+                    clearRequest.onerror = function (event) {
+                        console.error("Lỗi khi xoá dữ liệu cũ:", event.target.errorCode);
+                    };
                 }).catch(err => console.error("Lỗi mở DB:", err));
             })
             .catch(error => console.error("Lỗi fetch data sheet:", error));
@@ -608,6 +619,8 @@ document.addEventListener("DOMContentLoaded", function () {
         btnReport.classList.remove("active");
         document.getElementById("report-query").value = "";
         document.getElementById("report-results").innerHTML = "";
+        document.getElementById("search-query").value = "";
+        document.getElementById("search-results").innerHTML = "";
         document
             .querySelectorAll("#status-dropdown .status-box")
             .forEach((el) => el.classList.remove("active"));
@@ -1282,4 +1295,5 @@ document.addEventListener("DOMContentLoaded", function () {
             hasNotifiedOffline = true;
         }
     });
+
 });
