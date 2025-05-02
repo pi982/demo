@@ -742,25 +742,25 @@ header,
 	/* Đặt lại width cho các cột còn lại theo lớp đã gán cho báo cáo */
 	/* Với báo cáo: thứ tự hiển thị sau khi ẩn là cột thứ 2, cột thứ 3, sau đó cột thứ 5, thứ 6, thứ 7 */
 	#report-results th.col-20, #report-results td.col-20 {
-		width: 21% !important;
+		width: 18.5% !important;
 	}
 
 	#report-results th.col-44, #report-results td.col-44 {
-		width: 46% !important;
+		width: 47% !important;
 	}
 
 	#report-results th.col-12, #report-results td.col-12 {
-		width: 11% !important;
+		width: 11.5% !important;
 	}
 
 	/* Nếu có bảng tìm kiếm sử dụng cấu trúc tương tự, áp dụng tương tự nếu cần. */
 
 	#search-results th.col-21, #search-results td.col-21 {
-		width: 20% !important;
+		width: 18% !important;
 	}
 
 	#search-results th.col-45, #search-results td.col-45 {
-		width: 45% !important;
+		width: 47% !important;
 	}
 
 	#search-results th.col-27, #search-results td.col-27 {
@@ -849,5 +849,3 @@ header,
 		width: 8%;
 	}
 }
-
-
