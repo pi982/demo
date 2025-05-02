@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("loginTimestamp")) {
         // Người dùng đã đăng nhập, ẩn form đăng nhập và hiển thị giao diện chính
@@ -54,7 +53,14 @@ document.addEventListener("DOMContentLoaded", function () {
         modal.classList.add("show");
 
         // Định nghĩa thời gian hiển thị dựa vào loại thông báo
-        const displayDuration = type === "status" ? 4000 : 1500; // "normal" tồn tại 5 giây, các loại khác 2 giây
+        let displayDuration;
+        if (type === "status") {
+            displayDuration = 4000;
+        } else if (type === "error") {
+            displayDuration = 2000;
+        } else {
+            displayDuration = 1500;
+        }
 
         // Sau khi thông báo được hiển thị, ẩn và xử lý thông báo kế tiếp
         setTimeout(() => {
@@ -181,6 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const records = req.result;
                 if (records.length === 0) {
                     console.log("Không có bản ghi offline cần đồng bộ");
+                    showModal("Không có bản ghi nào cần đồng bộ.", "status");
                     return;
                 }
                 // Gộp các bản ghi single và batch thành 1 mảng chung
@@ -212,16 +219,18 @@ document.addEventListener("DOMContentLoaded", function () {
                     .then(() => {
                         // Với no-cors, nếu promise được resolve, ta coi request đã được gửi thành công
                         console.log("Gửi thành công tất cả bản ghi offline");
-                        showModal("Gửi thành công tất cả bản ghi Offline", "success");
+                        showModal("Gửi thành công tất cả bản ghi Offline", "status");
                         clearOfflineAttendanceStore();
                     })
                     .catch(err => {
                         console.error("Lỗi khi đồng bộ các bản ghi offline:", err);
+                        showModal("Lỗi khi đồng bộ các bản ghi offline", "error");
                     });
             };
 
             req.onerror = () => {
                 console.error("Lỗi truy xuất bản ghi offline từ IndexedDB");
+                showModal("Lỗi truy xuất bản ghi Offline từ IndexedDB", "error");
             };
         }).catch(err => console.error(err));
     }
@@ -1285,7 +1294,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (navigator.serviceWorker && navigator.serviceWorker.controller) {
             navigator.serviceWorker.controller.postMessage({ action: 'offlineNotification' });
         } else {
-            new Notification("Mất kết nối", {
+            new Notification("Mất kết nối!", {
                 body: "Vào lại khi có mạng! Để đồng bộ dữ liệu.",
                 icon: "/images/icon.png",
                 tag: "offline-notification"
@@ -1309,4 +1318,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
-
