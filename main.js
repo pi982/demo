@@ -654,6 +654,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    const fixedRowsPerPage = calculateRowsPerPage();
     function calculateRowsPerPage() {
         // Đặt một breakpoint để phân biệt màn hình lớn và nhỏ,
         // ví dụ: nếu window.innerWidth >= 768px thì xem như màn hình to, còn nhỏ hơn xem như màn hình nhỏ.
@@ -781,7 +782,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // ---------------------
     function renderTablePage() {
         const resultsDiv = document.getElementById("search-results");
-        const dynamicPageSize = calculateRowsPerPage();
+        const dynamicPageSize = fixedRowsPerPage; 
         const start = (currentPage - 1) * dynamicPageSize;
         const end = start + dynamicPageSize;
         const pageData = searchData.slice(start, end);
@@ -1015,7 +1016,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function renderReportTable() {
         const resultsDiv = document.getElementById("report-results");
-        const dynamicPageSize = calculateRowsPerPage();
+        const dynamicPageSize = fixedRowsPerPage; 
         const start = (currentReportPage - 1) * dynamicPageSize;
         const end = start + dynamicPageSize;
         const pageData = reportData.slice(start, end);
@@ -1276,6 +1277,5 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
-
 
 
