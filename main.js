@@ -782,6 +782,13 @@ document.addEventListener("DOMContentLoaded", function () {
     // ---------------------
     function renderTablePage() {
         const resultsDiv = document.getElementById("search-results");
+
+        // Nếu không có dữ liệu, ẩn bảng (chỉ reset nội dung của div)
+        if (!searchData || searchData.length === 0) {
+            resultsDiv.innerHTML = "";
+            return;
+        }
+
         const dynamicPageSize = fixedRowsPerPage; 
         const start = (currentPage - 1) * dynamicPageSize;
         const end = start + dynamicPageSize;
