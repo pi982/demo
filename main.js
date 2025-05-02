@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("loginTimestamp")) {
         // Người dùng đã đăng nhập, ẩn form đăng nhập và hiển thị giao diện chính
@@ -1259,11 +1260,22 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 1000);
     }
 
-       if (Notification.permission !== 'granted') {
-        Notification.requestPermission().then(function (permission) {
-            console.log('Quyền thông báo:', permission);
-        });
+    // Kiểm tra nếu trình duyệt hỗ trợ Notification và trạng thái hiện tại là "default"
+    if ("Notification" in window && Notification.permission === "default") {
+        // Định nghĩa hàm xử lý khi người dùng click vào bất kỳ điểm nào trên trang
+        const handleUserClick = function () {
+            // Gọi requestPermission() khi có hành động click (đảm bảo user gesture hợp lệ)
+            Notification.requestPermission().then(function (permission) {
+                console.log("Quyền thông báo:", permission);
+            });
+            // Sau khi đã gọi, xóa sự kiện này để không bị gọi lại nhiều lần
+            document.removeEventListener("click", handleUserClick);
+        };
+
+        // Gán sự kiện click cho toàn bộ tài liệu
+        document.addEventListener("click", handleUserClick);
     }
+
 
     // Biến cờ cục bộ để kiểm tra xem đã gửi thông báo offline hay chưa (cho phiên này)
     let hasNotifiedOffline = false;
@@ -1297,3 +1309,4 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
