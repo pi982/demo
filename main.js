@@ -858,7 +858,7 @@ document.addEventListener("DOMContentLoaded", function () {
             tableHtml += `<button class="pagination-btn" data-page="${currentPage + 1}">Next</button>`;
         }
         tableHtml += `</div>`;
-        tableHtml += `<div style="margin-top:-35px; text-align:center;">
+        tableHtml += `<div style="margin-top:-40px; text-align:center;">
                     <button id="confirm-attendance" class="confirm-attendance-btn">Xác nhận</button>
                   </div>`;
         resultsDiv.innerHTML = tableHtml;
@@ -1096,7 +1096,7 @@ document.addEventListener("DOMContentLoaded", function () {
             tableHtml += `<button class="pagination-btn" data-page="${currentReportPage + 1}">Next</button>`;
         }
         tableHtml += `</div>`;
-        tableHtml += `<div style="margin-top:-35px; text-align:center;">
+        tableHtml += `<div style="margin-top:-40px; text-align:center;">
                     <button id="print-report" class=" confirm-attendance-btn" style="padding: 5px 10px;"> In </button>
                   </div>`;
         resultsDiv.innerHTML = tableHtml;
@@ -1285,7 +1285,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener("click", handleUserClick);
     }
 
-
     // Biến cờ cục bộ để kiểm tra xem đã gửi thông báo offline hay chưa (cho phiên này)
     let hasNotifiedOffline = false;
 
@@ -1301,7 +1300,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
     }
-
     // Kiểm tra trạng thái mạng ngay khi trang vừa load
     if (!navigator.onLine && !hasNotifiedOffline) {
         sendOfflineNotification();
@@ -1316,5 +1314,4 @@ document.addEventListener("DOMContentLoaded", function () {
             hasNotifiedOffline = true;
         }
     });
-
 });
