@@ -1282,7 +1282,4 @@ document.addEventListener("DOMContentLoaded", function () {
             hasNotifiedOffline = true;
         }
     });
-
 });
-
-
