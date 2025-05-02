@@ -468,8 +468,7 @@ th {
 	text-align: center;
 	position: relative;
 	box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-	width: 40%;
-	padding: 10px 5px;
+	padding: 10px 15px;
 }
 
 	.modal-content p,
@@ -500,6 +499,8 @@ th {
 		color: var(--warning-color);
 		/* border-left: 5px solid var(--error-color); */
 	}
+
+
 
 .modal-close {
 	position: absolute;
@@ -693,8 +694,7 @@ header,
 
 	/* Kích thước font trong dropdown và modal */
 	.modal-content {
-		width: 95%;
-		padding: 6px;
+		padding: 6px 10px;
 	}
 
 		.modal-content p,
