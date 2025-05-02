@@ -128,11 +128,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchCache = new Map();
     let searchData = [];
     let currentPage = 1;
-    const pageSize = 15;
     let reportData = [];
     let currentReportPage = 1;
-    const reportPageSize = 15;
     let selectedStudents = {};
+
+
 
     // ========== Offline Helper Functions ==========
     function openAttendanceDB() {
@@ -654,6 +654,39 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    function calculateRowsPerPage() {
+        // Đặt một breakpoint để phân biệt màn hình lớn và nhỏ,
+        // ví dụ: nếu window.innerWidth >= 768px thì xem như màn hình to, còn nhỏ hơn xem như màn hình nhỏ.
+        let headerHeight, footerHeight, additionalSpacing, rowHeight;
+
+        if (window.innerWidth >= 768) {
+            // Cài đặt cho màn hình lớn
+            headerHeight = 400;      // ví dụ: 400px cho header
+            footerHeight = 40;       // ví dụ: 40px cho vùng điều khiển dưới cùng
+            additionalSpacing = 10;  // khoảng đệm thêm
+            rowHeight = 35;          // chiều cao mỗi hàng là 35px
+        } else {
+            // Cài đặt cho màn hình nhỏ
+            headerHeight = 380;      // giảm chiều cao header cho điện thoại (ví dụ: 300px)
+            footerHeight = 30;       // giảm chiều cao footer (ví dụ: 30px)
+            additionalSpacing = 10;   // giảm khoảng đệm
+            rowHeight = 30;          // giảm chiều cao mỗi hàng (ví dụ: 30px)
+        }
+
+        // Tính không gian sẵn có cho bảng dựa vào chiều cao cửa sổ sau khi loại trừ header, footer và khoảng đệm
+        const availableHeight = window.innerHeight - headerHeight - footerHeight - additionalSpacing;
+
+        // Tính số hàng tối đa có thể hiển thị
+
+        return Math.floor(availableHeight / rowHeight);
+    }
+
+    window.addEventListener("resize", () => {
+        // Cập nhật lại bảng tìm kiếm và báo cáo khi kích thước thay đổi
+        renderTablePage();
+        // Nếu bạn có hàm render cho báo cáo, cũng gọi renderReportTable();
+    });
+
     // ---------------------
     // EVENT LISTENER TÌM KIẾM (SEARCH)
     // ---------------------
@@ -748,24 +781,26 @@ document.addEventListener("DOMContentLoaded", function () {
     // ---------------------
     function renderTablePage() {
         const resultsDiv = document.getElementById("search-results");
-        const start = (currentPage - 1) * pageSize;
-        const end = start + pageSize;
+        const dynamicPageSize = calculateRowsPerPage();
+        const start = (currentPage - 1) * dynamicPageSize;
+        const end = start + dynamicPageSize;
         const pageData = searchData.slice(start, end);
         let tableHtml = `
       <table>
         <colgroup>
-          <col style="width: 20%;">
-          <col style="width: 45%;">
-          <col style="width: 22%;">
-          <col style="width: 13%;">
+            <col>
+            <col>
+            <col>
+            <col>
+            <col>
         </colgroup>
         <thead>
           <tr>
             <th>ID</th>
-            <th>Tên Thánh</th>
-            <th>Họ và Tên</th>
-            <th>Lớp</th>
-            <th>Chọn</th>
+            <th class="col-21" >Tên Thánh</th>
+            <th class="col-45" >Họ và Tên</th>
+            <th class="col-27">Lớp</th>
+            <th class="col-14">Chọn</th>
           </tr>
         </thead>
         <tbody>`;
@@ -782,7 +817,7 @@ document.addEventListener("DOMContentLoaded", function () {
         </tr>`;
         });
         tableHtml += `</tbody></table>`;
-        const totalPages = Math.ceil(searchData.length / pageSize);
+        const totalPages = Math.ceil(searchData.length / dynamicPageSize);
         tableHtml += `<div id="pagination" style="text-align:right; margin-top:12px;">`;
         if (currentPage > 1) {
             tableHtml += `<button class="pagination-btn" data-page="${currentPage - 1}">Prev</button>`;
@@ -980,29 +1015,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function renderReportTable() {
         const resultsDiv = document.getElementById("report-results");
-        const start = (currentReportPage - 1) * reportPageSize;
-        const end = start + reportPageSize;
+        const dynamicPageSize = calculateRowsPerPage();
+        const start = (currentReportPage - 1) * dynamicPageSize;
+        const end = start + dynamicPageSize;
         const pageData = reportData.slice(start, end);
         let tableHtml = `
       <table>
         <colgroup>
-          <col style="width: 15%;">
-          <col style="width: 35%;">
-          <col style="width: 20%;">
-          <col style="width: 10%;">
-          <col style="width: 10%;">
-          <col style="width: 10%;">
+            <col>
+            <col>
+            <col>
+            <col>
+            <col>
+            <col>
+            <col>
         </colgroup>
         <thead>
-          <tr>
+        <tr>
             <th>ID</th>
-            <th>Tên Thánh</th>
-            <th>Họ và Tên</th>
+            <th class="col-20">Tên Thánh</th>
+            <th class="col-44">Họ và Tên</th>
             <th>Lớp</th>
-            <th>Đi lễ</th>
-            <th>Đi học</th>
-            <th>Khác</th>
-          </tr>
+            <th class="col-12">Đi lễ</th>
+            <th class="col-12">Đi học</th>
+            <th class="col-12">Khác</th>
+        </tr>
         </thead>
         <tbody>`;
         pageData.forEach((item) => {
@@ -1018,7 +1055,7 @@ document.addEventListener("DOMContentLoaded", function () {
         </tr>`;
         });
         tableHtml += `</tbody></table>`;
-        const totalPages = Math.ceil(reportData.length / reportPageSize);
+        const totalPages = Math.ceil(reportData.length / dynamicPageSize);
         tableHtml += `<div id="report-pagination" style="text-align:right; margin-top:12px;">`;
         if (currentReportPage > 1) {
             tableHtml += `<button class="pagination-btn" data-page="${currentReportPage - 1}">Prev</button>`;
@@ -1238,5 +1275,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-
 });
+
+
+
