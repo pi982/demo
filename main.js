@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Định nghĩa thời gian hiển thị dựa vào loại thông báo
         let displayDuration;
         if (type === "status") {
-            displayDuration = 4000;
+            displayDuration = 3000;
         } else if (type === "error") {
             displayDuration = 2000;
         } else {
@@ -138,8 +138,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let reportData = [];
     let currentReportPage = 1;
     let selectedStudents = {};
-
-
 
     // ========== Offline Helper Functions ==========
     function openAttendanceDB() {
