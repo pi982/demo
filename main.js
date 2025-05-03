@@ -432,7 +432,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
     function onScanFailure(error) {
-        console.warn("Lỗi quét QR:", error);
+        //console.warn("Lỗi quét QR:", error);
     }
     function fadeIn(element) {
         element.style.opacity = 0;
@@ -954,7 +954,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         saveAttendanceRecord(batchRecord);
 
                     }
-
 
                     // Reset giao diện
                     document.getElementById("search-query").value = "";
