@@ -74,7 +74,7 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('message', event => {
     if (event.data && event.data.action === 'offlineNotification') {
-        self.registration.showNotification("Có bản ghi", {
+        self.registration.showNotification("Có bản Ghi Offline", {
             body: "Vào lại khi có mạng! Để đồng bộ dữ liệu.",
             icon: "/images/icon.png",
             tag: "offline-notification"
