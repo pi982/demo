@@ -76,7 +76,7 @@ self.addEventListener('message', event => {
     if (event.data && event.data.action === 'offlineNotification') {
         self.registration.showNotification("Có bản Ghi Offline", {
             body: "Vào lại khi có mạng! Để đồng bộ dữ liệu.",
-            icon: "/images/icon.png",
+            icon: "/demo/images/icon.png",
             tag: "offline-notification"
         });
     } else {  // Nếu điều kiện không thỏa mãn
