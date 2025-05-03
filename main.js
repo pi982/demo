@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("loginTimestamp")) {
         // Người dùng đã đăng nhập, ẩn form đăng nhập và hiển thị giao diện chính
@@ -104,7 +105,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(data => {
                 if (data.status === "success") {
                     // Nếu đăng nhập thành công, hiển thị thông báo và chuyển giao diện
-                    showModal("Đăng nhập thành công", "success");
                     localStorage.setItem("loginTimestamp", new Date().getTime());
                     document.getElementById("login-container").style.display = "none";
                     document.querySelector(".mode-toggle").style.display = "flex";
@@ -139,6 +139,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentReportPage = 1;
     let selectedStudents = {};
 
+
+
     // ========== Offline Helper Functions ==========
     function openAttendanceDB() {
         return new Promise((resolve, reject) => {
@@ -159,6 +161,8 @@ document.addEventListener("DOMContentLoaded", function () {
             request.onsuccess = () => resolve(request.result);
         });
     }
+    // Biến cờ cục bộ để kiểm tra xem đã gửi thông báo offline hay chưa (cho phiên này)
+    let hasNotifiedOffline = false;
 
     function saveAttendanceRecord(record) {
         openAttendanceDB().then(db => {
@@ -167,6 +171,12 @@ document.addEventListener("DOMContentLoaded", function () {
             const req = store.add(record);
             req.onsuccess = () => {
                 console.log("Đã lưu điểm danh Offline:", record);
+                // Chỉ hiển thị modal nếu chưa được hiển thị trong phiên này
+                if (!hasNotifiedOffline) {
+                    showModal("Có bản ghi Offline", "status");
+                    sendOfflineNotification();
+                    hasNotifiedOffline = true;
+                }
             };
             req.onerror = (err) => {
                 console.error("Lỗi lưu điểm danh offline:", err);
@@ -185,7 +195,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 const records = req.result;
                 if (records.length === 0) {
                     console.log("Không có bản ghi offline cần đồng bộ");
-                    showModal("Không có bản ghi nào cần đồng bộ.", "status");
                     return;
                 }
                 // Gộp các bản ghi single và batch thành 1 mảng chung
@@ -296,7 +305,7 @@ document.addEventListener("DOMContentLoaded", function () {
         runOnlineTasks();
     } else {
         // Nếu không có mạng ngay từ đầu, hiển thị thông báo offline.
-        showModal("Vào lại khi có mạng! Để đồng bộ dữ liệu.", "status");
+        showModal("Bạn đang Offline", "status");
     }
 
     window.addEventListener("online", () => {
@@ -306,9 +315,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Lắng nghe sự kiện 'offline': thông báo khi mất kết nối
     window.addEventListener("offline", () => {
-        showModal("Vào lại khi có mạng! Để đồng bộ dữ liệu.", "status");
+        showModal("Bạn đang Offline", "status");
         // (Tùy chọn) Gọi hàm gửi notification
-        sendOfflineNotification && sendOfflineNotification();
     });
 
 
@@ -1283,27 +1291,11 @@ document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener("click", handleUserClick);
     }
 
-    // Biến cờ cục bộ để kiểm tra xem đã gửi thông báo offline hay chưa (cho phiên này)
-    let hasNotifiedOffline = false;
-
     // Hàm gửi thông điệp đến Service Worker để hiển thị thông báo offline
     function sendOfflineNotification() {
         if (navigator.serviceWorker && navigator.serviceWorker.controller) {
             navigator.serviceWorker.controller.postMessage({ action: 'offlineNotification' });
-        } 
-    }
-    // Kiểm tra trạng thái mạng ngay khi trang vừa load
-    if (!navigator.onLine && !hasNotifiedOffline) {
-        sendOfflineNotification();
-        hasNotifiedOffline = true;
+        }
     }
 
-    // Lắng nghe sự kiện 'offline' (trong quá trình làm việc trên trang)
-    window.addEventListener('offline', function () {
-        console.log("Offline: Mất kết nối Internet");
-        if (!hasNotifiedOffline) {
-            sendOfflineNotification();
-            hasNotifiedOffline = true;
-        }
-    });
 });
