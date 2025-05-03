@@ -10,9 +10,6 @@ const urlsToCache = [
     '/demo/images/icon.png'
 ];
 
-// Khai báo biến cờ ở phạm vi toàn cục của Service Worker
-let hasShownOfflineNotification = false;
-
 self.addEventListener('install', event => {
     console.log('Service Worker đang được cài đặt...');
     event.waitUntil(
@@ -75,20 +72,15 @@ self.addEventListener('activate', event => {
     );
 });
 
-// Lắng nghe message từ main.js để hiển thị thông báo offline (chỉ gửi một lần)
 self.addEventListener('message', event => {
     if (event.data && event.data.action === 'offlineNotification') {
-        // Kiểm tra biến cờ: chỉ hiển thị thông báo nếu chưa hiển thị lần nào
-        if (!hasShownOfflineNotification) {
-            self.registration.showNotification("Có bản Ghi cần gửi", {
-                body: "Vào lại khi có mạng! Để gửi bản Ghi Offline.",
-                icon: "/demo/images/icon.png",
-                tag: "offline-notification"
-            });
-            hasShownOfflineNotification = true;
-        } else {
-            console.log("Thông báo offline đã được hiển thị rồi.");
-        }
+        self.registration.showNotification("Có bản ghi", {
+            body: "Vào lại khi có mạng! Để đồng bộ dữ liệu.",
+            icon: "/images/icon.png",
+            tag: "offline-notification"
+        });
+    } else {  // Nếu điều kiện không thỏa mãn
+        console.log("Thông báo offline đã được hiển thị rồi.");
     }
 });
 
