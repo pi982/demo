@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("loginTimestamp")) {
         // Người dùng đã đăng nhập, ẩn form đăng nhập và hiển thị giao diện chính
@@ -173,7 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log("Đã lưu điểm danh Offline:", record);
                 // Chỉ hiển thị modal nếu chưa được hiển thị trong phiên này
                 if (!hasNotifiedOffline) {
-                    showModal("Có bản ghi Offline", "status");
+                    showModal("Có bản Ghi Offline - Vào lại khi có mạng!\nĐể đồng bộ dữ liệu", "status");
                     sendOfflineNotification();
                     hasNotifiedOffline = true;
                 }
@@ -1297,5 +1296,5 @@ document.addEventListener("DOMContentLoaded", function () {
             navigator.serviceWorker.controller.postMessage({ action: 'offlineNotification' });
         }
     }
-
 });
+
