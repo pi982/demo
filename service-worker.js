@@ -80,8 +80,8 @@ self.addEventListener('message', event => {
     if (event.data && event.data.action === 'offlineNotification') {
         // Kiểm tra biến cờ: chỉ hiển thị thông báo nếu chưa hiển thị lần nào
         if (!hasShownOfflineNotification) {
-            self.registration.showNotification("Mất kết nối !", {
-                body: "Vào lại khi có mạng! Để đồng bộ dữ liệu.",
+            self.registration.showNotification("Có bản Ghi cần gửi", {
+                body: "Vào lại khi có mạng! Để gửi bản Ghi Offline.",
                 icon: "/demo/images/icon.png",
                 tag: "offline-notification"
             });
