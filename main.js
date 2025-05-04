@@ -413,7 +413,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let isScanning = false;
     const html5QrCode = new Html5Qrcode("qr-scanner");
     const qrConfig = {
-      fps: 20,
+      fps: 15,
       qrbox: function (viewfinderWidth, viewfinderHeight) {
         let width, height, size;
         if (viewfinderWidth > 1500) {
