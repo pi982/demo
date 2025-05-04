@@ -419,16 +419,16 @@ document.addEventListener("DOMContentLoaded", function () {
         if (viewfinderWidth > 1500) {
           width = viewfinderWidth * 0.4;
           height = viewfinderHeight * 0.8;
-          if (width < 250) width = 250;
-          if (height < 200) height = 200;
+          if (width < 250) width = 200;
+          if (height < 200) height = 180;
         } else {
           width = viewfinderWidth * 0.4;
           height = viewfinderHeight * 0.5;
-          if (width < 250) width = 250;
-          if (height < 200) height = 200;
+          if (width < 250) width = 200;
+          if (height < 200) height = 180;
         }
         size = Math.min(width, height);
-        const minSize = Math.max(250, 200);
+        const minSize = Math.max(200, 180);
         if (size < minSize) {
           size = minSize;
         }
