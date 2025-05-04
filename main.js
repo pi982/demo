@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log("Đã lưu điểm danh Offline:", record);
                 // Chỉ hiển thị modal nếu chưa được hiển thị trong phiên này
                 if (!hasNotifiedOffline) {
-                    showModal("Bản Ghi Offline - Vào lại ứng dụng khi có mạng!\nĐể gửi điểm danh.", "status");
+                    showModal("Bản Ghi Offline - Vào lại App khi có mạng!\nĐể gửi điểm danh.", "status");
                     sendOfflineNotification();
                     hasNotifiedOffline = true;
                 }
@@ -303,7 +303,7 @@ document.addEventListener("DOMContentLoaded", function () {
         runOnlineTasks();
     } else {
         // Nếu không có mạng ngay từ đầu, hiển thị thông báo offline.
-        showModal("Bạn đang Offline", "status");
+        showModal("Bạn đang Offline!", "status");
     }
 
     window.addEventListener("online", () => {
@@ -313,11 +313,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Lắng nghe sự kiện 'offline': thông báo khi mất kết nối
     window.addEventListener("offline", () => {
-        showModal("Bạn đang Offline", "status");
+        showModal("Bạn đang Offline!", "status");
         // (Tùy chọn) Gọi hàm gửi notification
     });
-
-
 
     function normalizeText(text) {
         if (!text) return "";
