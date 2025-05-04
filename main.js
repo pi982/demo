@@ -162,7 +162,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     // Biến cờ cục bộ để kiểm tra xem đã gửi thông báo offline hay chưa (cho phiên này)
     let hasNotifiedOffline = false;
-
     function saveAttendanceRecord(record) {
         openAttendanceDB().then(db => {
             const transaction = db.transaction("offlineAttendance", "readwrite");
@@ -172,7 +171,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log("Đã lưu điểm danh Offline:", record);
                 // Chỉ hiển thị modal nếu chưa được hiển thị trong phiên này
                 if (!hasNotifiedOffline) {
-                    showModal("Có bản Ghi Offline - Vào lại khi có mạng!\nĐể đồng bộ dữ liệu", "status");
+                    showModal("Bản Ghi Offline - Vào lại ứng dụng khi có mạng!\nĐể gửi điểm danh.", "status");
                     sendOfflineNotification();
                     hasNotifiedOffline = true;
                 }
