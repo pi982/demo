@@ -1140,6 +1140,81 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    function renderReportTable() {
+        const resultsDiv = document.getElementById("report-results");
+        const dynamicPageSize = fixedRowsPerPage; 
+        const start = (currentReportPage - 1) * dynamicPageSize;
+        const end = start + dynamicPageSize;
+        const pageData = reportData.slice(start, end);
+        let tableHtml = `
+      <table>
+        <colgroup>
+            <col>
+            <col>
+            <col>
+            <col>
+            <col>
+            <col>
+            <col>
+        </colgroup>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th class="col-20">Tên Thánh</th>
+            <th class="col-44">Họ và Tên</th>
+            <th>Lớp</th>
+            <th class="col-12">Đi lễ</th>
+            <th class="col-12">Đi học</th>
+            <th class="col-12">Khác</th>
+        </tr>
+        </thead>
+        <tbody>`;
+        pageData.forEach((item) => {
+            tableHtml += `
+        <tr>
+          <td>${item.id}</td>
+          <td>${item.holyName}</td>
+          <td style="text-align: left;">${item.fullName}</td>
+          <td>${item.birthDate}</td>
+          <td>${item.percentDiLe || ""}</td>
+          <td>${item.percentDiHoc || ""}</td>
+          <td>${item.percentKhac || ""}</td>
+        </tr>`;
+        });
+        tableHtml += `</tbody></table>`;
+        const totalPages = Math.ceil(reportData.length / dynamicPageSize);
+        tableHtml += `<div id="report-pagination" style="text-align:right; margin-top:20px;">`;
+        if (currentReportPage > 1) {
+            tableHtml += `<button class="pagination-btn" data-page="${currentReportPage - 1}">Prev</button>`;
+        }
+        tableHtml += `<span class="pagination-info"> Page ${currentReportPage} / ${totalPages} </span>`;
+        if (currentReportPage < totalPages) {
+            tableHtml += `<button class="pagination-btn" data-page="${currentReportPage + 1}">Next</button>`;
+        }
+        tableHtml += `</div>`;
+        tableHtml += `<div style="margin-top:-40px; text-align:center;">
+                    <button id="print-report" class=" confirm-attendance-btn" style="padding: 5px 10px;"> In </button>
+                  </div>`;
+        resultsDiv.innerHTML = tableHtml;
+        document.querySelectorAll("#report-pagination .pagination-btn").forEach((btn) => {
+            btn.addEventListener("click", function () {
+                currentReportPage = parseInt(this.getAttribute("data-page"));
+                renderReportTable();
+            });
+        });
+        document.getElementById("print-report").addEventListener("click", function () {
+            printReport(reportData);
+            setTimeout(() => {
+                document.getElementById("report-query").value = "";
+                document.getElementById("report-results").innerHTML = "";
+                selectedStudents = {};
+                searchData = [];
+                searchCache.clear();
+                console.log("Dữ liệu báo cáo đã được làm mới sau khi in");
+            }, 1000);
+        });
+    }
+
     function printReport(data) {
         // Thiết lập thông tin header chung
         const uniqueClasses = Array.from(new Set(data.map(item => item.birthDate)));
@@ -1171,10 +1246,10 @@ document.addEventListener("DOMContentLoaded", function () {
             border-collapse: collapse;
             table-layout: fixed;
             font-size: 13px;
-            margin-top: 10px;
+            margin-top: 20px;
           }
           th, td {
-            padding: 5px;
+            padding: 5px 5px;
             box-sizing: border-box;
             border: 1px solid black;
             word-wrap: break-word;
@@ -1205,10 +1280,10 @@ document.addEventListener("DOMContentLoaded", function () {
           }
           @media (max-width: 600px) {
             table {
-              font-size: 11px;
+              font-size: 12px;
             }
             th, td {
-              padding: 5px;
+              padding: 6px 5px;
             }
           }
         </style>
@@ -1254,10 +1329,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 html += `
             <tr>
               <th colspan="13" class="header-cell">
-                <h1 style="margin:0; font-size:28px;">
+                <h1 style="margin-top:10px; font-size:30px;">
                   Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}
                 </h1>
-                <p style="margin:5px 0 0; font-size:18px;">Ngày: ${formattedDate}</p>
+                <p style="margin: 10px 0 20px 0 ; font-size:20px;">Ngày: ${formattedDate}</p>
               </th>
             </tr>
       `;
