@@ -1140,100 +1140,100 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    function printReport(data) {
-        const uniqueClasses = Array.from(new Set(data.map((item) => item.birthDate)));
-        const hasMultipleClasses = uniqueClasses.length > 1;
-        const headerClassText =
-            !hasMultipleClasses && data.length > 0 ? data[0].birthDate : "";
-        const today = new Date();
-        const formattedDate = today.toLocaleDateString("vi-VN");
-        const printWindow = window.open("", "In Báo cáo", "width=800,height=600");
-        let html = `
-        <html>
-        <head>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <title>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</title>
-            <style>
+function printReport(data) {
+    const uniqueClasses = Array.from(new Set(data.map((item) => item.birthDate)));
+    const hasMultipleClasses = uniqueClasses.length > 1;
+    const headerClassText = !hasMultipleClasses && data.length > 0 ? data[0].birthDate : "";
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString("vi-VN");
+    const printWindow = window.open("", "In Báo cáo", "width=800,height=600");
+    
+    let html = `
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</title>
+        <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 10px;
+            padding: 0;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        .header p {
+            margin: 5px 0 0;
+            font-size: 18px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            table-layout: fixed;
+            font-size: 13px;
+        }
+        th, td {
+            border: 1px solid black;
+            word-wrap: break-word;       /* hoặc overflow-wrap: break-word; */
+            white-space: normal;
+            padding: 6px;
+            text-align: center;
+        }
+        th {
+            font-weight: bold;
+        }
+        /* Thêm luật dưới để ép hiển thị đường viền trên của header cho mỗi trang in */
+        thead tr th {
+            border-top: 1px solid black;
+        }
+        td:last-child, th:last-child {
+            text-align: center;
+        }
+
+        @media print {
             body {
-                font-family: Arial, sans-serif;
-                margin: 10px;
-                padding: 0;
-            }
-            .header {
-                text-align: center;
-                margin-bottom: 10px;
-            }
-            .header h1 {
-                margin: 0;
-                font-size: 28px;
-            }
-            .header p {
-                margin: 5px 0 0;
-                font-size: 18px;
-            }
-
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-top: 10px;
-                table-layout: fixed;
-                font-size: 13px;
-            }
-            th, td {
-                border: 1px solid black;
-                word-wrap: break-word;       /* Hoặc overflow-wrap: break-word; */
-                white-space: normal;
-                padding: 6px;
-                text-align: center;
-
-            }
-            th {
-	            text-align: center; /* Giữ căn giữa cho header */
-	            font-weight: bold;
-            }
-
-	            td:last-child, th:last-child {
-		            text-align: center; 
-	            }
-
-            @media print {
-                body{
                 margin-left: 10px;
-                }
-                thead { display: table-header-group; }
-                tr { page-break-inside: avoid; }
             }
+            thead {
+                display: table-header-group;
+            }
+            /* Comment dòng này để tránh việc hàng cuối bị kéo dãn */
+            /* tr { page-break-inside: avoid; } */
+        }
 
-            @media (max-width: 600px) {
-              table { 
+        @media (max-width: 600px) {
+            table {
                 font-size: 11px;
                 table-layout: fixed;
                 width: 100%;
-                  }
-              th, td { 
-                  padding: 1px; 
-                  }
             }
+            th, td {
+                padding: 1px;
+            }
+        }
+        </style>
+    </head>
+    <body>
 
-            </style>
-        </head>
-        <body>
-
-            <div class="header">
-                <h1>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</h1>
-                <p>Ngày: ${formattedDate}</p>
-            </div>  
-            
-            <div class="content">
-            <table>
-                <colgroup>
-                <!-- Giả sử các cột đầu tiên A - E không cần thay đổi -->
+        <div class="header">
+            <h1>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</h1>
+            <p>Ngày: ${formattedDate}</p>
+        </div>
+        
+        <div class="content">
+        <table>
+            <colgroup>
                 <col style="width: 4%;">
                 <col style="width: 10%;">
                 <col style="width: 10%;">
                 <col style="width: 22%;">
-                
-                <!-- Các cột F đến M (tùy chỉnh số lượng và tỷ lệ phần trăm sao cho phù hợp) -->
                 <col style="width: 6%;">
                 <col style="width: 6%;">
                 <col style="width: 6%;">
@@ -1243,65 +1243,60 @@ document.addEventListener("DOMContentLoaded", function () {
                 <col style="width: 6%;">
                 <col style="width: 6%;">
                 <col style="width: 6%;">
-                </colgroup>
-                <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>ID</th>
-                    <th>Tên Thánh</th>
-                    <th>Họ và Tên</th>`;
-        /*if (hasMultipleClasses) {
-            html += `<th>Lớp</th>`;
-        }*/
-        html += `   <th>Đi lễ</th>
-                    <th>Vắng</th>
-                    <th>Đi học</th>
-                    <th>Vắng</th>
-                    <th>Đi</th>
-                    <th>Vắng</th>  
-                    <th>Đi lễ</th>
-                    <th>Đi học</th>
-                    <th>Khác</th>
-                </tr>
-                </thead>
-                <tbody>`;
-        data.forEach((item, index) => {
-            html += `<tr>
-                <td>${index + 1}</td>
-                <td>${item.id}</td>
-                <td>${item.holyName}</td>
-                <td style="text-align: left;">${item.fullName}</td>`;
-            /*if (hasMultipleClasses) {
-                html += `<td>${item.birthDate}</td>`;
-            }*/
-            html += `<td>${(item.colF !== null && item.colF !== undefined) ? item.colF : ""}</td>
-                <td>${(item.colG !== null && item.colG !== undefined) ? item.colG : ""}</td>
-                <td>${(item.colH !== null && item.colH !== undefined) ? item.colH : ""}</td>
-                <td>${(item.colI !== null && item.colI !== undefined) ? item.colI : ""}</td>
-                <td>${(item.colJ !== null && item.colJ !== undefined) ? item.colJ : ""}</td>
-                <td>${(item.colK !== null && item.colK !== undefined) ? item.colK : ""}</td>
-                <td>${item.percentDiLe || ""}</td>
-                <td>${item.percentDiHoc || ""}</td>
-                <td>${item.percentKhac || ""}</td>
-                </tr>`;
-        });
-        html += `
-                </tbody>
-            </table>
-            </div>
-        </body>
-        </html>`;
-        printWindow.document.write(html);
-        printWindow.document.close();
-        printWindow.focus();
-        // Gán sự kiện onafterprint để tự động đóng cửa sổ sau khi in
-        printWindow.onafterprint = function () {
-            printWindow.close();
-        };
-        setTimeout(() => {
-            printWindow.print();
-        }, 1000);
-    }
+            </colgroup>
+            <thead>
+            <tr>
+                <th>STT</th>
+                <th>ID</th>
+                <th>Tên Thánh</th>
+                <th>Họ và Tên</th>
+                <th>Đi lễ</th>
+                <th>Vắng</th>
+                <th>Đi học</th>
+                <th>Vắng</th>
+                <th>Đi</th>
+                <th>Vắng</th>
+                <th>Đi lễ</th>
+                <th>Đi học</th>
+                <th>Khác</th>
+            </tr>
+            </thead>
+            <tbody>`;
+    data.forEach((item, index) => {
+        html += `<tr>
+            <td>${index + 1}</td>
+            <td>${item.id}</td>
+            <td>${item.holyName}</td>
+            <td style="text-align: left;">${item.fullName}</td>
+            <td>${(item.colF !== null && item.colF !== undefined) ? item.colF : ""}</td>
+            <td>${(item.colG !== null && item.colG !== undefined) ? item.colG : ""}</td>
+            <td>${(item.colH !== null && item.colH !== undefined) ? item.colH : ""}</td>
+            <td>${(item.colI !== null && item.colI !== undefined) ? item.colI : ""}</td>
+            <td>${(item.colJ !== null && item.colJ !== undefined) ? item.colJ : ""}</td>
+            <td>${(item.colK !== null && item.colK !== undefined) ? item.colK : ""}</td>
+            <td>${item.percentDiLe || ""}</td>
+            <td>${item.percentDiHoc || ""}</td>
+            <td>${item.percentKhac || ""}</td>
+            </tr>`;
+    });
+    html += `
+            </tbody>
+        </table>
+        </div>
+    </body>
+    </html>`;
+    
+    printWindow.document.write(html);
+    printWindow.document.close();
+    printWindow.focus();
+    // Cửa sổ in tự động đóng sau khi in xong
+    printWindow.onafterprint = function () {
+        printWindow.close();
+    };
+    setTimeout(() => {
+        printWindow.print();
+    }, 1000);
+}
 
     // Kiểm tra nếu trình duyệt hỗ trợ Notification và trạng thái hiện tại là "default"
     if ("Notification" in window && Notification.permission === "default") {
