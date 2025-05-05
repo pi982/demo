@@ -1271,7 +1271,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
               .header h1 {
                 margin: 0;
-                font-size: 30px;
+                font-size: 40px;
               }
               .header p {
                 margin: 10px 0 20px 0;
@@ -1287,7 +1287,7 @@ document.addEventListener("DOMContentLoaded", function () {
               /* Khi in, lặp lại header của bảng trên mỗi trang */
               @media print {
                 body{
-                   margin: 0 10px;
+                   margin: 0;
                 }
                 thead {
                   display: table-header-group;
@@ -1300,11 +1300,11 @@ document.addEventListener("DOMContentLoaded", function () {
               @media (max-width: 600px) {
                 .header h1 {
                 margin: 0;
-                font-size: 28px;
+                font-size: 30px;
                 }
                 .header p {
-                margin: 5px 0 5px 0;
-                font-size: 18px;
+                margin: 10px 0 10px 0;
+                font-size: 20px;
                 }
                 table {
                   margin: 5px;
@@ -1314,7 +1314,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   
                 }
                 th, td {
-                  padding: 4.5px 4px;
+                  padding: 4.5px 5px;
                 }
               }
             </style>
