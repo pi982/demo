@@ -1312,7 +1312,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let currentIndex = 0;
         let page = 1;
         while (currentIndex < data.length) {
-            let rowsThisPage = (page === 1) ? 20 : 25 ;
+            let rowsThisPage = (page === 1) ? 22 : 25 ;
             let pageData = data.slice(currentIndex, currentIndex + rowsThisPage);
             currentIndex += rowsThisPage;
 
