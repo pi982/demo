@@ -1277,12 +1277,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 font-size: 20px;
                 font-weight: normal;
               }
-
                @page {
-                size: A4 landscape;
-                margin: 0 15mm 0mm 10mm;  /* trên, phải, dưới, trái */
-              }
-
+                  margin-top: 0mm;
+                  margin-right: 10mm;
+                  margin-bottom: 0mm;
+                  margin-left: 10mm;
+               }
               /* Khi in, lặp lại header của bảng trên mỗi trang */
               @media print {
                 thead {
@@ -1294,9 +1294,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
               }
               @media (max-width: 600px) {
-                body{
-                   margin: 0;
-                }
                 .header h1 {
                 margin: 0;
                 font-size: 28px;
