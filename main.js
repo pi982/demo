@@ -1156,7 +1156,7 @@ function printReport(data) {
         <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 10px;
+            margin: 15px;
             padding: 0;
         }
         .header {
@@ -1189,17 +1189,13 @@ function printReport(data) {
         th {
             font-weight: bold;
         }
-        /* Thêm luật dưới để ép hiển thị đường viền trên của header cho mỗi trang in */
-        thead tr th {
-            border-top: 1px solid black;
-        }
         td:last-child, th:last-child {
             text-align: center;
         }
 
         @media print {
             body {
-                margin-left: 10px;
+                margin-left: 15px;
             }
             thead {
                 display: table-header-group;
