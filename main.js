@@ -1299,7 +1299,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 font-size: 18px;
                 }
                 table {
-                  font-size: 12px;
+                  font-size: 13px;
                 }
                 th, td {
                   padding: 4px 5px;
