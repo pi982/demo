@@ -1289,6 +1289,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
               }
               @media (max-width: 600px) {
+                body{
+                margin: 5px;
+                }
                 .header h1 {
                 margin: 0;
                 font-size: 28px;
@@ -1301,7 +1304,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   font-size: 12px;
                 }
                 th, td {
-                  padding: 6px 5px;
+                  padding: 5px 5px;
                 }
               }
             </style>
