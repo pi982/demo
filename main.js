@@ -1304,7 +1304,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   font-size: 12px;
                 }
                 th, td {
-                  padding: 5px 5px;
+                  padding: 4.5px 5px;
                 }
               }
             </style>
