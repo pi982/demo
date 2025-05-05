@@ -1300,11 +1300,11 @@ document.addEventListener("DOMContentLoaded", function () {
               @media (max-width: 600px) {
                 .header h1 {
                 margin: 0;
-                font-size: 30px;
+                font-size: 28px;
                 }
                 .header p {
                 margin: 5px 0 5px 0;
-                font-size: 20px;
+                font-size: 18px;
                 }
                 table {
                   margin: 5px;
@@ -1314,7 +1314,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   
                 }
                 th, td {
-                  padding: 5px 5px;
+                  padding: 4.5px 4px;
                 }
               }
             </style>
