@@ -1245,7 +1245,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 width: 100%;
                 border-collapse: collapse;
                 table-layout: fixed;
-                font-size: 12.5px;
+                font-size: 13px;
                 margin-top: 20px;
               }
               th, td {
@@ -1276,6 +1276,7 @@ document.addEventListener("DOMContentLoaded", function () {
               .header p {
                 margin: 10px 0 20px 0;
                 font-size: 20px;
+                font-weight: normal;
               }
 
               /* Khi in, lặp lại header của bảng trên mỗi trang */
@@ -1298,7 +1299,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 font-size: 18px;
                 }
                 table {
-                  font-size: 11px;
+                  font-size: 12px;
                 }
                 th, td {
                   padding: 4px 5px;
@@ -1312,7 +1313,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let currentIndex = 0;
         let page = 1;
         while (currentIndex < data.length) {
-            let rowsThisPage = (page === 1) ? 22 : 25 ;
+            let rowsThisPage = (page === 1) ? 21 : 24 ;
             let pageData = data.slice(currentIndex, currentIndex + rowsThisPage);
             currentIndex += rowsThisPage;
 
