@@ -1237,7 +1237,6 @@ document.addEventListener("DOMContentLoaded", function () {
             <style>
               body {
                 font-family: Arial, sans-serif;
-                margin: 0 10px;
                 padding: 0;
               }
               table {
@@ -1310,7 +1309,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   
                 }
                 th, td {
-                  padding: 5px 5px;
+                  padding: 4.5px 5px;
                 }
               }
             </style>
