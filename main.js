@@ -1313,7 +1313,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   
                 }
                 th, td {
-                  padding: 4.7px 5px;
+                  padding: 4.6px 5px;
                 }
               }
             </style>
@@ -1324,7 +1324,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let currentIndex = 0;
         let page = 1;
         while (currentIndex < data.length) {
-            let rowsThisPage = (page === 1) ? 21 : 24 ;
+            let rowsThisPage = (page === 1) ? 21 : 25 ;
             let pageData = data.slice(currentIndex, currentIndex + rowsThisPage);
             currentIndex += rowsThisPage;
 
