@@ -1278,11 +1278,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 font-weight: normal;
               }
 
+               @page {
+                size: A4 landscape;
+                margin: 0 15mm 0mm 10mm;  /* trên, phải, dưới, trái */
+              }
+
               /* Khi in, lặp lại header của bảng trên mỗi trang */
               @media print {
-                body{
-                   margin: 0 10px;
-                }
                 thead {
                   display: table-header-group;
                 }
