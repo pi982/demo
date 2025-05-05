@@ -1151,12 +1151,12 @@ document.addEventListener("DOMContentLoaded", function () {
         let html = `
     <html>
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
         <title>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</title>
         <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 15px;
+            margin: 15px 10px,
             padding: 0;
         }
         .header {
@@ -1185,6 +1185,9 @@ document.addEventListener("DOMContentLoaded", function () {
             white-space: normal;
             padding: 6px;
             text-align: center;
+            line-height: 1.2;
+            min-height: 18px;  /* Điều chỉnh giá trị sao cho phù hợp */
+            vertical-align: middle;
         }
         th {
             font-weight: bold;
@@ -1196,13 +1199,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         @media print {
             body {
-                margin-left: 15px;
+                margin: 10px;
             }
             thead {
                 display: table-header-group;
             }
-            /* Comment dòng này để tránh việc hàng cuối bị kéo dãn */
-            tr { page-break-inside: avoid; }
         }
 
         @media (max-width: 600px) {
