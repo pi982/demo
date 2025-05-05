@@ -1190,9 +1190,6 @@ document.addEventListener("DOMContentLoaded", function () {
                   border: none;
                   text-align: center;
               }
-              .page-break {
-                  page-break-before: always;
-              }
               @media print {
                   body {
                       margin: 15px 10px;
@@ -1230,7 +1227,7 @@ document.addEventListener("DOMContentLoaded", function () {
       let currentIndex = 0;
       let page = 0;
       while (currentIndex < data.length) {
-        let rowsThisPage = (page === 0) ? 20 : 30;
+        let rowsThisPage = (page === 0) ? 20 : 20;
         let pageData = data.slice(currentIndex, currentIndex + rowsThisPage);
         currentIndex += rowsThisPage;
         page++;
