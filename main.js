@@ -1140,15 +1140,15 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-function printReport(data) {
-    const uniqueClasses = Array.from(new Set(data.map((item) => item.birthDate)));
-    const hasMultipleClasses = uniqueClasses.length > 1;
-    const headerClassText = !hasMultipleClasses && data.length > 0 ? data[0].birthDate : "";
-    const today = new Date();
-    const formattedDate = today.toLocaleDateString("vi-VN");
-    const printWindow = window.open("", "In Báo cáo", "width=800,height=600");
-    
-    let html = `
+    function printReport(data) {
+        const uniqueClasses = Array.from(new Set(data.map((item) => item.birthDate)));
+        const hasMultipleClasses = uniqueClasses.length > 1;
+        const headerClassText = !hasMultipleClasses && data.length > 0 ? data[0].birthDate : "";
+        const today = new Date();
+        const formattedDate = today.toLocaleDateString("vi-VN");
+        const printWindow = window.open("", "In Báo cáo", "width=800,height=600");
+
+        let html = `
     <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -1189,19 +1189,20 @@ function printReport(data) {
         th {
             font-weight: bold;
         }
+
         td:last-child, th:last-child {
             text-align: center;
         }
 
         @media print {
             body {
-                margin-left: 15px;
+                margin-left: 10px;
             }
             thead {
                 display: table-header-group;
             }
             /* Comment dòng này để tránh việc hàng cuối bị kéo dãn */
-            /* tr { page-break-inside: avoid; } */
+            tr { page-break-inside: avoid; }
         }
 
         @media (max-width: 600px) {
@@ -1211,7 +1212,7 @@ function printReport(data) {
                 width: 100%;
             }
             th, td {
-                padding: 1px;
+                padding: 5px 2px;
             }
         }
         </style>
@@ -1258,8 +1259,8 @@ function printReport(data) {
             </tr>
             </thead>
             <tbody>`;
-    data.forEach((item, index) => {
-        html += `<tr>
+        data.forEach((item, index) => {
+            html += `<tr>
             <td>${index + 1}</td>
             <td>${item.id}</td>
             <td>${item.holyName}</td>
@@ -1274,25 +1275,25 @@ function printReport(data) {
             <td>${item.percentDiHoc || ""}</td>
             <td>${item.percentKhac || ""}</td>
             </tr>`;
-    });
-    html += `
+        });
+        html += `
             </tbody>
         </table>
         </div>
     </body>
     </html>`;
-    
-    printWindow.document.write(html);
-    printWindow.document.close();
-    printWindow.focus();
-    // Cửa sổ in tự động đóng sau khi in xong
-    printWindow.onafterprint = function () {
-        printWindow.close();
-    };
-    setTimeout(() => {
-        printWindow.print();
-    }, 1000);
-}
+
+        printWindow.document.write(html);
+        printWindow.document.close();
+        printWindow.focus();
+        // Cửa sổ in tự động đóng sau khi in xong
+        printWindow.onafterprint = function () {
+            printWindow.close();
+        };
+        setTimeout(() => {
+            printWindow.print();
+        }, 1000);
+    }
 
     // Kiểm tra nếu trình duyệt hỗ trợ Notification và trạng thái hiện tại là "default"
     if ("Notification" in window && Notification.permission === "default") {
