@@ -1291,6 +1291,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   -webkit-page-break-inside: avoid;
                 }
               }
+              
               @media (max-width: 600px) {
                 .header h1 {
                 margin: 0;
@@ -1318,7 +1319,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let currentIndex = 0;
         let page = 1;
         while (currentIndex < data.length) {
-            let rowsThisPage = (page === 1) ? 21 : 24 ;
+            let rowsThisPage = (page === 1) ? 20 : 24 ;
             let pageData = data.slice(currentIndex, currentIndex + rowsThisPage);
             currentIndex += rowsThisPage;
 
