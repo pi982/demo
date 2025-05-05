@@ -1278,11 +1278,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 font-weight: normal;
               }
 
-              @page {
-                size: A4 landscape;
-                margin: 10mm; /* Bạn có thể tùy chỉnh margin theo nhu cầu */
-              }
-
               /* Khi in, lặp lại header của bảng trên mỗi trang */
               @media print {
                 body{
@@ -1297,6 +1292,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
               }
               @media (max-width: 600px) {
+                body{
+                   margin: 0;
+                }
                 .header h1 {
                 margin: 0;
                 font-size: 28px;
