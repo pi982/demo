@@ -1201,8 +1201,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             @media (max-width: 600px) {
               table { 
-                  font-size: 11px;
-                  border-collapse: separate;
+                font-size: 11px;
+                table-layout: fixed;
+                width: 100%;
+                /* Nếu không cần border-collapse khác, có thể giữ lại collapse */
+                border-collapse: collapse;
                   }
               th, td { 
                   padding: 1px; 
