@@ -1180,7 +1180,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             table, th, td {
                 font-size: 13px; /* Điều chỉnh giá trị này theo ý bạn */
-                box-sizing: border-box;
                 border: 0.5px solid black;
                 word-wrap: break-word;       /* Hoặc overflow-wrap: break-word; */
                 white-space: normal;
@@ -1202,10 +1201,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
             @media (max-width: 600px) {
               table { 
-                  font-size: 10px; 
+                  font-size: 11px;
+                  border-collapse: separate;
+                  border-spacing: 0;
                   }
               th, td { 
-                  padding: 2px; 
+                  padding: 1px; 
                   }
             }
 
