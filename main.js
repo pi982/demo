@@ -1245,7 +1245,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 width: 100%;
                 border-collapse: collapse;
                 table-layout: fixed;
-                font-size: 13px;
+                font-size: 12.5px;
                 margin-top: 20px;
               }
               th, td {
