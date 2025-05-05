@@ -1303,7 +1303,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 table {
                   table-layout: fixed;
                   width: 100%;
-                  font-size: 12.5px;
+                  font-size: 11.5px;
                 }
                 th, td {
                   padding: 4px 4px;
