@@ -1237,7 +1237,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <style>
               body {
                 font-family: Arial, sans-serif;
-                margin: 15px 10px;
+                margin: 0 10px;
                 padding: 0;
               }
               table {
@@ -1281,7 +1281,7 @@ document.addEventListener("DOMContentLoaded", function () {
               /* Khi in, lặp lại header của bảng trên mỗi trang */
               @media print {
                 body{
-                   margin: 10px;
+                   margin: 0 10px;
                 }
                 thead {
                   display: table-header-group;
