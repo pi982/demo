@@ -1290,15 +1290,14 @@ document.addEventListener("DOMContentLoaded", function () {
                   -webkit-page-break-inside: avoid;
                 }
               }
-              
               @media (max-width: 600px) {
                 .header h1 {
                 margin: 0;
-                font-size: 26px;
+                font-size: 10px;
                 }
                 .header p {
                 margin: 5px 0 5px 0;
-                font-size: 16px;
+                font-size: 5px;
                 }
                 table {
                   margin: 5px;
