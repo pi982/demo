@@ -1214,7 +1214,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }, 1000);
         });
     }
-
     function printReport(data) {
         // Thiết lập thông tin header chung
         const uniqueClasses = Array.from(new Set(data.map(item => item.birthDate)));
@@ -1298,13 +1297,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 font-size: 26px;
                 }
                 .header p {
-                margin: 8px 0 8px 0;
+                margin: 5px 0 5px 0;
                 font-size: 16px;
                 }
                 table {
+                  margin: 5px;
                   table-layout: fixed;
                   width: 100%;
-                  font-size: 0.5 rem;
+                  font-size: 5px;
                   
                 }
                 th, td {
