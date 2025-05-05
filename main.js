@@ -1310,11 +1310,11 @@ document.addEventListener("DOMContentLoaded", function () {
                   margin: 5px;
                   table-layout: fixed;
                   width: 100%;
-                  font-size: 13px;
+                  font-size: 12.5px;
                   
                 }
                 th, td {
-                  padding: 4px 5px;
+                  padding: 5px 5px;
                 }
               }
             </style>
