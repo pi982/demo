@@ -1238,6 +1238,7 @@ document.addEventListener("DOMContentLoaded", function () {
               body {
                 font-family: Arial, sans-serif;
                 padding: 0;
+                margin: 0 10px;
               }
               table {
                 width: 100%;
@@ -1277,6 +1278,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 font-weight: normal;
               }
                @page {
+                  size: A4 landscape;
                   margin-top: 10mm;
                   margin-right: 10mm;
                   margin-bottom: 0mm;
