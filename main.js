@@ -1299,21 +1299,21 @@ document.addEventListener("DOMContentLoaded", function () {
               @media (max-width: 600px) {
                 .header h1 {
                 margin: 0;
-                font-size: 30px;
+                font-size: 28px;
                 }
                 .header p {
-                margin: 10px 0 10px 0;
-                font-size: 20px;
+                margin: 8px 0 8px 0;
+                font-size: 18px;
                 }
                 table {
-                  margin: 5px;
+                  margin: 8px;
                   table-layout: fixed;
                   width: 100%;
                   font-size: 12px;
                   
                 }
                 th, td {
-                  padding: 4.6px 5px;
+                  padding: 4.5px 5px;
                 }
               }
             </style>
