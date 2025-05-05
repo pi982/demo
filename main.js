@@ -1358,7 +1358,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Hàng đầu tiên của header bảng (luôn hiển thị ở mọi trang)
             html += `
             <tr>
-              <th>STT</th>
+              <th></th>
               <th>ID</th>
               <th>Tên Thánh</th>
               <th>Họ và Tên</th>
