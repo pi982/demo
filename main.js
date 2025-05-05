@@ -1279,6 +1279,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 font-weight: normal;
               }
 
+              @page {
+                size: A4 landscape;
+                margin: 10mm; /* Bạn có thể tùy chỉnh margin theo nhu cầu */
+              }
+
               /* Khi in, lặp lại header của bảng trên mỗi trang */
               @media print {
                 body{
@@ -1305,11 +1310,11 @@ document.addEventListener("DOMContentLoaded", function () {
                   margin: 5px;
                   table-layout: fixed;
                   width: 100%;
-                  font-size: 10px;
+                  font-size: 12px;
                   
                 }
                 th, td {
-                  padding: 4px 4px;
+                  padding: 5px 5px;
                 }
               }
             </style>
