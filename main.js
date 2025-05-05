@@ -1200,10 +1200,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 tr { page-break-inside: avoid; }
             }
 
-            @media only screen and (max-width: 600px) {
-              table { font-size: 12px; }
-              th, td { padding: 4px; }
-              /* Điều chỉnh thêm cho border và kích thước nếu cần */
+            @media (max-width: 600px) {
+              table { 
+                  font-size: 10px; 
+                  }
+              th, td { 
+                  padding: 2px; 
+                  }
             }
 
             </style>
