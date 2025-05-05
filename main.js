@@ -1231,65 +1231,83 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Xây dựng nội dung HTML cho in báo cáo
         let html = `
-    <html>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-        <title>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</title>
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-            margin: 15px 10px;
-            padding: 0;
-          }
-          table {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed;
-            font-size: 13px;
-            margin-top: 20px;
-          }
-          th, td {
-            padding: 5px 5px;
-            box-sizing: border-box;
-            border: 1px solid black;
-            word-wrap: break-word;
-            white-space: normal;
-            text-align: center;
-            line-height: 1.2;
-            vertical-align: middle;
-          }
-          th {
-            font-weight: bold;
-          }
-          td:last-child, th:last-child {
-            text-align: center;
-          }
-          .header-cell {
-            border: none;
-            text-align: center;
-          }
-          /* Khi in, lặp lại header của bảng trên mỗi trang */
-          @media print {
-            thead {
-              display: table-header-group;
-            }
-            tr {
-              page-break-inside: avoid;
-              -webkit-page-break-inside: avoid;
-            }
-          }
-          @media (max-width: 600px) {
-            table {
-              font-size: 12px;
-            }
-            th, td {
-              padding: 6px 5px;
-            }
-          }
-        </style>
-      </head>
-      <body>
-  `;
+        <html>
+          <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+            <title>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</title>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                margin: 15px 10px;
+                padding: 0;
+              }
+              table {
+                width: 100%;
+                border-collapse: collapse;
+                table-layout: fixed;
+                font-size: 13px;
+                margin-top: 20px;
+              }
+              th, td {
+                padding: 5px 5px;
+                box-sizing: border-box;
+                border: 1px solid black;
+                word-wrap: break-word;
+                white-space: normal;
+                text-align: center;
+                line-height: 1.2;
+                vertical-align: middle;
+              }
+              th {
+                font-weight: bold;
+              }
+              td:last-child, th:last-child {
+                text-align: center;
+              }
+              .header {
+                border: none;
+                text-align: center;
+              }
+
+              .header h1 {
+                margin: 0;
+                font-size: 30px;
+              }
+              .header p {
+                margin: 10px 0 20px 0;
+                font-size: 20px;
+              }
+
+              /* Khi in, lặp lại header của bảng trên mỗi trang */
+              @media print {
+                thead {
+                  display: table-header-group;
+                }
+                tr {
+                  page-break-inside: avoid;
+                  -webkit-page-break-inside: avoid;
+                }
+              }
+              @media (max-width: 600px) {
+                .header h1 {
+                margin: 0;
+                font-size: 28px;
+                }
+                .header p {
+                margin: 10px 0 10px 0;
+                font-size: 18px;
+                }
+                table {
+                  font-size: 12px;
+                }
+                th, td {
+                  padding: 6px 5px;
+                }
+              }
+            </style>
+          </head>
+          <body>
+      `;
 
         let currentIndex = 0;
         let page = 1;
@@ -1328,11 +1346,9 @@ document.addEventListener("DOMContentLoaded", function () {
             if (page === 1) {
                 html += `
             <tr>
-              <th colspan="13" class="header-cell">
-                <h1 style="margin-top:10px; font-size:30px;">
-                  Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}
-                </h1>
-                <p style="margin: 10px 0 20px 0 ; font-size:20px;">Ngày: ${formattedDate}</p>
+              <th colspan="13" class="header">
+                <h1>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</h1>
+                <p>Ngày: ${formattedDate}</p>
               </th>
             </tr>
       `;
