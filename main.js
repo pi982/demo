@@ -1180,11 +1180,11 @@ document.addEventListener("DOMContentLoaded", function () {
             font-size: 13px;
         }
         th, td {
+            padding:5px 5px;
             box-sizing: border-box;
             border: 1px solid black;
             word-wrap: break-word;       /* hoặc overflow-wrap: break-word; */
             white-space: normal;
-            padding: 6px;
             text-align: center;
             line-height: 1.2;
             vertical-align: middle;
@@ -1196,6 +1196,7 @@ document.addEventListener("DOMContentLoaded", function () {
         td:last-child, th:last-child {
             text-align: center;
         }
+
         @media print {
             body {
                 margin: 15px 10px;
@@ -1207,14 +1208,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 /* Ép buộc hiển thị đường viền trên và dưới nhất quán */
                 border-top: 1px solid black !important;
                 border-bottom: 1px solid black !important;
+                height: 20px;
                 line-height: 1.2;
-                height: 19px;
-
             }
             tr {
                 page-break-inside: avoid;
                 -webkit-page-break-inside: avoid;
             }
+
+
 
         }
 
@@ -1224,7 +1226,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 width: 100%;
             }
             th, td {
-                padding: 6px 2px;
+                padding: 5px 5px;
             }
         }
         </style>
