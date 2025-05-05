@@ -1294,16 +1294,16 @@ document.addEventListener("DOMContentLoaded", function () {
               @media (max-width: 600px) {
                 .header h1 {
                 margin: 0;
-                font-size: 28px;
+                font-size: 26px;
                 }
                 .header p {
-                margin: 10px 0 10px 0;
-                font-size: 18px;
+                margin: 8px 0 8px 0;
+                font-size: 16px;
                 }
                 table {
                   table-layout: fixed;
                   width: 100%;
-                  font-size: 11.5px;
+                  font-size: 11px;
                 }
                 th, td {
                   padding: 4px 4px;
