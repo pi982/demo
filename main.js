@@ -1186,7 +1186,6 @@ document.addEventListener("DOMContentLoaded", function () {
             padding: 6px;
             text-align: center;
             line-height: 1.2;
-            min-height: 18px;  /* Điều chỉnh giá trị sao cho phù hợp */
             vertical-align: middle;
         }
         th {
