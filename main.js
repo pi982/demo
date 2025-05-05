@@ -1196,7 +1196,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         @media print {
             body {
-                margin-left: 10px;
+                margin-left: 15px;
             }
             thead {
                 display: table-header-group;
@@ -1208,11 +1208,10 @@ document.addEventListener("DOMContentLoaded", function () {
         @media (max-width: 600px) {
             table {
                 font-size: 11px;
-                table-layout: fixed;
                 width: 100%;
             }
             th, td {
-                padding: 5px 2px;
+                padding: 6px 2px;
             }
         }
         </style>
