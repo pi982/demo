@@ -1233,7 +1233,6 @@ document.addEventListener("DOMContentLoaded", function () {
         let html = `
         <html>
           <head>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
             <title>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</title>
             <style>
               body {
@@ -1299,6 +1298,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 font-size: 18px;
                 }
                 table {
+                  table-layout: fixed;
+                  width: 100%;
                   font-size: 12.5px;
                 }
                 th, td {
@@ -1326,8 +1327,8 @@ document.addEventListener("DOMContentLoaded", function () {
             html += `
       <table>
         <colgroup>
-          <col style="width: 4.5%;">
-          <col style="width: 9.5%;">
+          <col style="width: 5%;">
+          <col style="width: 10%;">
           <col style="width: 10%;">
           <col style="width: 22%;">
           <col style="width: 6%;">
