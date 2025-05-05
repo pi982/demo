@@ -1214,6 +1214,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }, 1000);
         });
     }
+    
     function printReport(data) {
         // Thiết lập thông tin header chung
         const uniqueClasses = Array.from(new Set(data.map(item => item.birthDate)));
@@ -1294,17 +1295,17 @@ document.addEventListener("DOMContentLoaded", function () {
               @media (max-width: 600px) {
                 .header h1 {
                 margin: 0;
-                font-size: 10px;
+                font-size: 26px;
                 }
                 .header p {
                 margin: 5px 0 5px 0;
-                font-size: 5px;
+                font-size: 16px;
                 }
                 table {
                   margin: 5px;
                   table-layout: fixed;
                   width: 100%;
-                  font-size: 5px;
+                  font-size: 10px;
                   
                 }
                 th, td {
@@ -1348,7 +1349,7 @@ document.addEventListener("DOMContentLoaded", function () {
         </colgroup>
         <thead>
     `;
-
+            
             // Trang đầu tiên có header báo cáo (tiêu đề + ngày)
             if (page === 1) {
                 html += `
