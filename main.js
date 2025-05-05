@@ -1300,17 +1300,17 @@ document.addEventListener("DOMContentLoaded", function () {
               @media (max-width: 600px) {
                 .header h1 {
                 margin: 0;
-                font-size: 26px;
+                font-size: 30px;
                 }
                 .header p {
                 margin: 5px 0 5px 0;
-                font-size: 16px;
+                font-size: 20px;
                 }
                 table {
                   margin: 5px;
                   table-layout: fixed;
                   width: 100%;
-                  font-size: 12px;
+                  font-size: 13px;
                   
                 }
                 th, td {
@@ -1325,7 +1325,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let currentIndex = 0;
         let page = 1;
         while (currentIndex < data.length) {
-            let rowsThisPage = (page === 1) ? 20 : 24 ;
+            let rowsThisPage = (page === 1) ? 20 : 25 ;
             let pageData = data.slice(currentIndex, currentIndex + rowsThisPage);
             currentIndex += rowsThisPage;
 
