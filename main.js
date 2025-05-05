@@ -1208,7 +1208,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 border-top: 1px solid black !important;
                 border-bottom: 1px solid black !important;
                 line-height: 1.2;
-                height: 20px;
+                height: 19px;
 
             }
             tr {
