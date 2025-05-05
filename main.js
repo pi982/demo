@@ -1160,7 +1160,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             .header {
               text-align: center;
-              margin-bottom: 20px;
+              margin-bottom: 15px;
             }
             .header h1 {
               margin: 0;
@@ -1168,7 +1168,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             .header p {
               margin: 5px 0 0;
-              font-size: 20px;
+              font-size: 18px;
             }
 
             table {
@@ -1210,18 +1210,18 @@ document.addEventListener("DOMContentLoaded", function () {
             <table>
               <colgroup>
                 <!-- Giả sử các cột đầu tiên A - E không cần thay đổi -->
-                <col style="width: 5%;">
-                <col style="width: 11%;">
-                <col style="width: 12%;">
-                <col style="width: 24%;">
+                <col style="width: 4%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+                <col style="width: 22%;">
                 
                 <!-- Các cột F đến M (tùy chỉnh số lượng và tỷ lệ phần trăm sao cho phù hợp) -->
-                <col style="width: 5%;">
-                <col style="width: 5%;">
-                <col style="width: 5%;">
-                <col style="width: 5%;">
-                <col style="width: 5%;">
-                <col style="width: 5%;">
+                <col style="width: 6%;">
+                <col style="width: 6%;">
+                <col style="width: 6%;">
+                <col style="width: 6%;">
+                <col style="width: 6%;">
+                <col style="width: 6%;">
                 <col style="width: 6%;">
                 <col style="width: 6%;">
                 <col style="width: 6%;">
@@ -1308,4 +1308,3 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 });
-
