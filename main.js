@@ -1168,7 +1168,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             .header p {
               margin: 5px 0 0;
-              font-size: 24px;
+              font-size: 20px;
             }
 
             table {
@@ -1190,14 +1190,9 @@ document.addEventListener("DOMContentLoaded", function () {
               text-align: center;
             }
 
-            @page {
-              size: auto;
-              margin: 10mm; /* Bạn có thể tùy chỉnh margin theo nhu cầu */
-            }
-
             @media print {
               body{
-                margin-left: 10px;
+                margin-left: 5px;
               }
               thead { display: table-header-group; }
               tr { page-break-inside: avoid; }
