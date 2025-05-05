@@ -1278,7 +1278,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 font-weight: normal;
               }
                @page {
-                  margin-top: 0mm;
+                  margin-top: 10mm;
                   margin-right: 10mm;
                   margin-bottom: 0mm;
                   margin-left: 10mm;
@@ -1310,7 +1310,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   
                 }
                 th, td {
-                  padding: 4.5px 5px;
+                  padding: 5px 5px;
                 }
               }
             </style>
