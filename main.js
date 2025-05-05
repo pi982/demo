@@ -1204,6 +1204,10 @@ document.addEventListener("DOMContentLoaded", function () {
             thead {
                 display: table-header-group;
             }
+            tr {
+                page-break-inside: avoid;
+                -webkit-page-break-inside: avoid;
+            }
         }
 
         @media (max-width: 600px) {
