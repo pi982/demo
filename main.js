@@ -1180,6 +1180,7 @@ document.addEventListener("DOMContentLoaded", function () {
             font-size: 13px;
         }
         th, td {
+            box-sizing: border-box;
             border: 1px solid black;
             word-wrap: break-word;       /* hoặc overflow-wrap: break-word; */
             white-space: normal;
@@ -1203,10 +1204,17 @@ document.addEventListener("DOMContentLoaded", function () {
             thead {
                 display: table-header-group;
             }
+            thead tr th {
+                /* Ép buộc hiển thị đường viền trên và dưới nhất quán */
+                border-top: 1px solid black !important;
+                border-bottom: 1px solid black !important;
+                line-height: 1.2;
+            }
             tr {
                 page-break-inside: avoid;
                 -webkit-page-break-inside: avoid;
             }
+
         }
 
         @media (max-width: 600px) {
