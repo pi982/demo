@@ -1280,6 +1280,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
               /* Khi in, lặp lại header của bảng trên mỗi trang */
               @media print {
+                body{
+                   margin: 10px;
+                }
                 thead {
                   display: table-header-group;
                 }
