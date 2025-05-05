@@ -1196,10 +1196,9 @@ document.addEventListener("DOMContentLoaded", function () {
         td:last-child, th:last-child {
             text-align: center;
         }
-
         @media print {
             body {
-                margin: 10px;
+                margin: 15px 10px;
             }
             thead {
                 display: table-header-group;
