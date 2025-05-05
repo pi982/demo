@@ -1302,7 +1302,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   font-size: 12.5px;
                 }
                 th, td {
-                  padding: 4px 5px;
+                  padding: 4px 4px;
                 }
               }
             </style>
@@ -1326,8 +1326,8 @@ document.addEventListener("DOMContentLoaded", function () {
             html += `
       <table>
         <colgroup>
-          <col style="width: 4%;">
-          <col style="width: 10%;">
+          <col style="width: 4.5%;">
+          <col style="width: 9.5%;">
           <col style="width: 10%;">
           <col style="width: 22%;">
           <col style="width: 6%;">
@@ -1358,7 +1358,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Hàng đầu tiên của header bảng (luôn hiển thị ở mọi trang)
             html += `
             <tr>
-              <th></th>
+              <th>STT</th>
               <th>ID</th>
               <th>Tên Thánh</th>
               <th>Họ và Tên</th>
