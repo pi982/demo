@@ -1169,27 +1169,32 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             .header p {
                 margin: 5px 0 0;
-                font-size: 20px;
+                font-size: 18px;
             }
 
             table {
                 width: 100%;
                 border-collapse: collapse;
-                margin-top: 20px;
+                margin-top: 10px;
                 table-layout: fixed;
-            }
-            table, th, td {
-                font-size: 13px; /* Điều chỉnh giá trị này theo ý bạn */
-                border: 0.5px solid black;
-                word-wrap: break-word;       /* Hoặc overflow-wrap: break-word; */
-                white-space: normal;
-
+                font-size: 13px;
             }
             th, td {
+                border: 1px solid black;
+                word-wrap: break-word;       /* Hoặc overflow-wrap: break-word; */
+                white-space: normal;
                 padding: 6px;
-                line-height: 1.2;
                 text-align: center;
+
             }
+            th {
+	            text-align: center; /* Giữ căn giữa cho header */
+	            font-weight: bold;
+            }
+
+	            td:last-child, th:last-child {
+		            text-align: center; 
+	            }
 
             @media print {
                 body{
@@ -1204,8 +1209,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 font-size: 11px;
                 table-layout: fixed;
                 width: 100%;
-                /* Nếu không cần border-collapse khác, có thể giữ lại collapse */
-                border-collapse: collapse;
                   }
               th, td { 
                   padding: 1px; 
