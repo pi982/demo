@@ -1203,7 +1203,6 @@ document.addEventListener("DOMContentLoaded", function () {
               table { 
                   font-size: 11px;
                   border-collapse: separate;
-                  border-spacing: 0;
                   }
               th, td { 
                   padding: 1px; 
