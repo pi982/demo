@@ -1290,14 +1290,14 @@ document.addEventListener("DOMContentLoaded", function () {
               }
               @media (max-width: 600px) {
                 body{
-                margin: 5px;
+                margin: 0;
                 }
                 .header h1 {
                 margin: 0;
                 font-size: 28px;
                 }
                 .header p {
-                margin: 10px 0 10px 0;
+                margin: 5px 0 5px 0;
                 font-size: 18px;
                 }
                 table {
