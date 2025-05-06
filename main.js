@@ -1223,13 +1223,13 @@ document.addEventListener("DOMContentLoaded", function () {
       const today = new Date();
       const formattedDate = today.toLocaleDateString("vi-VN");
     
-      // Xác định xem có phải mobile không (điều kiện ví dụ: width <= 600px)
+      // Kiểm tra xem thiết bị có phải mobile (ví dụ: width <= 600px) không
       const isMobile = window.matchMedia("only screen and (max-width: 600px)").matches;
     
       // Mở cửa sổ in mới
       const printWindow = window.open("", "In Báo cáo", "width=800,height=600");
     
-      // Nội dung HTML header chung (bao gồm cả CSS)
+      // Header HTML kèm các style dùng chung
       let html = `
         <html>
           <head>
@@ -1249,7 +1249,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 margin-top: 20px;
               }
               th, td {
-                padding: 5px 5px;
+                padding: 5px;
                 box-sizing: border-box;
                 border: 0.5px solid black;
                 word-wrap: break-word;
@@ -1262,7 +1262,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 font-weight: bold;
               }
               .header {
-                border: none;
                 text-align: center;
               }
               .header h1 {
@@ -1275,10 +1274,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 font-weight: normal;
               }
               @page {
-                  size: A4 landscape;
-                  margin: 10mm;
+                size: A4 landscape;
+                margin: 10mm;
               }
-              /* Khi in trên desktop: dùng một bảng duy nhất, header in tự động lặp lại */
+              /* Khi in trên desktop, chỉ tự lặp lại <thead> trong bảng */
               @media print {
                 thead {
                   display: table-header-group;
@@ -1288,20 +1287,16 @@ document.addEventListener("DOMContentLoaded", function () {
                   -webkit-page-break-inside: avoid;
                 }
               }
-              /* Trên mobile, điều chỉnh font-size và padding */
               @media (max-width: 600px) {
                 .header h1 {
-                  margin: 0;
                   font-size: 28px;
                 }
                 .header p {
-                  margin: 8px 0 8px 0;
+                  margin: 8px 0;
                   font-size: 18px;
                 }
                 table {
                   margin: 5px;
-                  table-layout: fixed;
-                  width: 100%;
                   font-size: 12px;
                 }
                 th, td {
@@ -1314,22 +1309,21 @@ document.addEventListener("DOMContentLoaded", function () {
       `;
     
       if (isMobile) {
-        // Trên mobile: chia bảng thành nhiều bảng, mỗi bảng có header riêng
+        // Trên mobile: chia dữ liệu ra thành các bảng con riêng biệt
+        // Trang đầu tiên có 20 hàng, các trang sau mỗi bảng có 24 hàng.
         let currentIndex = 0;
         let page = 1;
         let globalRowCount = 0;
         while (currentIndex < data.length) {
-          // Trang đầu tiên 20 hàng, sau đó là 24 hàng mỗi trang
           const rowsThisPage = (page === 1) ? 20 : 24;
           const pageData = data.slice(currentIndex, currentIndex + rowsThisPage);
           currentIndex += rowsThisPage;
-          
-          // Nếu không phải bảng đầu tiên, chèn page-break để đảm bảo bảng mới in ở trang mới
+    
+          // Nếu không phải trang đầu tiên, chèn thẻ div để tạo vùng ngắt trang.
           if (page > 1) {
             html += `<div style="page-break-before: always;"></div>`;
           }
-          
-          // Tạo bảng cho trang hiện tại
+    
           html += `
             <table>
               <colgroup>
@@ -1349,8 +1343,7 @@ document.addEventListener("DOMContentLoaded", function () {
               </colgroup>
               <thead>
           `;
-          
-          // Trang đầu tiên có header báo cáo lớn (tiêu đề + ngày)
+          // Chỉ trang đầu tiên có header báo cáo lớn (tiêu đề và ngày)
           if (page === 1) {
             html += `
                 <tr>
@@ -1361,8 +1354,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 </tr>
             `;
           }
-          
-          // Hàng header của bảng (các cột)
+          // Hàng header của bảng (các tiêu đề cột) được luôn hiển thị trong mỗi bảng
           html += `
                 <tr>
                   <th>STT</th>
@@ -1382,8 +1374,6 @@ document.addEventListener("DOMContentLoaded", function () {
               </thead>
               <tbody>
           `;
-          
-          // Duyệt và thêm các dòng dữ liệu cho bảng hiện tại
           pageData.forEach(item => {
             globalRowCount++;
             html += `
@@ -1404,7 +1394,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 </tr>
             `;
           });
-          
           html += `
               </tbody>
             </table>
@@ -1412,9 +1401,13 @@ document.addEventListener("DOMContentLoaded", function () {
           page++;
         }
       } else {
-        // Trên desktop: dùng một bảng duy nhất để trình duyệt tự phân trang (với header được lặp lại nhờ CSS)
-        let globalRowCount = 0;
+        // Trên desktop: xuất phần header báo cáo bên ngoài bảng
+        // Vì CSS sẽ tự lặp lại <thead> (chứa chỉ các tiêu đề cột) ở mỗi trang in, nên trang 2 trở đi chỉ có header của bảng
         html += `
+          <div class="header">
+            <h1>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</h1>
+            <p>Ngày: ${formattedDate}</p>
+          </div>
           <table>
             <colgroup>
               <col style="width: 5%;">
@@ -1433,12 +1426,6 @@ document.addEventListener("DOMContentLoaded", function () {
             </colgroup>
             <thead>
               <tr>
-                <th colspan="13" class="header">
-                  <h1>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</h1>
-                  <p>Ngày: ${formattedDate}</p>
-                </th>
-              </tr>
-              <tr>
                 <th>STT</th>
                 <th>ID</th>
                 <th>Tên Thánh</th>
@@ -1456,7 +1443,7 @@ document.addEventListener("DOMContentLoaded", function () {
             </thead>
             <tbody>
         `;
-        
+        let globalRowCount = 0;
         data.forEach(item => {
           globalRowCount++;
           html += `
@@ -1477,7 +1464,6 @@ document.addEventListener("DOMContentLoaded", function () {
               </tr>
           `;
         });
-        
         html += `
             </tbody>
           </table>
@@ -1493,7 +1479,7 @@ document.addEventListener("DOMContentLoaded", function () {
       printWindow.document.close();
       printWindow.focus();
     
-      // Tự động đóng cửa sổ in sau khi hoàn tất (nếu trình duyệt hỗ trợ)
+      // Tự động đóng cửa sổ in sau khi in xong (nếu diện trình duyệt hỗ trợ)
       printWindow.onafterprint = function () {
         printWindow.close();
       };
