@@ -1216,101 +1216,206 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
     function printReport(data) {
-        // Thiết lập thông tin header chung
-        const uniqueClasses = Array.from(new Set(data.map(item => item.birthDate)));
-        const hasMultipleClasses = uniqueClasses.length > 1;
-        const headerClassText = (!hasMultipleClasses && data.length > 0) ? data[0].birthDate : "";
-        const today = new Date();
-        const formattedDate = today.toLocaleDateString("vi-VN");
-
-        // Mở cửa sổ in mới
-        const printWindow = window.open("", "In Báo cáo", "width=800,height=600");
-
-        // Bắt đầu xây dựng nội dung HTML cho báo cáo
-        let html = `
-    <html>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</title>
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-            padding: 0;
-            margin: 0 10px;
+      // Thiết lập thông tin header chung
+      const uniqueClasses = Array.from(new Set(data.map(item => item.birthDate)));
+      const hasMultipleClasses = uniqueClasses.length > 1;
+      const headerClassText = (!hasMultipleClasses && data.length > 0) ? data[0].birthDate : "";
+      const today = new Date();
+      const formattedDate = today.toLocaleDateString("vi-VN");
+    
+      // Xác định xem có phải mobile không (điều kiện ví dụ: width <= 600px)
+      const isMobile = window.matchMedia("only screen and (max-width: 600px)").matches;
+    
+      // Mở cửa sổ in mới
+      const printWindow = window.open("", "In Báo cáo", "width=800,height=600");
+    
+      // Nội dung HTML header chung (bao gồm cả CSS)
+      let html = `
+        <html>
+          <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</title>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                padding: 0;
+                margin: 0 10px;
+              }
+              table {
+                width: 100%;
+                border-collapse: collapse;
+                table-layout: fixed;
+                font-size: 13px;
+                margin-top: 20px;
+              }
+              th, td {
+                padding: 5px 5px;
+                box-sizing: border-box;
+                border: 0.5px solid black;
+                word-wrap: break-word;
+                white-space: normal;
+                text-align: center;
+                line-height: 1.2;
+                vertical-align: middle;
+              }
+              th {
+                font-weight: bold;
+              }
+              .header {
+                border: none;
+                text-align: center;
+              }
+              .header h1 {
+                margin: 0;
+                font-size: 40px;
+              }
+              .header p {
+                margin: 10px 0 20px 0;
+                font-size: 20px;
+                font-weight: normal;
+              }
+              @page {
+                  size: A4 landscape;
+                  margin: 10mm;
+              }
+              /* Khi in trên desktop: dùng một bảng duy nhất, header in tự động lặp lại */
+              @media print {
+                thead {
+                  display: table-header-group;
+                }
+                tr {
+                  page-break-inside: avoid;
+                  -webkit-page-break-inside: avoid;
+                }
+              }
+              /* Trên mobile, điều chỉnh font-size và padding */
+              @media (max-width: 600px) {
+                .header h1 {
+                  margin: 0;
+                  font-size: 28px;
+                }
+                .header p {
+                  margin: 8px 0 8px 0;
+                  font-size: 18px;
+                }
+                table {
+                  margin: 5px;
+                  table-layout: fixed;
+                  width: 100%;
+                  font-size: 12px;
+                }
+                th, td {
+                  padding: 4.5px 5px;
+                }
+              }
+            </style>
+          </head>
+          <body>
+      `;
+    
+      if (isMobile) {
+        // Trên mobile: chia bảng thành nhiều bảng, mỗi bảng có header riêng
+        let currentIndex = 0;
+        let page = 1;
+        let globalRowCount = 0;
+        while (currentIndex < data.length) {
+          // Trang đầu tiên 20 hàng, sau đó là 24 hàng mỗi trang
+          const rowsThisPage = (page === 1) ? 20 : 24;
+          const pageData = data.slice(currentIndex, currentIndex + rowsThisPage);
+          currentIndex += rowsThisPage;
+          
+          // Nếu không phải bảng đầu tiên, chèn page-break để đảm bảo bảng mới in ở trang mới
+          if (page > 1) {
+            html += `<div style="page-break-before: always;"></div>`;
           }
-          table {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed;
-            font-size: 13px;
-            margin-top: 20px;
+          
+          // Tạo bảng cho trang hiện tại
+          html += `
+            <table>
+              <colgroup>
+                <col style="width: 5%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+                <col style="width: 22%;">
+                <col style="width: 6%;">
+                <col style="width: 6%;">
+                <col style="width: 6%;">
+                <col style="width: 6%;">
+                <col style="width: 6%;">
+                <col style="width: 6%;">
+                <col style="width: 6%;">
+                <col style="width: 6%;">
+                <col style="width: 6%;">
+              </colgroup>
+              <thead>
+          `;
+          
+          // Trang đầu tiên có header báo cáo lớn (tiêu đề + ngày)
+          if (page === 1) {
+            html += `
+                <tr>
+                  <th colspan="13" class="header">
+                    <h1>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</h1>
+                    <p>Ngày: ${formattedDate}</p>
+                  </th>
+                </tr>
+            `;
           }
-          th, td {
-            padding: 5px;
-            box-sizing: border-box;
-            border: 0.5px solid black;
-            word-wrap: break-word;
-            white-space: normal;
-            text-align: center;
-            line-height: 1.2;
-            vertical-align: middle;
-          }
-          th { font-weight: bold; }
-
-          .header {
-            border: none;
-            text-align: center;
-          }
-          .header h1 {
-            margin: 0;
-            font-size: 40px;
-          }
-          .header p {
-            margin: 10px 0 20px 0;
-            font-size: 20px;
-            font-weight: normal;
-          }
-
-          @page {
-              size: A4 landscape;
-              margin: 10mm;
-          }
-          @media print {
-            /* Lặp lại header bảng ở đầu mỗi trang */
-            thead {
-              display: table-header-group;
-            }
-            tfoot {
-              display: table-footer-group;
-            }
-            /* Cố gắng tránh cắt giữa một hàng */
-            tr {
-              page-break-inside: avoid !important;
-              -webkit-page-break-inside: avoid !important;
-              break-inside: avoid !important;
-            }
-          }
-
-          @media (max-width: 600px) {
-            .header h1 {
-              font-size: 28px;
-            }
-            .header p {
-              margin: 8px 0;
-              font-size: 18px;
-            }
-            table {
-              margin: 5px;
-              font-size: 12px;
-            }
-            th, td {
-              padding: 4.5px 5px;
-            }
-          }
-        </style>
-      </head>
-      <body>
-        <table>
+          
+          // Hàng header của bảng (các cột)
+          html += `
+                <tr>
+                  <th>STT</th>
+                  <th>ID</th>
+                  <th>Tên Thánh</th>
+                  <th>Họ và Tên</th>
+                  <th>Đi lễ</th>
+                  <th>Vắng</th>
+                  <th>Đi học</th>
+                  <th>Vắng</th>
+                  <th>Đi</th>
+                  <th>Vắng</th>
+                  <th>Đi lễ</th>
+                  <th>Đi học</th>
+                  <th>Khác</th>
+                </tr>
+              </thead>
+              <tbody>
+          `;
+          
+          // Duyệt và thêm các dòng dữ liệu cho bảng hiện tại
+          pageData.forEach(item => {
+            globalRowCount++;
+            html += `
+                <tr>
+                  <td>${globalRowCount}</td>
+                  <td>${item.id}</td>
+                  <td>${item.holyName}</td>
+                  <td style="text-align:left;">${item.fullName}</td>
+                  <td>${(item.colF !== null && item.colF !== undefined) ? item.colF : ""}</td>
+                  <td>${(item.colG !== null && item.colG !== undefined) ? item.colG : ""}</td>
+                  <td>${(item.colH !== null && item.colH !== undefined) ? item.colH : ""}</td>
+                  <td>${(item.colI !== null && item.colI !== undefined) ? item.colI : ""}</td>
+                  <td>${(item.colJ !== null && item.colJ !== undefined) ? item.colJ : ""}</td>
+                  <td>${(item.colK !== null && item.colK !== undefined) ? item.colK : ""}</td>
+                  <td>${item.percentDiLe || ""}</td>
+                  <td>${item.percentDiHoc || ""}</td>
+                  <td>${item.percentKhac || ""}</td>
+                </tr>
+            `;
+          });
+          
+          html += `
+              </tbody>
+            </table>
+          `;
+          page++;
+        }
+      } else {
+        // Trên desktop: dùng một bảng duy nhất để trình duyệt tự phân trang (với header được lặp lại nhờ CSS)
+        let globalRowCount = 0;
+        html += `
+          <table>
             <colgroup>
               <col style="width: 5%;">
               <col style="width: 10%;">
@@ -1326,74 +1431,76 @@ document.addEventListener("DOMContentLoaded", function () {
               <col style="width: 6%;">
               <col style="width: 6%;">
             </colgroup>
-          <thead>
-            <tr>
-              <th colspan="13" class="header">
-                <h1>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</h1>
-                <p>Ngày: ${formattedDate}</p>
-              </th>
-            </tr>
-            <tr>
-              <th>STT</th>
-              <th>ID</th>
-              <th>Tên Thánh</th>
-              <th>Họ và Tên</th>
-              <th>Đi lễ</th>
-              <th>Vắng</th>
-              <th>Đi học</th>
-              <th>Vắng</th>
-              <th>Đi</th>
-              <th>Vắng</th>
-              <th>Đi lễ</th>
-              <th>Đi học</th>
-              <th>Khác</th>
-            </tr>
-          </thead>
-          <tbody>
-    `;
-
-        // Duyệt tất cả dữ liệu (không chia trang cố định)
-        let globalRowCount = 0;
-        data.forEach(item => {
-            globalRowCount++;
-            html += `
-          <tr>
-            <td>${globalRowCount}</td>
-            <td>${item.id}</td>
-            <td>${item.holyName}</td>
-            <td style="text-align:left;">${item.fullName}</td>
-            <td>${(item.colF !== null && item.colF !== undefined) ? item.colF : ""}</td>
-            <td>${(item.colG !== null && item.colG !== undefined) ? item.colG : ""}</td>
-            <td>${(item.colH !== null && item.colH !== undefined) ? item.colH : ""}</td>
-            <td>${(item.colI !== null && item.colI !== undefined) ? item.colI : ""}</td>
-            <td>${(item.colJ !== null && item.colJ !== undefined) ? item.colJ : ""}</td>
-            <td>${(item.colK !== null && item.colK !== undefined) ? item.colK : ""}</td>
-            <td>${item.percentDiLe || ""}</td>
-            <td>${item.percentDiHoc || ""}</td>
-            <td>${item.percentKhac || ""}</td>
-          </tr>
+            <thead>
+              <tr>
+                <th colspan="13" class="header">
+                  <h1>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</h1>
+                  <p>Ngày: ${formattedDate}</p>
+                </th>
+              </tr>
+              <tr>
+                <th>STT</th>
+                <th>ID</th>
+                <th>Tên Thánh</th>
+                <th>Họ và Tên</th>
+                <th>Đi lễ</th>
+                <th>Vắng</th>
+                <th>Đi học</th>
+                <th>Vắng</th>
+                <th>Đi</th>
+                <th>Vắng</th>
+                <th>Đi lễ</th>
+                <th>Đi học</th>
+                <th>Khác</th>
+              </tr>
+            </thead>
+            <tbody>
         `;
+        
+        data.forEach(item => {
+          globalRowCount++;
+          html += `
+              <tr>
+                <td>${globalRowCount}</td>
+                <td>${item.id}</td>
+                <td>${item.holyName}</td>
+                <td style="text-align:left;">${item.fullName}</td>
+                <td>${(item.colF !== null && item.colF !== undefined) ? item.colF : ""}</td>
+                <td>${(item.colG !== null && item.colG !== undefined) ? item.colG : ""}</td>
+                <td>${(item.colH !== null && item.colH !== undefined) ? item.colH : ""}</td>
+                <td>${(item.colI !== null && item.colI !== undefined) ? item.colI : ""}</td>
+                <td>${(item.colJ !== null && item.colJ !== undefined) ? item.colJ : ""}</td>
+                <td>${(item.colK !== null && item.colK !== undefined) ? item.colK : ""}</td>
+                <td>${item.percentDiLe || ""}</td>
+                <td>${item.percentDiHoc || ""}</td>
+                <td>${item.percentKhac || ""}</td>
+              </tr>
+          `;
         });
-
+        
         html += `
-          </tbody>
-        </table>
-      </body>
-    </html>
-    `;
-
-        printWindow.document.write(html);
-        printWindow.document.close();
-        printWindow.focus();
-
-        // Tự động đóng cửa sổ in sau khi hoàn tất (nếu trình duyệt hỗ trợ)
-        printWindow.onafterprint = function () {
-            printWindow.close();
-        };
-
-        setTimeout(() => {
-            printWindow.print();
-        }, 1000);
+            </tbody>
+          </table>
+        `;
+      }
+    
+      html += `
+          </body>
+        </html>
+      `;
+    
+      printWindow.document.write(html);
+      printWindow.document.close();
+      printWindow.focus();
+    
+      // Tự động đóng cửa sổ in sau khi hoàn tất (nếu trình duyệt hỗ trợ)
+      printWindow.onafterprint = function () {
+        printWindow.close();
+      };
+    
+      setTimeout(() => {
+        printWindow.print();
+      }, 1000);
     }
 
     // Kiểm tra nếu trình duyệt hỗ trợ Notification và trạng thái hiện tại là "default"
