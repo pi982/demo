@@ -55,9 +55,9 @@ document.addEventListener("DOMContentLoaded", function () {
         // Định nghĩa thời gian hiển thị dựa vào loại thông báo
         let displayDuration;
         if (type === "status") {
-            displayDuration = 3000;
+            displayDuration = 3500;
         } else if (type === "error") {
-            displayDuration = 2000;
+            displayDuration = 2500;
         } else {
             displayDuration = 1500;
         }
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     document.body.classList.add('app-active');
                 } else {
                     // Nếu đăng nhập thất bại, hiển thị lỗi
-                    showModal(data.message || "Sai tài khoản hoặc mật khẩu", "error");
+                    showModal(data.message || "Sai tài khoản hoặc mật khẩu.", "error");
                     document.body.classList.remove('app-active');
                 }
             })
@@ -162,6 +162,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     // Biến cờ cục bộ để kiểm tra xem đã gửi thông báo offline hay chưa (cho phiên này)
     let hasNotifiedOffline = false;
+
     function saveAttendanceRecord(record) {
         openAttendanceDB().then(db => {
             const transaction = db.transaction("offlineAttendance", "readwrite");
@@ -178,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
             };
             req.onerror = (err) => {
                 console.error("Lỗi lưu điểm danh offline:", err);
-                showModal("Lỗi lưu điểm danh Offline", "error");
+                showModal("Lỗi lưu điểm danh Offline.", "error");
             };
         }).catch(err => console.error(err));
     }
@@ -232,7 +233,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     .then(() => {
                         // Với no-cors, nếu promise được resolve, ta coi request đã được gửi thành công
                         console.log("Gửi xong tất cả bản điểm danh Offline");
-                        modalMessage.innerHTML = "Gửi xong tất cả bản điểm danh Offline";
+                        modalMessage.innerHTML = "Gửi xong tất cả bản điểm danh Offline.";
                         clearOfflineAttendanceStore();
                         setTimeout(() => {
                             modal.classList.remove("show");
@@ -240,13 +241,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     })
                     .catch(err => {
                         console.error("Lỗi khi đồng bộ các bản ghi offline:", err);
-                        showModal("Lỗi khi đồng bộ các bản ghi offline", "error");
+                        showModal("Lỗi gửi các bản ghi Offline.", "error");
                     });
             };
 
             req.onerror = () => {
                 console.error("Lỗi truy xuất bản ghi offline từ IndexedDB");
-                showModal("Lỗi truy xuất bản ghi Offline từ IndexedDB", "error");
+                showModal("Lỗi truy xuất dữ liệu Offline.", "error");
             };
         }).catch(err => console.error(err));
     }
@@ -327,6 +328,8 @@ document.addEventListener("DOMContentLoaded", function () {
         showModal("Bạn đang Offline!", "status");
         // (Tùy chọn) Gọi hàm gửi notification
     });
+
+
 
     function normalizeText(text) {
         if (!text) return "";
@@ -412,7 +415,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document
         .getElementById("status-khac")
         .addEventListener("click", () => onStatusSelected("khac"));
-
 
     // ---------------------
     // XỬ LÝ QR SCANNER
@@ -971,17 +973,18 @@ document.addEventListener("DOMContentLoaded", function () {
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({ records: records })
                         });
-                        showModal("Điểm danh" + attendanceDescription + selectedIds.length + " thiếu nhi thành công", "success");
+                        showModal("Điểm danh" + attendanceDescription + selectedIds.length + " thiếu nhi thành công.", "success");
                     } else {
                         const batchRecord = {
                             timestamp: Date.now(), // Thêm thuộc tính bắt buộc theo keyPath
                             recordType: "batch",   // Đánh dấu đây là bản ghi dạng batch
                             records: records       // Đây là mảng các bản ghi đã tạo
                         };
-                        showModal("Đã lưu điểm danh" + attendanceDescription + selectedIds.length + " thiếu nhi Offline", "normal");
+                        showModal("Đã lưu điểm danh" + attendanceDescription + selectedIds.length + " thiếu nhi Offline.", "normal");
                         saveAttendanceRecord(batchRecord);
 
                     }
+
 
                     // Reset giao diện
                     document.getElementById("search-query").value = "";
@@ -1151,101 +1154,26 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    function renderReportTable() {
-        const resultsDiv = document.getElementById("report-results");
-        const dynamicPageSize = fixedRowsPerPage; 
-        const start = (currentReportPage - 1) * dynamicPageSize;
-        const end = start + dynamicPageSize;
-        const pageData = reportData.slice(start, end);
-        let tableHtml = `
-      <table>
-        <colgroup>
-            <col>
-            <col>
-            <col>
-            <col>
-            <col>
-            <col>
-            <col>
-        </colgroup>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th class="col-20">Tên Thánh</th>
-            <th class="col-44">Họ và Tên</th>
-            <th>Lớp</th>
-            <th class="col-12">Đi lễ</th>
-            <th class="col-12">Đi học</th>
-            <th class="col-12">Khác</th>
-        </tr>
-        </thead>
-        <tbody>`;
-        pageData.forEach((item) => {
-            tableHtml += `
-        <tr>
-          <td>${item.id}</td>
-          <td>${item.holyName}</td>
-          <td style="text-align: left;">${item.fullName}</td>
-          <td>${item.birthDate}</td>
-          <td>${item.percentDiLe || ""}</td>
-          <td>${item.percentDiHoc || ""}</td>
-          <td>${item.percentKhac || ""}</td>
-        </tr>`;
-        });
-        tableHtml += `</tbody></table>`;
-        const totalPages = Math.ceil(reportData.length / dynamicPageSize);
-        tableHtml += `<div id="report-pagination" style="text-align:right; margin-top:20px;">`;
-        if (currentReportPage > 1) {
-            tableHtml += `<button class="pagination-btn" data-page="${currentReportPage - 1}">Prev</button>`;
-        }
-        tableHtml += `<span class="pagination-info"> Page ${currentReportPage} / ${totalPages} </span>`;
-        if (currentReportPage < totalPages) {
-            tableHtml += `<button class="pagination-btn" data-page="${currentReportPage + 1}">Next</button>`;
-        }
-        tableHtml += `</div>`;
-        tableHtml += `<div style="margin-top:-40px; text-align:center;">
-                    <button id="print-report" class=" confirm-attendance-btn" style="padding: 5px 10px;"> In </button>
-                  </div>`;
-        resultsDiv.innerHTML = tableHtml;
-        document.querySelectorAll("#report-pagination .pagination-btn").forEach((btn) => {
-            btn.addEventListener("click", function () {
-                currentReportPage = parseInt(this.getAttribute("data-page"));
-                renderReportTable();
-            });
-        });
-        document.getElementById("print-report").addEventListener("click", function () {
-            printReport(reportData);
-            setTimeout(() => {
-                document.getElementById("report-query").value = "";
-                document.getElementById("report-results").innerHTML = "";
-                selectedStudents = {};
-                searchData = [];
-                searchCache.clear();
-                console.log("Dữ liệu báo cáo đã được làm mới sau khi in");
-            }, 1000);
-        });
-    }
-    
     function printReport(data) {
-      // Thiết lập thông tin header chung
-      const uniqueClasses = Array.from(new Set(data.map(item => item.birthDate)));
-      const hasMultipleClasses = uniqueClasses.length > 1;
-      const headerClassText = (!hasMultipleClasses && data.length > 0) ? data[0].birthDate : "";
-      const today = new Date();
-      const formattedDate = today.toLocaleDateString("vi-VN");
-    
-      // Kiểm tra xem thiết bị có phải mobile (ví dụ: width <= 600px) không
-      const isMobile = window.matchMedia("only screen and (max-width: 600px)").matches;
-    
-      // Mở cửa sổ in mới
-      const printWindow = window.open("", "In Báo cáo", "width=800,height=600");
-    
-      // Header HTML kèm các style dùng chung
-      let html = `
+        // Thiết lập thông tin header chung
+        const uniqueClasses = Array.from(new Set(data.map(item => item.birthDate)));
+        const hasMultipleClasses = uniqueClasses.length > 1;
+        const headerClassText = (!hasMultipleClasses && data.length > 0) ? data[0].birthDate : "";
+        const today = new Date();
+        const formattedDate = today.toLocaleDateString("vi-VN");
+
+        // Biến đếm hiển thị số thứ tự STT cho toàn bộ báo cáo
+        let globalRowCount = 0;
+
+        // Mở cửa sổ in mới
+        const printWindow = window.open("", "In Báo cáo", "width=800,height=600");
+
+        // Xây dựng nội dung HTML cho in báo cáo
+        let html = `
         <html>
           <head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <title>Điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</title>
+            <title>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</title>
             <style>
               body {
                 font-family: Arial, sans-serif;
@@ -1260,7 +1188,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 margin-top: 20px;
               }
               th, td {
-                padding: 5px;
+                padding: 5px 5px;
                 box-sizing: border-box;
                 border: 0.5px solid black;
                 word-wrap: break-word;
@@ -1272,10 +1200,14 @@ document.addEventListener("DOMContentLoaded", function () {
               th {
                 font-weight: bold;
               }
+              td:last-child, th:last-child {
+                text-align: center;
+              }
               .header {
                 border: none;
                 text-align: center;
               }
+
               .header h1 {
                 margin: 0;
                 font-size: 30px;
@@ -1286,14 +1218,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 font-size: 20px;
                 font-weight: normal;
               }
-              @page {
+               @page {
                 size: A4 landscape;
                 margin-top: 10mm;
                 margin-bottom: 10mm;
                 margin-left: 15mm;
-                margin-right: 10mm;       
-              }
-              /* Khi in trên desktop, chỉ tự lặp lại <thead> trong bảng */
+                margin-right: 10mm;  
+               }
+              /* Khi in, lặp lại header của bảng trên mỗi trang */
               @media print {
                 thead {
                   display: table-header-group;
@@ -1305,15 +1237,19 @@ document.addEventListener("DOMContentLoaded", function () {
               }
               @media (max-width: 600px) {
                 .header h1 {
-                  font-size: 28px;
+                margin: 0;
+                font-size: 28px;
                 }
                 .header p {
-                  margin: 8px 0;
-                  font-size: 18px;
+                margin: 8px 0 8px 0;
+                font-size: 18px;
                 }
                 table {
                   margin: 5px;
+                  table-layout: fixed;
+                  width: 100%;
                   font-size: 12px;
+                  
                 }
                 th, td {
                   padding: 4.5px 5px;
@@ -1323,146 +1259,77 @@ document.addEventListener("DOMContentLoaded", function () {
           </head>
           <body>
       `;
-    
-      if (isMobile) {
-        // Trên mobile: chia dữ liệu ra thành các bảng con riêng biệt
-        // Trang đầu tiên có 20 hàng, các trang sau mỗi bảng có 24 hàng.
+
         let currentIndex = 0;
         let page = 1;
-        let globalRowCount = 0;
         while (currentIndex < data.length) {
-          const rowsThisPage = (page === 1) ? 20 : 24;
-          const pageData = data.slice(currentIndex, currentIndex + rowsThisPage);
-          currentIndex += rowsThisPage;
-    
-          // Nếu không phải trang đầu tiên, chèn thẻ div để tạo vùng ngắt trang.
-          if (page > 1) {
-            html += `<div style="page-break-before: always;"></div>`;
-          }
-    
-          html += `
-            <table>
-              <colgroup>
-                <col style="width: 5%;">
-                <col style="width: 10%;">
-                <col style="width: 10%;">
-                <col style="width: 22%;">
-                <col style="width: 6%;">
-                <col style="width: 6%;">
-                <col style="width: 6%;">
-                <col style="width: 6%;">
-                <col style="width: 6%;">
-                <col style="width: 6%;">
-                <col style="width: 6%;">
-                <col style="width: 6%;">
-                <col style="width: 6%;">
-              </colgroup>
-              <thead>
-          `;
-          // Chỉ trang đầu tiên có header báo cáo lớn (tiêu đề và ngày)
-          if (page === 1) {
+            let rowsThisPage = (page === 1) ? 20 : 24 ;
+            let pageData = data.slice(currentIndex, currentIndex + rowsThisPage);
+            currentIndex += rowsThisPage;
+
+            // Đối với trang thứ 2 trở đi, thêm trang mới bằng thẻ div tạo page-break
+            if (page > 1) {
+                html += `<div style="page-break-before: always;"></div>`;
+            }
+
+            // Tạo bảng cho trang hiện tại với header nằm trong <thead>
             html += `
-                <tr>
-                  <th colspan="13" class="header">
-                    <h1>Điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</h1>
-                    <p>Ngày: ${formattedDate}</p>
-                  </th>
-                </tr>
-            `;
-          }
-          // Hàng header của bảng (các tiêu đề cột) được luôn hiển thị trong mỗi bảng
-          html += `
-                <tr>
-                  <th>STT</th>
-                  <th>ID</th>
-                  <th>Tên Thánh</th>
-                  <th>Họ và Tên</th>
-                  <th>Đi lễ</th>
-                  <th>Vắng</th>
-                  <th>Đi học</th>
-                  <th>Vắng</th>
-                  <th>Đi</th>
-                  <th>Vắng</th>
-                  <th>Đi lễ</th>
-                  <th>Đi học</th>
-                  <th>Khác</th>
-                </tr>
-              </thead>
-              <tbody>
-          `;
-          pageData.forEach(item => {
-            globalRowCount++;
+      <table>
+        <colgroup>
+          <col style="width: 5%;">
+          <col style="width: 10%;">
+          <col style="width: 10%;">
+          <col style="width: 22%;">
+          <col style="width: 6%;">
+          <col style="width: 6%;">
+          <col style="width: 6%;">
+          <col style="width: 6%;">
+          <col style="width: 6%;">
+          <col style="width: 6%;">
+          <col style="width: 6%;">
+          <col style="width: 6%;">
+          <col style="width: 6%;">
+        </colgroup>
+        <thead>
+    `;
+            
+            // Trang đầu tiên có header báo cáo (tiêu đề + ngày)
+            if (page === 1) {
+                html += `
+            <tr>
+              <th colspan="13" class="header">
+                <h1>Điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</h1>
+                <p>Ngày: ${formattedDate}</p>
+              </th>
+            </tr>
+      `;
+            }
+
+            // Hàng đầu tiên của header bảng (luôn hiển thị ở mọi trang)
             html += `
-                <tr>
-                  <td>${globalRowCount}</td>
-                  <td>${item.id}</td>
-                  <td>${item.holyName}</td>
-                  <td style="text-align:left;">${item.fullName}</td>
-                  <td>${(item.colF !== null && item.colF !== undefined) ? item.colF : ""}</td>
-                  <td>${(item.colG !== null && item.colG !== undefined) ? item.colG : ""}</td>
-                  <td>${(item.colH !== null && item.colH !== undefined) ? item.colH : ""}</td>
-                  <td>${(item.colI !== null && item.colI !== undefined) ? item.colI : ""}</td>
-                  <td>${(item.colJ !== null && item.colJ !== undefined) ? item.colJ : ""}</td>
-                  <td>${(item.colK !== null && item.colK !== undefined) ? item.colK : ""}</td>
-                  <td>${item.percentDiLe || ""}</td>
-                  <td>${item.percentDiHoc || ""}</td>
-                  <td>${item.percentKhac || ""}</td>
-                </tr>
-            `;
-          });
-          html += `
-              </tbody>
-            </table>
-          `;
-          page++;
-        }
-      } else {
-        // Trên desktop: xuất phần header báo cáo bên ngoài bảng
-        // Vì CSS sẽ tự lặp lại <thead> (chứa chỉ các tiêu đề cột) ở mỗi trang in, nên trang 2 trở đi chỉ có header của bảng
-        html += `
-          <div class="header">
-            <h1>Điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</h1>
-            <p>Ngày: ${formattedDate}</p>
-          </div>
-          <table>
-            <colgroup>
-              <col style="width: 5%;">
-              <col style="width: 10%;">
-              <col style="width: 10%;">
-              <col style="width: 22%;">
-              <col style="width: 6%;">
-              <col style="width: 6%;">
-              <col style="width: 6%;">
-              <col style="width: 6%;">
-              <col style="width: 6%;">
-              <col style="width: 6%;">
-              <col style="width: 6%;">
-              <col style="width: 6%;">
-              <col style="width: 6%;">
-            </colgroup>
-            <thead>
-              <tr>
-                <th>STT</th>
-                <th>ID</th>
-                <th>Tên Thánh</th>
-                <th>Họ và Tên</th>
-                <th>Đi lễ</th>
-                <th>Vắng</th>
-                <th>Đi học</th>
-                <th>Vắng</th>
-                <th>Đi</th>
-                <th>Vắng</th>
-                <th>Đi lễ</th>
-                <th>Đi học</th>
-                <th>Khác</th>
-              </tr>
-            </thead>
-            <tbody>
-        `;
-        let globalRowCount = 0;
-        data.forEach(item => {
-          globalRowCount++;
-          html += `
+            <tr>
+              <th>STT</th>
+              <th>ID</th>
+              <th>Tên Thánh</th>
+              <th>Họ và Tên</th>
+              <th>Đi lễ</th>
+              <th>Vắng</th>
+              <th>Đi học</th>
+              <th>Vắng</th>
+              <th>Đi</th>
+              <th>Vắng</th>
+              <th>Đi lễ</th>
+              <th>Đi học</th>
+              <th>Khác</th>
+            </tr>
+          </thead>
+          <tbody>
+    `;
+
+            // Thêm các dòng dữ liệu của trang hiện tại
+            pageData.forEach(item => {
+                globalRowCount++;
+                html += `
               <tr>
                 <td>${globalRowCount}</td>
                 <td>${item.id}</td>
@@ -1478,31 +1345,33 @@ document.addEventListener("DOMContentLoaded", function () {
                 <td>${item.percentDiHoc || ""}</td>
                 <td>${item.percentKhac || ""}</td>
               </tr>
-          `;
-        });
-        html += `
-            </tbody>
-          </table>
-        `;
-      }
-    
-      html += `
-          </body>
-        </html>
       `;
-    
-      printWindow.document.write(html);
-      printWindow.document.close();
-      printWindow.focus();
-    
-      // Tự động đóng cửa sổ in sau khi in xong (nếu diện trình duyệt hỗ trợ)
-      printWindow.onafterprint = function () {
-        printWindow.close();
-      };
-    
-      setTimeout(() => {
-        printWindow.print();
-      }, 1000);
+            });
+
+            html += `
+          </tbody>
+        </table>
+    `;
+            page++;
+        }
+
+        html += `
+      </body>
+    </html>
+  `;
+
+        printWindow.document.write(html);
+        printWindow.document.close();
+        printWindow.focus();
+
+        // Nếu trình duyệt hỗ trợ, tự động đóng cửa sổ in sau khi in xong
+        printWindow.onafterprint = function () {
+            printWindow.close();
+        };
+
+        setTimeout(() => {
+            printWindow.print();
+        }, 1000);
     }
 
     // Kiểm tra nếu trình duyệt hỗ trợ Notification và trạng thái hiện tại là "default"
@@ -1520,11 +1389,16 @@ document.addEventListener("DOMContentLoaded", function () {
         // Gán sự kiện click cho toàn bộ tài liệu
         document.addEventListener("click", handleUserClick);
     }
-
+  
     // Hàm gửi thông điệp đến Service Worker để hiển thị thông báo offline
     function sendOfflineNotification() {
-        if (navigator.serviceWorker && navigator.serviceWorker.controller) {
-            navigator.serviceWorker.controller.postMessage({ action: 'offlineNotification' });
+        if (navigator.serviceWorker) {
+            navigator.serviceWorker.ready.then(registration => {
+                // registration.active đảm bảo rằng service worker đã đang kiểm soát trang
+                if (registration.active) {
+                    registration.active.postMessage({ action: 'offlineNotification' });
+                }
+            }).catch(err => console.error("Service worker chưa sẵn sàng:", err));
         }
     }
 });
