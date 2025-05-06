@@ -1276,14 +1276,21 @@ document.addEventListener("DOMContentLoaded", function () {
               margin: 10mm;
           }
           @media print {
+            /* Lặp lại header bảng ở đầu mỗi trang */
             thead {
               display: table-header-group;
             }
+            tfoot {
+              display: table-footer-group;
+            }
+            /* Cố gắng tránh cắt giữa một hàng */
             tr {
-              page-break-inside: avoid;
-              -webkit-page-break-inside: avoid;
+              page-break-inside: avoid !important;
+              -webkit-page-break-inside: avoid !important;
+              break-inside: avoid !important;
             }
           }
+
           @media (max-width: 600px) {
             .header h1 {
               font-size: 28px;
