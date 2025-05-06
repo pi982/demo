@@ -1234,7 +1234,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <html>
           <head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <title>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</title>
+            <title>Điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</title>
             <style>
               body {
                 font-family: Arial, sans-serif;
@@ -1262,11 +1262,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 font-weight: bold;
               }
               .header {
+                border: none;
                 text-align: center;
               }
               .header h1 {
                 margin: 0;
                 font-size: 40px;
+                text-transform: uppercase;
               }
               .header p {
                 margin: 10px 0 20px 0;
@@ -1348,7 +1350,7 @@ document.addEventListener("DOMContentLoaded", function () {
             html += `
                 <tr>
                   <th colspan="13" class="header">
-                    <h1>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</h1>
+                    <h1>Điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</h1>
                     <p>Ngày: ${formattedDate}</p>
                   </th>
                 </tr>
@@ -1405,7 +1407,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Vì CSS sẽ tự lặp lại <thead> (chứa chỉ các tiêu đề cột) ở mỗi trang in, nên trang 2 trở đi chỉ có header của bảng
         html += `
           <div class="header">
-            <h1>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</h1>
+            <h1>Điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</h1>
             <p>Ngày: ${formattedDate}</p>
           </div>
           <table>
