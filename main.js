@@ -300,7 +300,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
     
-
     // Kiểm tra trạng thái mạng ngay khi trang load
     if (navigator.onLine) {
         runOnlineTasks();
@@ -310,7 +309,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     window.addEventListener("online", () => {
-        //showModal("Đã kết nối mạng!", "success");
+        showModal("Đã kết nối mạng!", "success");
         syncCombinedAttendanceRecords();
     })
 
