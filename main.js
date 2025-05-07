@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 // Hiển thị thông báo “Đang gửi dữ liệu...” có spinner
-                showModal('<span class="spinner"></span>\nĐang gửi dữ liệu điểm danh Offline...', "normal");
+                showModal('<span class="spinner"></span>\nĐang gửi dữ liệu điểm danh Offline...');
 
                 // Gửi payload chung dạng JSON đến server
                 fetch(webAppUrl, {
@@ -302,6 +302,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Kiểm tra trạng thái mạng ngay khi trang load
     if (navigator.onLine) {
         runOnlineTasks();
+        showModal("Đã kết nối mạng!", "success");
     } else {
         // Nếu không có mạng ngay từ đầu, hiển thị thông báo offline.
         showModal("Bạn đang Offline!", "error");
@@ -314,7 +315,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Lắng nghe sự kiện 'offline': thông báo khi mất kết nối
     window.addEventListener("offline", () => {
-        showModal("Bạn đang Offline!", "status");
+        showModal("Bạn đang Offline!", "error");
         // (Tùy chọn) Gọi hàm gửi notification
     });
 
