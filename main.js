@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const modalContent = modal.querySelector(".modal-content");
 
         // Cập nhật nội dung thông báo
-        modalMessage.textContent = message;
+        modalMessage.innerHTML = message;
 
         // Xóa mọi class kiểu cũ
         modalContent.classList.remove("success", "error", "normal", "status");
@@ -137,8 +137,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let reportData = [];
     let currentReportPage = 1;
     let selectedStudents = {};
-
-
 
     // ========== Offline Helper Functions ==========
     function openAttendanceDB() {
