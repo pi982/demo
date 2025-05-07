@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 //console.log("Đã lưu điểm danh Offline:", record);
                 // Chỉ hiển thị modal nếu chưa được hiển thị trong phiên này
                 if (!hasNotifiedOffline) {
-                    showModal("Bản Ghi Offline - Vào lại App khi có mạng!\nĐể gửi điểm danh.", "status");
+                    showModal("Lưu Offline - Vào lại App khi có mạng!\nĐể gửi điểm danh.", "status");
                     sendOfflineNotification();
                     hasNotifiedOffline = true;
                 }
@@ -302,7 +302,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Kiểm tra trạng thái mạng ngay khi trang load
     if (navigator.onLine) {
         runOnlineTasks();
-        showModal("Đã kết nối mạng!", "success");
     } else {
         // Nếu không có mạng ngay từ đầu, hiển thị thông báo offline.
         showModal("Bạn đang Offline!", "error");
