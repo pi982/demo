@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const store = transaction.objectStore("offlineAttendance");
             const req = store.add(record);
             req.onsuccess = () => {
-                console.log("Đã lưu điểm danh Offline:", record);
+                //console.log("Đã lưu điểm danh Offline:", record);
                 // Chỉ hiển thị modal nếu chưa được hiển thị trong phiên này
                 if (!hasNotifiedOffline) {
                     showModal("Bản Ghi Offline - Vào lại App khi có mạng!\nĐể gửi điểm danh.", "status");
@@ -215,13 +215,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-                // Lấy tham chiếu đến các phần tử modal
-                const modal = document.getElementById("modal");
-                const modalMessage = document.getElementById("modal-message");
-
                 // Hiển thị thông báo “Đang gửi dữ liệu...” có spinner
-                modalMessage.innerHTML = '<span class="spinner"></span>\nĐang gửi dữ liệu điểm danh Offline...';
-                modal.classList.add("show");
+                showModal('<span class="spinner"></span>\nĐang gửi dữ liệu điểm danh Offline...', "status");
 
                 // Gửi payload chung dạng JSON đến server
                 fetch(webAppUrl, {
@@ -233,11 +228,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     .then(() => {
                         // Với no-cors, nếu promise được resolve, ta coi request đã được gửi thành công
                         console.log("Gửi xong tất cả bản điểm danh Offline");
-                        modalMessage.innerHTML = "Gửi xong tất cả bản điểm danh Offline.";
+                        showModal("Đã gửi xong.", "success");
                         clearOfflineAttendanceStore();
-                        setTimeout(() => {
-                            modal.classList.remove("show");
-                        }, 2000);
                     })
                     .catch(err => {
                         console.error("Lỗi khi đồng bộ các bản ghi offline:", err);
