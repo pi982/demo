@@ -72,7 +72,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }, 200);
         }, displayDuration);
     }
-
     // ---------------------
     // Login Handling
     // ---------------------
@@ -214,7 +213,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 // Hiển thị thông báo “Đang gửi dữ liệu...” có spinner
-                showModal('<span class="spinner"></span>\nĐang gửi dữ liệu điểm danh Offline...', "status");
+                showModal('<span class="spinner"></span>\nĐang gửi dữ liệu điểm danh Offline...', "normal");
 
                 // Gửi payload chung dạng JSON đến server
                 fetch(webAppUrl, {
@@ -305,7 +304,7 @@ document.addEventListener("DOMContentLoaded", function () {
         runOnlineTasks();
     } else {
         // Nếu không có mạng ngay từ đầu, hiển thị thông báo offline.
-        //showModal("Bạn đang Offline!", "status");
+        showModal("Bạn đang Offline!", "error");
     }
 
     window.addEventListener("online", () => {
