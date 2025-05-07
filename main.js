@@ -1236,7 +1236,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   margin: 5px;
                   table-layout: fixed;
                   width: 100%;
-                  font-size: 12px;
+                  font-size: 12.5px;
                   
                 }
                 th, td {
@@ -1247,7 +1247,6 @@ document.addEventListener("DOMContentLoaded", function () {
           </head>
           <body>
       `;
-
         let currentIndex = 0;
         let page = 1;
         while (currentIndex < data.length) {
