@@ -301,13 +301,14 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Có lỗi khi chạy các hàm online:", error);
         }
     }
+    
 
     // Kiểm tra trạng thái mạng ngay khi trang load
     if (navigator.onLine) {
         runOnlineTasks();
     } else {
         // Nếu không có mạng ngay từ đầu, hiển thị thông báo offline.
-        showModal("Bạn đang Offline!", "status");
+        //showModal("Bạn đang Offline!", "status");
     }
 
     window.addEventListener("online", () => {
