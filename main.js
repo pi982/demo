@@ -1208,7 +1208,7 @@ document.addEventListener("DOMContentLoaded", function () {
                    @page {
                     size: A4 landscape;
                     margin-top: 10mm;
-                    margin-bottom: 10mm;
+                    margin-bottom: 15mm;
                     margin-left: 15mm;
                     margin-right: 10mm;  
                    }
@@ -1242,6 +1242,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                     th, td {
                       padding: 4.5px 5px;
+                      border: 1px solid black;
                     }
                   }
                 </style>
