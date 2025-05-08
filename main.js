@@ -1218,8 +1218,10 @@ document.addEventListener("DOMContentLoaded", function () {
                       display: table-header-group;
                     }
                     tr {
-                      page-break-inside: avoid;
-                      -webkit-page-break-inside: avoid;
+                    page-break-inside: avoid;
+                    break-inside: avoid; /* Cho trình duyệt hiện đại */
+                    orphans: 2;
+                    widows: 2;
                     }
                   }
                   @media (max-width: 600px) {
