@@ -1207,8 +1207,8 @@ document.addEventListener("DOMContentLoaded", function () {
                   }
                    @page {
                     size: A4 landscape;
-                    margin-top: 10mm;
-                    margin-bottom: 15mm;
+                    margin-top: 15mm;
+                    margin-bottom: 5mm;
                     margin-left: 15mm;
                     margin-right: 10mm;  
                    }
@@ -1327,7 +1327,6 @@ document.addEventListener("DOMContentLoaded", function () {
             printWindow.print();
         }, 1000);
     }
-
     // Kiểm tra nếu trình duyệt hỗ trợ Notification và trạng thái hiện tại là "default"
     if ("Notification" in window && Notification.permission === "default") {
         // Định nghĩa hàm xử lý khi người dùng click vào bất kỳ điểm nào trên trang
