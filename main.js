@@ -1150,187 +1150,189 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
     function printReport(data) {
-      const uniqueClasses = Array.from(new Set(data.map((item) => item.birthDate)));
-      const hasMultipleClasses = uniqueClasses.length > 1;
-      const headerClassText =
-        !hasMultipleClasses && data.length > 0 ? data[0].birthDate : "";
-      const today = new Date();
-      const formattedDate = today.toLocaleDateString("vi-VN");
-    
-      const printWindow = window.open("", "In Báo cáo", "width=800,height=600");
-    
-      let html = `
-        <html>
-          <head>
-            <title>Báo cáo điểm danh</title>
-            <!-- Thêm meta viewport giúp mobile hiển thị đúng tỉ lệ -->
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <style>
-              body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-              }
-              table {
-                width: 100%;
-                border-collapse: collapse;
-                border-spacing: 0;
-                table-layout: fixed;
-                font-size: 13px;
-                margin-top: 20px;
-              }
-              th, td {
-                padding: 5px;
-                box-sizing: border-box;
-                border: 0.5px solid black;
-                word-wrap: break-word;
-                white-space: normal;
-                text-align: center;
-                line-height: 1.2;
-                vertical-align: middle;
-              }
-              /* Đảm bảo hàng cuối luôn có border dưới */
-              tbody tr:last-child td {
-                border-bottom: 0.5px solid black;
-              }
-              td:last-child, th:last-child {
-                text-align: center;
-              }
-              .header {
-                text-align: center;
-                margin: 10px;
-              }
-              .header h1 {
-                margin: 0;
-                font-size: 30px;
-                text-transform: uppercase;
-              }
-              .header p {
-                margin: 10px 0 20px;
-                font-size: 20px;
-              }
-              @page {
-                size: A4 landscape;
-                margin-top: 15mm;
-                margin-bottom: 5mm;
-                margin-left: 15mm;
-                margin-right: 10mm;
-              }
-              /* In ấn: tránh chia cắt 1 hàng giữa các trang */
-              @media print {
-                thead {
-                  display: table-header-group;
-                }
-                tr {
-                  page-break-inside: avoid;
-                  break-inside: avoid; /* Cho trình duyệt hiện đại */
-                  orphans: 2;
-                  widows: 2;
-                }
-              }
-              /* Các tùy chỉnh riêng cho mobile khi in */
-              @media print and (max-width: 600px) {
-                body {
-                  margin: 0;
-                  padding: 0;
-                }
-                .header h1 {
-                  font-size: 28px;
-                }
-                .header p {
-                  font-size: 18px;
-                  margin: 8px 0;
-                }
-                table {
-                  margin: 6px 0;
-                  font-size: 12.2px;
-                }
-                th, td {
-                  padding: 4.5px 5px;
-                  border: 1px solid black;
-                }
-                /* Đảm bảo hàng cuối hiển thị đúng border dưới */
-                tbody tr:last-child td {
-                  border-bottom: 1px solid black;
-                }
-              }
-            </style>
-          </head>
-          <body>
-            <div class="header">
-              <h1>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</h1>
-              <p>Ngày: ${formattedDate}</p>
-            </div>
-            <div class="content">
-              <table>
-                <colgroup>
-                  <col style="width: 5%;">
-                  <col style="width: 10%;">
-                  <col style="width: 10%;">
-                  <col style="width: 22%;">
-                  <col style="width: 6%;">
-                  <col style="width: 6%;">
-                  <col style="width: 6%;">
-                  <col style="width: 6%;">
-                  <col style="width: 6%;">
-                  <col style="width: 6%;">
-                  <col style="width: 6%;">
-                  <col style="width: 6%;">
-                  <col style="width: 6%;">
-                </colgroup>
-                <thead>
-                  <tr>
-                    <th>STT</th>
-                    <th>ID</th>
-                    <th>Tên Thánh</th>
-                    <th>Họ và Tên</th>
-                    <th>Đi lễ</th>
-                    <th>Vắng</th>
-                    <th>Đi học</th>
-                    <th>Vắng</th>
-                    <th>Đi</th>
-                    <th>Vắng</th>
-                    <th>Đi lễ</th>
-                    <th>Đi học</th>
-                    <th>Khác</th>
-                  </tr>
-                </thead>
-                <tbody>`;
-      data.forEach((item, index) => {
-        html += `<tr>
-                  <td>${index + 1}</td>
-                  <td>${item.id}</td>
-                  <td>${item.holyName}</td>
-                  <td style="text-align: left;">${item.fullName}</td>
-                  <td>${(item.colF !== null && item.colF !== undefined) ? item.colF : ""}</td>
-                  <td>${(item.colG !== null && item.colG !== undefined) ? item.colG : ""}</td>
-                  <td>${(item.colH !== null && item.colH !== undefined) ? item.colH : ""}</td>
-                  <td>${(item.colI !== null && item.colI !== undefined) ? item.colI : ""}</td>
-                  <td>${(item.colJ !== null && item.colJ !== undefined) ? item.colJ : ""}</td>
-                  <td>${(item.colK !== null && item.colK !== undefined) ? item.colK : ""}</td>
-                  <td>${item.percentDiLe || ""}</td>
-                  <td>${item.percentDiHoc || ""}</td>
-                  <td>${item.percentKhac || ""}</td>
-                </tr>`;
-      });
-      html += `
-                </tbody>
-              </table>
-            </div>
-          </body>
-        </html>`;
-    
-      printWindow.document.write(html);
-      printWindow.document.close();
-      printWindow.focus();
-      // Đóng cửa sổ sau khi in (nếu cần)
-      printWindow.onafterprint = function () {
-        printWindow.close();
-      };
-      setTimeout(() => {
-        printWindow.print();
-      }, 1000);
+        const uniqueClasses = Array.from(new Set(data.map((item) => item.birthDate)));
+        const hasMultipleClasses = uniqueClasses.length > 1;
+        const headerClassText =
+            !hasMultipleClasses && data.length > 0 ? data[0].birthDate : "";
+        const today = new Date();
+        const formattedDate = today.toLocaleDateString("vi-VN");
+
+        const printWindow = window.open("", "In Báo cáo", "width=800,height=600");
+
+        let html = `
+    <html>
+      <head>
+        <title>Báo cáo điểm danh</title>
+        <!-- Thêm meta viewport giúp mobile hiển thị đúng tỉ lệ -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+          }
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+            table-layout: fixed;
+            font-size: 13px;
+            margin-top: 20px;
+          }
+          th, td {
+            padding: 5px;
+            box-sizing: border-box;
+            border: 0.5px solid black;
+            word-wrap: break-word;
+            white-space: normal;
+            text-align: center;
+            line-height: 1.2;
+            vertical-align: middle;
+          }
+          /* Đảm bảo hàng cuối luôn có border dưới */
+          tbody tr:last-child td {
+            border-bottom: 0.5px solid black;
+          }
+          td:last-child, th:last-child {
+            text-align: center;
+          }
+          .header {
+            text-align: center;
+            margin: 10px;
+          }
+          .header h1 {
+            margin: 0;
+            font-size: 30px;
+            text-transform: uppercase;
+          }
+          .header p {
+            margin: 10px 0 20px;
+            font-size: 20px;
+          }
+          @page {
+            size: A4 landscape;
+            margin-top: 15mm;
+            margin-bottom: 5mm;
+            margin-left: 15mm;
+            margin-right: 10mm;
+          }
+          /* In ấn: tránh chia cắt 1 hàng giữa các trang */
+          @media print {
+            thead {
+              display: table-header-group;
+            }
+            tr {
+              page-break-inside: avoid;
+              break-inside: avoid; /* Cho trình duyệt hiện đại */
+              orphans: 2;
+              widows: 2;
+            }
+          }
+          /* Các tùy chỉnh riêng cho mobile khi in */
+          @media print and (max-width: 600px) {
+            body {
+              margin: 0;
+              padding: 0;
+            }
+            .header h1 {
+              font-size: 28px;
+            }
+            .header p {
+              font-size: 18px;
+              margin: 8px 0;
+            }
+            table {
+              margin: 6px 0;
+              font-size: 12.2px;
+            }
+            th, td {
+              padding: 4.5px 5px;
+              /* Ép border đồng nhất do 0.5px có thể không hiển thị như mong đợi */
+              border: 1px solid black;
+            }
+            /* Đảm bảo hàng cuối hiển thị đúng border dưới */
+            tbody tr:last-child td {
+              border-bottom: 1px solid black;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <h1>Báo cáo điểm danh${!hasMultipleClasses ? " - " + headerClassText : ""}</h1>
+          <p>Ngày: ${formattedDate}</p>
+        </div>
+        <div class="content">
+          <table>
+            <colgroup>
+              <col style="width: 5%;">
+              <col style="width: 10%;">
+              <col style="width: 10%;">
+              <col style="width: 22%;">
+              <col style="width: 6%;">
+              <col style="width: 6%;">
+              <col style="width: 6%;">
+              <col style="width: 6%;">
+              <col style="width: 6%;">
+              <col style="width: 6%;">
+              <col style="width: 6%;">
+              <col style="width: 6%;">
+              <col style="width: 6%;">
+            </colgroup>
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>ID</th>
+                <th>Tên Thánh</th>
+                <th>Họ và Tên</th>
+                <th>Đi lễ</th>
+                <th>Vắng</th>
+                <th>Đi học</th>
+                <th>Vắng</th>
+                <th>Đi</th>
+                <th>Vắng</th>
+                <th>Đi lễ</th>
+                <th>Đi học</th>
+                <th>Khác</th>
+              </tr>
+            </thead>
+            <tbody>`;
+        data.forEach((item, index) => {
+            html += `<tr>
+              <td>${index + 1}</td>
+              <td>${item.id}</td>
+              <td>${item.holyName}</td>
+              <td style="text-align: left;">${item.fullName}</td>
+              <td>${(item.colF !== null && item.colF !== undefined) ? item.colF : ""}</td>
+              <td>${(item.colG !== null && item.colG !== undefined) ? item.colG : ""}</td>
+              <td>${(item.colH !== null && item.colH !== undefined) ? item.colH : ""}</td>
+              <td>${(item.colI !== null && item.colI !== undefined) ? item.colI : ""}</td>
+              <td>${(item.colJ !== null && item.colJ !== undefined) ? item.colJ : ""}</td>
+              <td>${(item.colK !== null && item.colK !== undefined) ? item.colK : ""}</td>
+              <td>${item.percentDiLe || ""}</td>
+              <td>${item.percentDiHoc || ""}</td>
+              <td>${item.percentKhac || ""}</td>
+            </tr>`;
+        });
+        html += `
+            </tbody>
+          </table>
+        </div>
+      </body>
+    </html>`;
+
+        printWindow.document.write(html);
+        printWindow.document.close();
+        printWindow.focus();
+        // Đóng cửa sổ sau khi in (nếu cần)
+        printWindow.onafterprint = function () {
+            printWindow.close();
+        };
+        setTimeout(() => {
+            printWindow.print();
+        }, 1000);
     }
+    
     // Kiểm tra nếu trình duyệt hỗ trợ Notification và trạng thái hiện tại là "default"
     if ("Notification" in window && Notification.permission === "default") {
         // Định nghĩa hàm xử lý khi người dùng click vào bất kỳ điểm nào trên trang
