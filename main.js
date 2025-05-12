@@ -457,15 +457,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
     function startCamera(loadingElem) {
-        // Thêm khoảng delay 500ms cho camera tự lấy nét trước khi bắt đầu quét
+        // Thêm delay 500ms trước khi bắt đầu quét
         setTimeout(() => {
-            // Sửa đổi videoConstraints: thêm width và height theo ý muốn
-            const videoConstraints = {
-                facingMode: "environment",
-                width: { ideal: 640 },
-                height: { ideal: 480 }
-            };
-    
+            const videoConstraints = { facingMode: "environment" };
             html5QrCode
                 .start(videoConstraints, qrConfig, onScanSuccess, onScanFailure)
                 .then(() => {
@@ -488,7 +482,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             showModal("Không truy cập được camera!", "error");
                         });
                 });
-        }, 500);
+        }, 500); // Delay 500ms trước khi khởi động camera
     }
     
     function showQRInterface() {
