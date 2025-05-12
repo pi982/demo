@@ -420,13 +420,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const html5QrCode = new Html5Qrcode("qr-scanner");
     
     const qrConfig = {
-      fps: 30,  // Tăng fps để xử lý nhiều khung hình hơn
-      qrbox: function (viewfinderWidth, viewfinderHeight) {
-        // Chọn kích thước quét phù hợp
-        let size = Math.min(viewfinderWidth, viewfinderHeight) * 0.6;
-        if (size < 200) size = 200;
-        return { width: size, height: size };
-      },
+      fps: 20,  // Tăng fps để xử lý nhiều khung hình hơn
       // Nếu thư viện hỗ trợ, bạn có thể thiết lập các thông số video
       videoConstraints: {
         facingMode: "environment",
