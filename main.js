@@ -1,45 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  function adjustQrOrientation() {
-    const qrScannerElem = document.getElementById("qr-scanner");
-    if (!qrScannerElem) return;
-    
-    // Lấy giá trị của thuộc tính window.orientation (trên iOS sẽ trả về 0, 90 hoặc -90)
-    const orientation = window.orientation;
-    
-    // Nếu điện thoại đang ở chế độ portrait (0 hoặc 180), ép container hiển thị theo landscape
-    if (orientation === 0 || orientation === 180) {
-      qrScannerElem.style.transform = "rotate(90deg)";
-      // Swap width và height cho phù hợp với màn hình
-      qrScannerElem.style.width = window.innerHeight + "px";
-      qrScannerElem.style.height = window.innerWidth + "px";
-    } else {
-      // Nếu đã ở landscape, đặt lại về kích thước ban đầu
-      qrScannerElem.style.transform = "rotate(0deg)";
-      qrScannerElem.style.width = "100vw";
-      qrScannerElem.style.height = "100vh";
-    }
-  }
-  
-  // Gọi hàm này ngay sau khi DOM load xong để căn chỉnh ban đầu
-  adjustQrOrientation();
-  
-  // Lắng nghe sự thay đổi của thiết bị (orientationchange) và điều chỉnh lại
-  window.addEventListener("orientationchange", function () {
-    // Thêm delay ngắn (300ms) để đảm bảo chuyển đổi hoàn tất
-    setTimeout(adjustQrOrientation, 300);
-  });
-
-
-  
-  // Gọi hàm này ngay sau khi DOM load xong để căn chỉnh ban đầu
-  adjustQrOrientation();
-  
-  // Lắng nghe sự thay đổi của thiết bị (orientationchange) và điều chỉnh lại
-  window.addEventListener("orientationchange", function () {
-    // Thêm delay ngắn (300ms) để đảm bảo chuyển đổi hoàn tất
-    setTimeout(adjustQrOrientation, 300);
-  });
-
     if (localStorage.getItem("loginTimestamp")) {
         // Người dùng đã đăng nhập, ẩn form đăng nhập và hiển thị giao diện chính
         document.getElementById("login-container").style.display = "none";
@@ -509,27 +468,49 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
     function startCamera(loadingElem) {
-      const videoConstraints = { facingMode: "environment" };
-      html5QrCode
-        .start(videoConstraints, qrConfig, onScanSuccess, onScanFailure)
-        .then(() => {
-          isScanning = true;
-          if (loadingElem) loadingElem.style.display = "none";
-          console.log("Camera bắt đầu quét mã QR với facingMode: 'environment'.");
-          
-          // Sau khi camera khởi chạy, đảm bảo rằng thẻ video có thuộc tính playsinline và được "reset" hướng
-          setTimeout(() => {
-            const videoElem = document.querySelector("#qr-scanner video");
-            if (videoElem) {
-              videoElem.setAttribute("playsinline", "");
-              // Ép video feed hiển thị đúng hướng, bạn có thể giữ transform là 0 deg tại đây
-              videoElem.style.transform = "rotate(0deg)";
+      Html5Qrcode.getCameras()
+        .then((cameras) => {
+          // In ra danh sách các camera để debug
+          console.log("Danh sách camera:", cameras.map(camera => camera.label));
+    
+          if (!cameras || !cameras.length) {
+            if (loadingElem) {
+              loadingElem.style.display = "flex";
+              loadingElem.textContent = "Không tìm thấy camera!";
             }
-          }, 500);
-          
+            showModal("Không tìm thấy camera!", "error");
+            return;
+          }
+    
+          let selectedCameraId = null;
+          // Sử dụng thuộc tính facingMode: nếu có camera với facingMode === "environment" thì chọn camera đó
+          const environmentCamera = cameras.find(camera => camera.facingMode === "environment");
+    
+          if (environmentCamera) {
+            selectedCameraId = environmentCamera.id;
+          } else {
+            // Nếu không có, mặc định chọn camera đầu tiên
+            selectedCameraId = cameras[0].id;
+          }
+    
+          // Thêm một khoảng delay nhỏ, giúp camera có thời gian lấy nét
+          setTimeout(() => {
+            html5QrCode.start(selectedCameraId, qrConfig, onScanSuccess, onScanFailure)
+              .then(() => {
+                isScanning = true;
+                if (loadingElem) {
+                  loadingElem.style.display = "none";
+                }
+                console.log("Camera bắt đầu quét mã QR.");
+              })
+              .catch((err) => {
+                console.error("Lỗi khi khởi động camera:", err);
+                showModal("Không truy cập được camera!", "error");
+              });
+          }, 1000);
         })
         .catch((err) => {
-          console.error("Lỗi khi khởi động camera:", err);
+          console.error("Lỗi lấy danh sách camera:", err);
           showModal("Không truy cập được camera!", "error");
         });
     }
