@@ -455,24 +455,17 @@ document.addEventListener("DOMContentLoaded", function () {
             if (callback) callback();
         }, 500);
     }
-    
     function startCamera(loadingElem) {
-        const videoConstraints = {
-            facingMode: "environment",
-            width: { ideal: 1280 },
-            height: { ideal: 720 },
-            aspectRatio: { ideal: 16 / 9 }
-        };
-    
+        const videoConstraints = { facingMode: "environment" };
         html5QrCode
             .start(videoConstraints, qrConfig, onScanSuccess, onScanFailure)
             .then(() => {
                 isScanning = true;
                 if (loadingElem) loadingElem.style.display = "none";
-                console.log("Camera bắt đầu quét mã QR với facingMode và constraints mới.");
+                console.log("Camera bắt đầu quét mã QR với facingMode: 'environment'.");
             })
             .catch((err) => {
-                console.error("Lỗi khi khởi động camera với constraints mới:", err);
+                console.error("Lỗi khi khởi động camera với facingMode: 'environment':", err);
                 // Fallback: nếu không tìm được camera theo constraint, thử khởi động mặc định.
                 html5QrCode
                     .start(null, qrConfig, onScanSuccess, onScanFailure)
@@ -487,7 +480,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
             });
     }
-    
     function showQRInterface() {
         searchContainer.style.display = "none";
         reportContainer.style.display = "none";
