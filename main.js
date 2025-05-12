@@ -419,8 +419,15 @@ document.addEventListener("DOMContentLoaded", function () {
     let isScanning = false;
     const html5QrCode = new Html5Qrcode("qr-scanner");
     const qrConfig = {
-      fps: 20
+      fps: 30, // Tăng fps để xử lý nhiều khung hình hơn
+      videoConstraints: {
+        facingMode: "environment", // Chỉ định sử dụng camera sau
+        width: { ideal: 640 },
+        height: { ideal: 480 }
+      }
     };
+
+
     const scannedCodes = new Set();
     function onScanSuccess(decodedText) {
         if (!scannedCodes.has(decodedText)) {
@@ -459,24 +466,9 @@ document.addEventListener("DOMContentLoaded", function () {
     function startCamera(loadingElem) {
       Html5Qrcode.getCameras()
         .then((cameras) => {
-          // Ghi ra danh sách tên các camera để debug
-          console.log("Các camera được phát hiện:", cameras.map(camera => camera.label));
+          console.log("Danh sách camera:", cameras.map(camera => camera.label));
     
-          let selectedCameraId = null;
-    
-          if (cameras.length === 1) {
-            // Nếu chỉ có một camera, chọn luôn camera đó
-            selectedCameraId = cameras[0].id;
-          } else if (cameras.length > 1) {
-            // Nếu có nhiều camera, tìm camera sau dựa trên nhãn (label)
-            const rearCamera = cameras.find(camera => {
-              const label = camera.label.toLowerCase();
-              return label.includes("back") || label.includes("rear") || label.includes("environment") || label.includes("sau");
-            });
-            // Nếu không tìm thấy camera sau, sử dụng camera đầu tiên
-            selectedCameraId = rearCamera ? rearCamera.id : cameras[0].id;
-          } else {
-            // Nếu không có camera nào được tìm thấy
+          if (!cameras || !cameras.length) {
             if (loadingElem) {
               loadingElem.style.display = "flex";
               loadingElem.textContent = "Không tìm thấy camera!";
@@ -485,19 +477,36 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
           }
     
-          // Khởi động camera đã chọn
-          html5QrCode.start(selectedCameraId, qrConfig, onScanSuccess, onScanFailure)
-            .then(() => {
-              isScanning = true;
-              if (loadingElem) {
-                loadingElem.style.display = "none";
-              }
-              console.log("Camera bắt đầu quét mã QR.");
-            })
-            .catch((err) => {
-              console.error("Lỗi khi khởi động camera:", err);
-              showModal("Không truy cập được camera!", "error");
+          let selectedCameraId = null;
+          if (cameras.length === 1) {
+            selectedCameraId = cameras[0].id;
+          } else {
+            const rearCamera = cameras.find(camera => {
+              const label = camera.label.toLowerCase();
+              return label.includes("back") ||
+                     label.includes("rear") ||
+                     label.includes("environment") ||
+                     label.includes("sau");
             });
+            selectedCameraId = rearCamera ? rearCamera.id : cameras[0].id;
+          }
+    
+          // Thêm delay nhỏ (ví dụ: 500ms) trước khi bắt đầu quét để camera có thời gian auto-focus
+          setTimeout(() => {
+            html5QrCode.start(selectedCameraId, qrConfig, onScanSuccess, onScanFailure)
+              .then(() => {
+                isScanning = true;
+                if (loadingElem) {
+                  loadingElem.style.display = "none";
+                }
+                console.log("Camera bắt đầu quét mã QR.");
+              })
+              .catch((err) => {
+                console.error("Lỗi khi khởi động camera:", err);
+                showModal("Không truy cập được camera!", "error");
+              });
+          }, 500);
+          
         })
         .catch((err) => {
           console.error("Lỗi lấy danh sách camera:", err);
