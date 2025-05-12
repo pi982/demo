@@ -418,20 +418,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let cameraId = null;
     let isScanning = false;
     const html5QrCode = new Html5Qrcode("qr-scanner");
-    
-    // Cấu hình QR không sử dụng qrbox
     const qrConfig = {
-      fps: 20, // Tăng fps để xử lý nhiều khung hình hơn
-      videoConstraints: {
-        facingMode: "environment", // Chỉ định sử dụng camera sau
-        width: { ideal: 640 },
-        height: { ideal: 480 }
-      }
+      fps: 20,
     };
-
-
-
-
     const scannedCodes = new Set();
     function onScanSuccess(decodedText) {
         if (!scannedCodes.has(decodedText)) {
@@ -466,55 +455,31 @@ document.addEventListener("DOMContentLoaded", function () {
             if (callback) callback();
         }, 500);
     }
-    
     function startCamera(loadingElem) {
-      Html5Qrcode.getCameras()
-        .then((cameras) => {
-          // In ra danh sách các camera để debug
-          console.log("Danh sách camera:", cameras.map(camera => camera.label));
-    
-          if (!cameras || !cameras.length) {
-            if (loadingElem) {
-              loadingElem.style.display = "flex";
-              loadingElem.textContent = "Không tìm thấy camera!";
-            }
-            showModal("Không tìm thấy camera!", "error");
-            return;
-          }
-    
-          let selectedCameraId = null;
-          // Sử dụng thuộc tính facingMode: nếu có camera với facingMode === "environment" thì chọn camera đó
-          const environmentCamera = cameras.find(camera => camera.facingMode === "environment");
-    
-          if (environmentCamera) {
-            selectedCameraId = environmentCamera.id;
-          } else {
-            // Nếu không có, mặc định chọn camera đầu tiên
-            selectedCameraId = cameras[0].id;
-          }
-    
-          // Thêm một khoảng delay nhỏ, giúp camera có thời gian lấy nét
-          setTimeout(() => {
-            html5QrCode.start(selectedCameraId, qrConfig, onScanSuccess, onScanFailure)
-              .then(() => {
+        const videoConstraints = { facingMode: "environment" };
+        html5QrCode
+            .start(videoConstraints, qrConfig, onScanSuccess, onScanFailure)
+            .then(() => {
                 isScanning = true;
-                if (loadingElem) {
-                  loadingElem.style.display = "none";
-                }
-                console.log("Camera bắt đầu quét mã QR.");
-              })
-              .catch((err) => {
-                console.error("Lỗi khi khởi động camera:", err);
-                showModal("Không truy cập được camera!", "error");
-              });
-          }, 1000);
-        })
-        .catch((err) => {
-          console.error("Lỗi lấy danh sách camera:", err);
-          showModal("Không truy cập được camera!", "error");
-        });
+                if (loadingElem) loadingElem.style.display = "none";
+                console.log("Camera bắt đầu quét mã QR với facingMode: 'environment'.");
+            })
+            .catch((err) => {
+                console.error("Lỗi khi khởi động camera với facingMode: 'environment':", err);
+                // Fallback: nếu không tìm được camera theo constraint, thử khởi động mặc định.
+                html5QrCode
+                    .start(null, qrConfig, onScanSuccess, onScanFailure)
+                    .then(() => {
+                        isScanning = true;
+                        if (loadingElem) loadingElem.style.display = "none";
+                        console.log("Fallback: Camera được khởi động mặc định.");
+                    })
+                    .catch((fallbackErr) => {
+                        console.error("Fallback: Lỗi khi khởi động camera mặc định:", fallbackErr);
+                        showModal("Không truy cập được camera!", "error");
+                    });
+            });
     }
-    
     function showQRInterface() {
         searchContainer.style.display = "none";
         reportContainer.style.display = "none";
