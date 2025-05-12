@@ -424,8 +424,8 @@ document.addEventListener("DOMContentLoaded", function () {
       // Nếu thư viện hỗ trợ, bạn có thể thiết lập các thông số video
       videoConstraints: {
         facingMode: "environment",
-        width: { ideal: 640 },
-        height: { ideal: 480 }
+        width: { ideal: 320 },
+        height: { ideal: 240 }
       }
     };
 
@@ -468,6 +468,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function startCamera(loadingElem) {
       Html5Qrcode.getCameras()
         .then((cameras) => {
+          // In ra danh sách các camera để debug
           console.log("Danh sách camera:", cameras.map(camera => camera.label));
     
           if (!cameras || !cameras.length) {
@@ -480,20 +481,17 @@ document.addEventListener("DOMContentLoaded", function () {
           }
     
           let selectedCameraId = null;
-          if (cameras.length === 1) {
-            selectedCameraId = cameras[0].id;
+          // Sử dụng thuộc tính facingMode: nếu có camera với facingMode === "environment" thì chọn camera đó
+          const environmentCamera = cameras.find(camera => camera.facingMode === "environment");
+    
+          if (environmentCamera) {
+            selectedCameraId = environmentCamera.id;
           } else {
-            const rearCamera = cameras.find(camera => {
-              const label = camera.label.toLowerCase();
-              return label.includes("back") ||
-                     label.includes("rear") ||
-                     label.includes("environment") ||
-                     label.includes("sau");
-            });
-            selectedCameraId = rearCamera ? rearCamera.id : cameras[0].id;
+            // Nếu không có, mặc định chọn camera đầu tiên
+            selectedCameraId = cameras[0].id;
           }
     
-          // Thêm delay nhỏ (ví dụ: 500ms) trước khi bắt đầu quét để camera có thời gian auto-focus
+          // Thêm một khoảng delay nhỏ, giúp camera có thời gian lấy nét
           setTimeout(() => {
             html5QrCode.start(selectedCameraId, qrConfig, onScanSuccess, onScanFailure)
               .then(() => {
@@ -507,8 +505,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error("Lỗi khi khởi động camera:", err);
                 showModal("Không truy cập được camera!", "error");
               });
-          }, 500);
-          
+          }, 1000);
         })
         .catch((err) => {
           console.error("Lỗi lấy danh sách camera:", err);
