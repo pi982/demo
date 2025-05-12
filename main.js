@@ -419,9 +419,17 @@ document.addEventListener("DOMContentLoaded", function () {
     let isScanning = false;
     const html5QrCode = new Html5Qrcode("qr-scanner");
     
+    // Cấu hình QR không sử dụng qrbox
     const qrConfig = {
-      fps: 20,  // Tăng fps để xử lý nhiều khung hình hơn
+      fps: 20, // Tăng fps để xử lý nhiều khung hình hơn
+      videoConstraints: {
+        facingMode: "environment", // Chỉ định sử dụng camera sau
+        width: { ideal: 640 },
+        height: { ideal: 480 }
+      }
     };
+
+
 
 
     const scannedCodes = new Set();
