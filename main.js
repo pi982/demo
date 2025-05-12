@@ -455,41 +455,56 @@ document.addEventListener("DOMContentLoaded", function () {
             if (callback) callback();
         }, 500);
     }
+    
     function startCamera(loadingElem) {
       Html5Qrcode.getCameras()
         .then((cameras) => {
-          // In ra danh sách tên camera để kiểm tra trên console
-          console.log("Các camera được phát hiện:", cameras.map(c => c.label));
+          // Ghi ra danh sách tên các camera để debug
+          console.log("Các camera được phát hiện:", cameras.map(camera => camera.label));
     
-          if (Array.isArray(cameras) && cameras.length) {
-            // Chọn luôn camera đầu tiên (điều này giúp đảm bảo trên các thiết bị như iPhone 11)
-            cameraId = cameras[0].id;
-            html5QrCode
-              .start(cameraId, qrConfig, onScanSuccess, onScanFailure)
-              .then(() => {
-                isScanning = true;
-                if (loadingElem) {
-                  loadingElem.style.display = "none";
-                }
-                console.log("Camera đã bắt đầu quét mã QR.");
-              })
-              .catch((err) => {
-                console.error("Lỗi khi khởi động camera:", err);
-                showModal("Không truy cập được camera!", "error");
-              });
+          let selectedCameraId = null;
+    
+          if (cameras.length === 1) {
+            // Nếu chỉ có một camera, chọn luôn camera đó
+            selectedCameraId = cameras[0].id;
+          } else if (cameras.length > 1) {
+            // Nếu có nhiều camera, tìm camera sau dựa trên nhãn (label)
+            const rearCamera = cameras.find(camera => {
+              const label = camera.label.toLowerCase();
+              return label.includes("back") || label.includes("rear") || label.includes("environment") || label.includes("sau");
+            });
+            // Nếu không tìm thấy camera sau, sử dụng camera đầu tiên
+            selectedCameraId = rearCamera ? rearCamera.id : cameras[0].id;
           } else {
+            // Nếu không có camera nào được tìm thấy
             if (loadingElem) {
               loadingElem.style.display = "flex";
               loadingElem.textContent = "Không tìm thấy camera!";
             }
             showModal("Không tìm thấy camera!", "error");
+            return;
           }
+    
+          // Khởi động camera đã chọn
+          html5QrCode.start(selectedCameraId, qrConfig, onScanSuccess, onScanFailure)
+            .then(() => {
+              isScanning = true;
+              if (loadingElem) {
+                loadingElem.style.display = "none";
+              }
+              console.log("Camera bắt đầu quét mã QR.");
+            })
+            .catch((err) => {
+              console.error("Lỗi khi khởi động camera:", err);
+              showModal("Không truy cập được camera!", "error");
+            });
         })
         .catch((err) => {
           console.error("Lỗi lấy danh sách camera:", err);
           showModal("Không truy cập được camera!", "error");
         });
     }
+    
     function showQRInterface() {
         searchContainer.style.display = "none";
         reportContainer.style.display = "none";
