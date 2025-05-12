@@ -421,12 +421,6 @@ document.addEventListener("DOMContentLoaded", function () {
     
     const qrConfig = {
       fps: 20,  // Tăng fps để xử lý nhiều khung hình hơn
-      // Nếu thư viện hỗ trợ, bạn có thể thiết lập các thông số video
-      videoConstraints: {
-        facingMode: "environment",
-        width: { ideal: 320 },
-        height: { ideal: 240 }
-      }
     };
 
 
