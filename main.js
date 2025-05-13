@@ -462,7 +462,6 @@ document.addEventListener("DOMContentLoaded", function () {
             facingMode: "environment",
             width: { ideal: 1280 },
             height: { ideal: 720 },
-            aspectRatio: 16 / 9  // Hoặc một tỉ lệ phù hợp với giao diện của bạn
         };
     
         html5QrCode
