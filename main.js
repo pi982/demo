@@ -420,12 +420,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const html5QrCode = new Html5Qrcode("qr-scanner");
     const qrConfig = {
         fps: 15,
-        videoConstraints: {  // Đây là một thuộc tính của qrConfig, chứa đối tượng cấu hình camera.
-            facingMode: "environment",
-            width: { ideal: 1280 },
-            height: { ideal: 720 },
-            aspectRatio: 16 / 9  // Hoặc một tỉ lệ phù hợp với giao diện của bạn.
-        }
     };
     const scannedCodes = new Set();
     function onScanSuccess(decodedText) {
