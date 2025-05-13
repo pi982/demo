@@ -439,6 +439,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     function onScanFailure(error) {
         //console.warn("Lỗi quét QR:", error);
+        showModal("cầm nghiêng mã QR", "normal");
     }
     function fadeIn(element) {
         element.style.opacity = 0;
