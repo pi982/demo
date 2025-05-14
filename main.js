@@ -61,7 +61,6 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             displayDuration = 1000;
         }
-
         // Sau khi thông báo được hiển thị, ẩn và xử lý thông báo kế tiếp
         setTimeout(() => {
             modal.classList.remove("show");
@@ -69,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Đợi một chút (ví dụ 500ms) trước khi hiển thị thông báo tiếp theo để tránh hiện tượng quá chồng
             setTimeout(() => {
                 processQueue();
-            }, 100);
+            }, 200);
         }, displayDuration);
     }
     // ---------------------
