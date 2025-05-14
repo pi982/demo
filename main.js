@@ -55,11 +55,11 @@ document.addEventListener("DOMContentLoaded", function () {
         // Định nghĩa thời gian hiển thị dựa vào loại thông báo
         let displayDuration;
         if (type === "status") {
-            displayDuration = 3500;
+            displayDuration = 3000;
         } else if (type === "error") {
-            displayDuration = 2500;
+            displayDuration = 2000;
         } else {
-            displayDuration = 1500;
+            displayDuration = 1000;
         }
 
         // Sau khi thông báo được hiển thị, ẩn và xử lý thông báo kế tiếp
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Đợi một chút (ví dụ 500ms) trước khi hiển thị thông báo tiếp theo để tránh hiện tượng quá chồng
             setTimeout(() => {
                 processQueue();
-            }, 200);
+            }, 100);
         }, displayDuration);
     }
     // ---------------------
@@ -419,7 +419,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let isScanning = false;
     const html5QrCode = new Html5Qrcode("qr-scanner");
     const qrConfig = {
-        fps: 15,
+        fps: 10,
     };
     const scannedCodes = new Set();
     function onScanSuccess(decodedText) {
