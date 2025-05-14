@@ -491,7 +491,8 @@ th {
 		/* border-left: 5px solid var(--error-color); */
 	}
 
-	.modal-content.normal {
+	.modal-content.normal,
+	.modal-content.info{
 		color: var(--text-color);
 		/* border-left: 5px solid var(--error-color); */
 	}
