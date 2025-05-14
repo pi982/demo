@@ -51,12 +51,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Hiển thị modal
         modal.classList.add("show");
-
         // Định nghĩa thời gian hiển thị dựa vào loại thông báo
         let displayDuration;
         if (type === "status") {
             displayDuration = 3000;
-        } else if ( type === "info" || type === "error") {
+        } else if (type === "error") {
             displayDuration = 2000;
         } else {
             displayDuration = 1000;
