@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else if (type === "error") {
             displayDuration = 2000;
         } else {
-            displayDuration = 1500;
+            displayDuration = 1000;
         }
         // Sau khi thông báo được hiển thị, ẩn và xử lý thông báo kế tiếp
         setTimeout(() => {
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Đợi một chút (ví dụ 500ms) trước khi hiển thị thông báo tiếp theo để tránh hiện tượng quá chồng
             setTimeout(() => {
                 processQueue();
-            }, 200);
+            }, 100);
         }, displayDuration);
     }
     // ---------------------
@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 // Hiển thị thông báo “Đang gửi dữ liệu...” có spinner
-                showModal('<span class="spinner"></span>\nĐang gửi dữ liệu điểm danh Offline...', "info");
+                showModal('<span class="spinner"></span>\nĐang gửi dữ liệu điểm danh Offline...',"status");
 
                 // Gửi payload chung dạng JSON đến server
                 fetch(webAppUrl, {
