@@ -419,6 +419,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const html5QrCode = new Html5Qrcode("qr-scanner");
     const qrConfig = {
         fps: 10,
+        videoConstraints: {
+            width: { ideal: 1280 },
+            height: { ideal: 720 }
+        }
     };
     const scannedCodes = new Set();
     function onScanSuccess(decodedText) {
