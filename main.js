@@ -457,8 +457,8 @@ document.addEventListener("DOMContentLoaded", function () {
             fps: 15,
             videoConstraints: {
                 facingMode: "environment", 
-                width: { ideal: 1920 },
-                height: { ideal: 1080 }
+                width: { ideal: 1280 },
+                height: { ideal: 720 }
             }
         };
         html5QrCode
