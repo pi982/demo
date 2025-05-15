@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("loginTimestamp")) {
         // Người dùng đã đăng nhập, ẩn form đăng nhập và hiển thị giao diện chính
@@ -455,11 +454,11 @@ document.addEventListener("DOMContentLoaded", function () {
     function startCamera(loadingElem) {
         const videoConstraints = { facingMode: "environment" };
         const qrConfig = {
-            fps: 10,
+            fps: 15,
             videoConstraints: {
                 facingMode: "environment", 
-                width: { ideal: 1280 },
-                height: { ideal: 720 }
+                width: { ideal: 1920 },
+                height: { ideal: 1080 }
             }
         };
         html5QrCode
