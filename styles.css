@@ -491,8 +491,7 @@ th {
 		/* border-left: 5px solid var(--error-color); */
 	}
 
-	.modal-content.normal,
-	.modal-content.info{
+	.modal-content.normal{
 		color: var(--text-color);
 		/* border-left: 5px solid var(--error-color); */
 	}
@@ -500,8 +499,6 @@ th {
 		color: var(--warning-color);
 		/* border-left: 5px solid var(--error-color); */
 	}
-
-
 
 .modal-close {
 	position: absolute;
@@ -518,7 +515,6 @@ th {
 	.modal-close:hover {
 		color: #333;
 	}
-
 
 /* --- Spinner --- */
 .spinner {
