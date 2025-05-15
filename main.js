@@ -417,14 +417,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let cameraId = null;
     let isScanning = false;
     const html5QrCode = new Html5Qrcode("qr-scanner");
-    const qrConfig = {
-        fps: 10,
-        videoConstraints: {
-            facingMode: "environment", 
-            width: { ideal: 1280 },
-            height: { ideal: 720 }
-        }
-    };
     const scannedCodes = new Set();
     function onScanSuccess(decodedText) {
         if (!scannedCodes.has(decodedText)) {
@@ -462,6 +454,14 @@ document.addEventListener("DOMContentLoaded", function () {
     
     function startCamera(loadingElem) {
         const videoConstraints = { facingMode: "environment" };
+        const qrConfig = {
+            fps: 10,
+            videoConstraints: {
+                facingMode: "environment", 
+                width: { ideal: 1280 },
+                height: { ideal: 720 }
+            }
+        };
         html5QrCode
             .start(videoConstraints, qrConfig, onScanSuccess, onScanFailure)
             .then(() => {
