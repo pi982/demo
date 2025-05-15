@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else if (type === "error") {
             displayDuration = 2000;
         } else {
-            displayDuration = 1000;
+            displayDuration = 1500;
         }
         // Sau khi thông báo được hiển thị, ẩn và xử lý thông báo kế tiếp
         setTimeout(() => {
