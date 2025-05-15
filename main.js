@@ -416,9 +416,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let cameraId = null;
     let isScanning = false;
     const html5QrCode = new Html5Qrcode("qr-scanner");
-    const qrConfig = {
-        fps: 10,
-    };
     const scannedCodes = new Set();
     function onScanSuccess(decodedText) {
         if (!scannedCodes.has(decodedText)) {
@@ -455,29 +452,65 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
     function startCamera(loadingElem) {
-        const videoConstraints = { facingMode: "environment" };
-        html5QrCode
-            .start(videoConstraints, qrConfig, onScanSuccess, onScanFailure)
+      // Bước 1: Liệt kê các thiết bị camera
+      navigator.mediaDevices.enumerateDevices()
+        .then(devices => {
+          // Lấy ra các thiết bị có loại "videoinput"
+          const videoDevices = devices.filter(device => device.kind === "videoinput");
+          if (videoDevices.length === 0) {
+            throw new Error("Không tìm thấy camera nào.");
+          }
+    
+          let cameraIdOrConfig;
+          // Nếu có nhiều camera (thường là trên điện thoại), ép dùng camera sau
+          if (videoDevices.length > 1) {
+            cameraIdOrConfig = { facingMode: { exact: "environment" } };
+          } else {
+            // Nếu chỉ có một camera (thường là trên laptop), dùng ID của camera đó
+            cameraIdOrConfig = videoDevices[0].deviceId;
+          }
+          return { cameraIdOrConfig, videoDevices };
+        })
+        .then(({ cameraIdOrConfig, videoDevices }) => {
+          // Bước 2: Xác định cấu hình quét QR với videoConstraints bổ sung
+          const qrConfig = {
+            fps: 10,
+            qrbox: 250,
+            videoConstraints: {
+              width: { ideal: 1280 },
+              height: { ideal: 720 }
+            }
+          };
+    
+          // Bước 3: Khởi động camera với cameraIdOrConfig đã xác định
+          html5QrCode
+            .start(cameraIdOrConfig, qrConfig, onScanSuccess, onScanFailure)
             .then(() => {
-                isScanning = true;
-                if (loadingElem) loadingElem.style.display = "none";
-                console.log("Camera bắt đầu quét mã QR với facingMode: 'environment'.");
+              isScanning = true;
+              if (loadingElem) loadingElem.style.display = "none";
+              console.log("Camera đã khởi động với config:", cameraIdOrConfig, "và qrConfig:", qrConfig);
             })
-            .catch((err) => {
-                console.error("Lỗi khi khởi động camera với facingMode: 'environment':", err);
-                // Fallback: nếu không tìm được camera theo constraint, thử khởi động mặc định.
-                html5QrCode
-                    .start(null, qrConfig, onScanSuccess, onScanFailure)
-                    .then(() => {
-                        isScanning = true;
-                        if (loadingElem) loadingElem.style.display = "none";
-                        console.log("Fallback: Camera được khởi động mặc định.");
-                    })
-                    .catch((fallbackErr) => {
-                        console.error("Fallback: Lỗi khi khởi động camera mặc định:", fallbackErr);
-                        showModal("Không truy cập được camera!", "error");
-                    });
+            .catch(err => {
+              console.error("Lỗi khi khởi động camera với config", cameraIdOrConfig, err);
+              // Fallback: Thử dùng camera đầu tiên nếu có lỗi
+              const fallbackId = videoDevices[0].deviceId;
+              html5QrCode
+                .start(fallbackId, qrConfig, onScanSuccess, onScanFailure)
+                .then(() => {
+                  isScanning = true;
+                  if (loadingElem) loadingElem.style.display = "none";
+                  console.log("Fallback: Camera khởi động với fallback deviceId:", fallbackId);
+                })
+                .catch(fallbackErr => {
+                  console.error("Fallback: Lỗi khi khởi động camera mặc định:", fallbackErr);
+                  showModal("Không truy cập được camera!", "error");
+                });
             });
+        })
+        .catch(err => {
+          console.error("Lỗi khi liệt kê thiết bị:", err);
+          showModal("Không liệt kê được các thiết bị camera", "error");
+        });
     }
     
     function showQRInterface() {
