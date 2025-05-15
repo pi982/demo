@@ -420,6 +420,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const qrConfig = {
         fps: 10,
         videoConstraints: {
+            facingMode: "environment", 
             width: { ideal: 1280 },
             height: { ideal: 720 }
         }
